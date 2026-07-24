@@ -1,0 +1,113 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth User Links API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: User Links
+paths:
+  /v4/user-links/{linkToken}/access-token:
+    post:
+      description: Given a `linkToken`, generate a short-lived access token used to embed an authenticated user your application.
+      parameters:
+      - name: linkToken
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserAccessTokenV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Generate an access token
+      tags:
+      - User Links
+      operationId: createUserLinkAccessToken
+  /v4/user-links/{linkToken}/iframe-url:
+    post:
+      description: Generate a URL that can be used to embed logged in user data in an iframe.
+      parameters:
+      - name: linkToken
+        required: true
+        in: path
+        schema:
+          type: string
+      - name: page
+        required: true
+        in: query
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserIframeUrlV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Generate an iframe URL for a user with link token
+      tags:
+      - User Links
+      operationId: createUserLinkIframeUrl
+components:
+  schemas:
+    UserIframeUrlV4ResponseDto:
+      type: object
+      properties:
+        iframeUrl:
+          type: string
+          description: The iframe URL used to embed an authenticated user in your application
+      required:
+      - iframeUrl
+    UserAccessTokenV4ResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token used to perform API calls on behalf of the user
+        expiresAt:
+          format: date-time
+          type: string
+          description: The expiration date of the access token
+        userId:
+          type: string
+          description: The user ID of the authenticated user
+        userEmail:
+          type: string
+          description: The user email of the authenticated user
+        customerId:
+          type: string
+          description: The customer ID of the authenticated user
+        merchantId:
+          type: string
+          description: The merchant ID of the authenticated user
+      required:
+      - accessToken
+      - expiresAt
+      - userId
+      - userEmail
+      - customerId
+      - merchantId
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

@@ -1,0 +1,161 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Transactions API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Transactions
+paths:
+  /v4/transactions:
+    get:
+      description: Lists all transactions using pagination
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of objects to list.
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 50
+      - name: orderBy
+        required: false
+        in: query
+        description: The object attribute(s) to sort by.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - postedAt
+            - id
+      - name: order
+        required: false
+        in: query
+        description: The direction to sort by, one of `asc` or `desc`.
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+      - name: beforeCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the previous page of objects.
+        schema:
+          type: string
+      - name: afterCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the next page of objects.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The paginated list of transactions.
+          content:
+            application/json:
+              schema:
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/PageMetaDto'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/GetTransactionV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: List transactions
+      tags:
+      - Transactions
+      operationId: listTransactions
+components:
+  schemas:
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    GetTransactionV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The transaction ID
+        orderId:
+          type: string
+          description: The order ID associated with this transaction
+        amount:
+          type: number
+          description: The amount in cents (negative for debits, positive for credits).
+        currency:
+          description: The currency of the transaction
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        type:
+          description: The type of transaction
+          allOf:
+          - $ref: '#/components/schemas/MerchantLedgerType'
+        postedAt:
+          format: date-time
+          type: string
+          description: The time the transaction was posted (UTC timezone)
+        adjustmentId:
+          type: string
+          description: The order adjustment ID associated with this transaction if applicable
+        sourceTransactionIds:
+          description: For payout transactions, the IDs of source transactions that were paid out
+          items:
+            type: array
+          type: array
+        feeAmount:
+          type: number
+          description: The fee amount associated with this order transaction (if applicable)
+        feeTransactionId:
+          type: string
+          description: The transaction ID of the fee associated with this order transaction (if applicable)
+      required:
+      - id
+      - amount
+      - currency
+      - type
+      - postedAt
+    MerchantLedgerType:
+      type: string
+      enum:
+      - order
+      - fee
+      - order_refund
+      - fee_refund
+      - dispute
+      - payout
+      - unknown
+      description: The type of transaction
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

@@ -1,0 +1,120 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Auth
+paths:
+  /v4/auth/session:
+    post:
+      description: Generate a short-lived session token used initialize a Slope.js flow on behalf of a customer, skipping the need for the customer to login.
+      parameters:
+      - name: Slope-Access-Token
+        in: header
+        description: The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.
+        required: true
+        schema:
+          type: string
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SessionTokenV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Generate a new session
+      tags:
+      - Auth
+      operationId: createAuthSession
+  /v4/auth/token:
+    post:
+      description: Given a `authorizationCode`, generate a long-lived access token to make API requests on behalf of a customer.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AuthTokenV4RequestDto'
+      responses:
+        '201':
+          description: ''
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthTokenV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '404':
+          description: Returned when the authorizationCode is not found
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Generate an access token
+      tags:
+      - Auth
+      operationId: createAuthToken
+components:
+  schemas:
+    AuthTokenV4RequestDto:
+      type: object
+      properties:
+        authorizationCode:
+          type: string
+          description: The authorization code to use to generate a token
+      required:
+      - authorizationCode
+    AuthTokenV4ResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token to use to generate a token
+      required:
+      - accessToken
+    SessionTokenV4ResponseDto:
+      type: object
+      properties:
+        sessionToken:
+          type: string
+          description: The short-lived session token to use to initialize a Slope.js flow. Pass this token in the `sessionToken` parameter. Expires after 4 hours.
+        expiresAt:
+          format: date-time
+          type: string
+          description: The expiration date of the session token.
+      required:
+      - sessionToken
+      - expiresAt
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

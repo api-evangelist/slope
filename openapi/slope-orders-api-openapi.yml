@@ -1,0 +1,2774 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Orders API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Orders
+paths:
+  /v4/orders:
+    post:
+      description: Creates a new order for checkout. Returns both a code for Slope.JS widget and full URL for redirect flow
+      parameters:
+      - name: Slope-Access-Token
+        in: header
+        description: The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderV4RequestDto'
+      responses:
+        '201':
+          description: The created order. Returns either a standard order or a composable order depending on the uiType.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+                - $ref: '#/components/schemas/ComposableOrderV4ResponseDto'
+              examples:
+                standardOrder:
+                  summary: Standard created order
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    customerId: cust_123
+                    number: '00000001'
+                    checkoutCode: ABC123
+                    checkoutUrl: https://checkout.slope.so/ABC123
+                    total: 55000
+                    merchantFee: 0
+                    customerFee: 0
+                    customerFeePercentage: null
+                    totalWithFees: 55000
+                    amountCanceledPrincipal: 0
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: approved
+                    finalizedAt: null
+                    openedAt: null
+                    currency: usd
+                    selectedTermName: null
+                    selectedTermDays: null
+                    selectedPaymentType: null
+                    metadata: null
+                    paymentSchedule: []
+                composableOrder:
+                  summary: Composable order (when uiType is "composable")
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    total: 55000
+                    currency: usd
+                    selectedQuoteId: quote_123
+                    quotes:
+                    - id: quote_123
+                      name: Net 30
+                      totalWithFees: 105000
+                      financingFeePct: 2.5
+                      financingFeeTotal: 2500
+                      originalTotalWithFees: 105000
+                      originalFinancingFeeTotal: 2500
+                      originalFinancingFeePct: 2.5
+                      durationInDays: 30
+                      customerFeePercentage: 0
+                      schedule:
+                      - amount: 55000
+                        date: '2024-02-15'
+                    iframeUrls:
+                      checkbox: https://checkout.slope.so/composable/checkbox.html?orderCode=ABC123&secret=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9...
+                      expiresAt: '2024-01-15T11:00:00Z'
+        '400':
+          description: Bad Request - Invalid request format or validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 400
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                customerNoPreferredPaymentMethod:
+                  summary: Customer no preferred payment method
+                  value:
+                    statusCode: 400
+                    customer:
+                      externalId: ''
+                      customerMerchants: []
+                    code: customer-no-preferred-payment-method
+                    message: Please add or update your repayment method on your Slope Portal in order to use Pay Later for Business. For assistance, contact <mailto:support@slopepay.com|support@slopepay.com>.
+                invalidPaymentMethod:
+                  summary: Invalid payment method
+                  value:
+                    statusCode: 400
+                    code: invalid-payment-method
+                    message: Please add or update your repayment method on your Slope Portal in order to use Pay Later for Business. For assistance, contact support@slopepay.com.
+                orderTotalNegative:
+                  summary: Order total negative
+                  value:
+                    statusCode: 400
+                    code: order-total-negative
+                    message: Order total cannot be negative
+                orderItemsRequired:
+                  summary: Order items required
+                  value:
+                    statusCode: 400
+                    code: order-items-required
+                    message: No order items provided
+                orderItemsTotalMismatch:
+                  summary: Order items total mismatch
+                  value:
+                    statusCode: 400
+                    code: order-items-total-mismatch
+                    message: Order items total of 100 does not match order total of 200
+                orderItemDiscountValidation:
+                  summary: Order item discount validation error
+                  value:
+                    statusCode: 400
+                    code: order-item-discount-validation-error
+                    message: Discount cannot be a negative amount. Please check the quantity and unit price for example discounted item name
+                orderItemPriceValidation:
+                  summary: Order item price validation error
+                  value:
+                    statusCode: 400
+                    code: order-item-price-validation-error
+                    message: Price does not equal quantity * unit price for example item name
+        '409':
+          description: Conflict - Request conflicts with current state of the resource
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 409
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderExternalIdConflict:
+                  summary: Order external ID conflict
+                  value:
+                    statusCode: 409
+                    order:
+                      id: ord_example_id
+                      checkoutCode: null
+                      checkoutUrl: null
+                      customerFeePercentage: null
+                      selectedTermName: null
+                      selectedTermDays: null
+                      selectedPaymentType: null
+                      paymentSchedule: []
+                      apr: null
+                    code: order_external_id_conflict
+                    message: A different order ord_example_id with the same external ID already exists ext_order_123.
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                customerNotFound:
+                  summary: Customer not found
+                  value:
+                    statusCode: 422
+                    code: order-customer-not-found
+                    message: Customer not found or does not belong to merchant
+                customerMissingPrequalification:
+                  summary: Customer missing prequalification
+                  value:
+                    statusCode: 422
+                    code: missing-customer-prequalification
+                    message: The customer must go through the preapproval flow before creating an order.
+                customerIneligible:
+                  summary: Customer ineligible
+                  value:
+                    statusCode: 422
+                    code: customer-ineligible
+                    message: The customer is ineligible for Buy Now, Pay Later.
+                customerAccountNotAvailable:
+                  summary: Customer account not available
+                  value:
+                    statusCode: 422
+                    code: customer-account-not-available
+                    message: Your Slope line is currently unavailable due to an abnormal account status; please check your Slope Portal for pending account actions or contact <mailto:support@slopepay.com|support@slopepay.com> for assistance.
+                accessTokenMismatch:
+                  summary: Access token mismatch
+                  value:
+                    statusCode: 422
+                    code: order-access-token-mismatch
+                    message: Slope-Access-Token does not match customerId parameter
+                merchantUnauthorized:
+                  summary: Merchant unauthorized
+                  value:
+                    statusCode: 422
+                    code: order-merchant-unauthorized
+                    message: The merchant is not authorized to access this customer.
+                orderExternalIdCustomerConflict:
+                  summary: Order external ID customer conflict
+                  value:
+                    statusCode: 422
+                    code: order-external-id-customer-conflict
+                    message: The order was found by externalId but belongs to a different customer. Ensure the externalId and access token belong to the same customer.
+                noQuotesAvailable:
+                  summary: No quotes available
+                  value:
+                    statusCode: 422
+                    code: order-no-quotes-available
+                    message: No available quotes found on refresh
+                orderNoOffers:
+                  summary: Order no offers
+                  value:
+                    statusCode: 422
+                    code: order-offers-none
+                    message: The order is not approved for any Pay Later offers.
+                orderMinimumRejected:
+                  summary: Order minimum rejected
+                  value:
+                    statusCode: 422
+                    code: orders-total-min
+                    message: Order total 100 did not meet order minimum
+                orderMaxRejected:
+                  summary: Order max rejected
+                  value:
+                    statusCode: 422
+                    code: orders-total-max
+                    message: Order total 1000000000 exceeds order maximum
+                orderLocalityRejected:
+                  summary: Order locality rejected
+                  value:
+                    statusCode: 422
+                    code: locality-rejected
+                    message: 'Error creating order for customer cust_123 with total 100: Unable to offer a loan for the specified terms in jurisdiction'
+                orderEvalRejected:
+                  summary: Order evaluation rejected
+                  value:
+                    statusCode: 422
+                    code: order-eval-rejected
+                    message: Order evaluation was rejected
+                orderPayeeRequired:
+                  summary: Order payee required
+                  value:
+                    statusCode: 422
+                    code: order-payee-required
+                    message: Order payee name and province is required on all order items
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Create an order
+      tags:
+      - Orders
+      operationId: createOrder
+    get:
+      description: Lists all orders using pagination.
+      parameters:
+      - name: status
+        required: false
+        in: query
+        description: When specified, only orders with the given status are returned.
+        schema:
+          enum:
+          - pending
+          - approved
+          - submitted
+          - opening
+          - open
+          - finalizing
+          - finalized
+          - unpaid
+          - partiallyPaid
+          - complete
+          - defaulted
+          - rejected
+          - canceled
+          - refunded
+          - repayment
+          type: string
+      - name: customerId
+        required: false
+        in: query
+        description: When specified, only orders with the given Slope assigned Customer ID or partner assigned Customer ID are returned.
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of objects to list.
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 50
+      - name: orderBy
+        required: false
+        in: query
+        description: The object attribute(s) to sort by.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - createdAt
+            - id
+      - name: order
+        required: false
+        in: query
+        description: The direction to sort by, one of `asc` or `desc`.
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+      - name: beforeCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the previous page of objects.
+        schema:
+          type: string
+      - name: afterCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the next page of objects.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The paginated list of orders.
+          content:
+            application/json:
+              schema:
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/PageMetaDto'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: List orders
+      tags:
+      - Orders
+      operationId: listOrders
+  /v4/orders/{id}:
+    get:
+      description: Gets an order by ID.
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The current order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+              examples:
+                finalized:
+                  summary: Finalized order
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    customerId: cust_123
+                    number: '00000001'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 1000000
+                    totalFinalized: 1000000
+                    merchantFee: 0
+                    customerFee: 25000
+                    customerFeePercentage: 2.5
+                    totalWithFees: 1025000
+                    amountCanceledPrincipal: 0
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: finalized
+                    finalizedAt: '2024-01-15T10:30:00.000Z'
+                    openedAt: '2024-01-15T10:00:00.000Z'
+                    currency: usd
+                    selectedTermName: Net 30
+                    selectedTermDays: 30
+                    selectedPaymentType: ach
+                    metadata: null
+                    paymentSchedule:
+                    - amount: 1025000
+                      date: '2024-02-14'
+                    amountOutstanding: 1025000
+                    apr: 30
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Get an order
+      tags:
+      - Orders
+      operationId: getOrder
+  /v4/orders/{id}/cancel:
+    post:
+      description: An API to cancel an order. This is not allowed once order is finalized. You may also cancel on merchant dashboard.
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The canceled order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+              examples:
+                canceled:
+                  summary: Canceled order
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    customerId: cust_123
+                    number: '00000001'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 55000
+                    merchantFee: 0
+                    customerFee: 0
+                    customerFeePercentage: null
+                    totalWithFees: 0
+                    amountCanceledPrincipal: 55000
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: canceled
+                    finalizedAt: null
+                    openedAt: null
+                    currency: usd
+                    selectedTermName: null
+                    selectedTermDays: null
+                    selectedPaymentType: null
+                    metadata: null
+                    paymentSchedule: []
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderCannotBeCanceled:
+                  summary: Order cannot be canceled
+                  value:
+                    statusCode: 422
+                    code: order-cannot-be-canceled
+                    message: Order with status finalized cannot be canceled. Finalized orders cannot be canceled. To update finalized orders, use the adjustments endpoint.
+                orderCancelVirtualCardNotAllowed:
+                  summary: Virtual card order cannot be canceled
+                  value:
+                    statusCode: 422
+                    code: order-cancel-virtual-card-not-allowed
+                    message: Orders using a virtual card cannot be canceled when in open status
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Cancel an order
+      tags:
+      - Orders
+      operationId: cancelOrder
+  /v4/orders/{id}/finalize:
+    post:
+      description: Moves an order from the "open" state to the "finalized" state.
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/FinalizeOrderV4RequestDto'
+      responses:
+        '200':
+          description: The finalized order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FinalizeOrderV4ResponseDto'
+              examples:
+                finalized:
+                  summary: Finalized order
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    customerId: cust_123
+                    number: '00000001'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 1000000
+                    totalFinalized: 1000000
+                    merchantFee: 0
+                    customerFee: 25000
+                    customerFeePercentage: 2.5
+                    totalWithFees: 1025000
+                    amountCanceledPrincipal: 0
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: finalized
+                    finalizedAt: '2024-01-15T10:30:00.000Z'
+                    openedAt: '2024-01-15T10:00:00.000Z'
+                    currency: usd
+                    selectedTermName: Net 30
+                    selectedTermDays: 30
+                    selectedPaymentType: ach
+                    metadata: null
+                    paymentSchedule:
+                    - amount: 1025000
+                      date: '2024-02-14'
+                    amountOutstanding: 1025000
+                    apr: 30
+                finalizing:
+                  summary: Order in finalizing status
+                  value:
+                    id: ord_456
+                    externalId: ext_order_456
+                    customerId: cust_456
+                    number: '00000002'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 750000
+                    totalFinalized: 300000
+                    merchantFee: 0
+                    customerFee: 18750
+                    customerFeePercentage: 2.5
+                    totalWithFees: 768750
+                    amountCanceledPrincipal: 0
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: finalizing
+                    finalizedAt: null
+                    openedAt: '2024-01-15T10:00:00.000Z'
+                    currency: usd
+                    selectedTermName: Net 30
+                    selectedTermDays: 30
+                    selectedPaymentType: ach
+                    metadata: null
+                    paymentSchedule: []
+                    transactionId: le_123abc456def
+        '400':
+          description: Bad Request - Invalid request format or validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 400
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotOpen:
+                  summary: Order not open
+                  value:
+                    statusCode: 400
+                    order:
+                      id: ord_example_not_open
+                      status: approved
+                    code: order-not-open
+                    message: The order does not have an open status and cannot be finalized.
+                orderAlreadyFinalized:
+                  summary: Order already finalized
+                  value:
+                    statusCode: 400
+                    order:
+                      id: ord_example_finalized
+                      status: finalized
+                    code: order-already-finalized
+                    message: The order is already finalized.
+                orderFinalizePending:
+                  summary: Order finalize pending
+                  value:
+                    statusCode: 400
+                    order:
+                      id: ord_example_finalizing
+                      status: finalizing
+                    code: order-finalize-pending
+                    message: The order is being finalized.
+                invalidPaymentMethod:
+                  summary: Invalid payment method
+                  value:
+                    statusCode: 400
+                    code: invalid-payment-method
+                    message: The payment method is missing or invalid.
+                invalidPaymentTerms:
+                  summary: Invalid payment terms
+                  value:
+                    statusCode: 400
+                    code: invalid-payment-terms
+                    message: The payment terms are missing or invalid.
+                invalidTermsAcceptanceStartDate:
+                  summary: Invalid terms acceptance start date
+                  value:
+                    statusCode: 400
+                    code: invalid-terms-acceptance-date
+                    message: The customer's terms acceptance date is missing or invalid.
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Finalize an order
+      tags:
+      - Orders
+      operationId: finalizeOrder
+  /v4/orders/{id}/open:
+    post:
+      description: Optional API call during checkout flow. Only used by developers that utilize the submitted status. Moves an order from the "submitted" state to the "open" state.
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OpenOrderSharedDto'
+      responses:
+        '200':
+          description: The opened order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+              examples:
+                opened:
+                  summary: Opened order
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    customerId: cust_123
+                    number: '00000001'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 55000
+                    merchantFee: 0
+                    customerFee: 0
+                    customerFeePercentage: null
+                    totalWithFees: 55000
+                    amountCanceledPrincipal: 0
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: open
+                    finalizedAt: null
+                    openedAt: '2024-01-15T10:30:00Z'
+                    currency: usd
+                    selectedTermName: Net 30
+                    selectedTermDays: 30
+                    selectedPaymentType: ach
+                    metadata: null
+                    paymentSchedule: []
+        '400':
+          description: Bad Request - Invalid request format or validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 400
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                invalidPaymentMethod:
+                  summary: Invalid payment method
+                  value:
+                    statusCode: 400
+                    code: invalid-payment-method
+                    message: The payment method is missing or invalid.
+                invalidPaymentTerms:
+                  summary: Invalid payment terms
+                  value:
+                    statusCode: 400
+                    code: invalid-payment-terms
+                    message: The payment terms are missing or invalid.
+                invalidTermsAcceptanceStartDate:
+                  summary: Invalid terms acceptance start date
+                  value:
+                    statusCode: 400
+                    code: invalid-terms-acceptance-date
+                    message: The customer's terms acceptance date is missing or invalid.
+                incompleteOrderDetails:
+                  summary: Incomplete order details
+                  value:
+                    statusCode: 400
+                    code: incomplete-order-details
+                    message: Order is missing contact email or phone. Please go back and update the contact information.
+                customerFraudLikely:
+                  summary: Customer fraud likely
+                  value:
+                    statusCode: 400
+                    code: customer-fraud-likely
+                    message: Your account has been flagged for review. Email support@slopepay.com for more info.
+                achBalanceLow:
+                  summary: ACH balance low
+                  value:
+                    statusCode: 400
+                    code: ach-balance
+                    message: The bank account you selected does not have a sufficient balance to open this order. Email support@slopepay.com for more info.
+                offerNotApproved:
+                  summary: Offer not approved
+                  value:
+                    statusCode: 400
+                    code: order-offer-rejected
+                    message: 'This offer is not longer valid due to the following reason: Risk evaluation failed. Please email support@slopepay.com.'
+                incorrectQuote:
+                  summary: Incorrect quote
+                  value:
+                    statusCode: 400
+                    code: incorrect-quote
+                    message: The selected ID quote_123 does not match the order's selected quote ID quote_456
+        '402':
+          description: Payment Required - Payment is required to complete the request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 402
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                paymentRequired:
+                  summary: Payment required
+                  value:
+                    statusCode: 402
+                    code: payment_authorization_failed
+                    message: Payment authorization failed
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                invalidStatus:
+                  summary: Invalid status
+                  value:
+                    statusCode: 422
+                    code: order-status-invalid
+                    message: The order's current status is unexpected or invalid.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Open an order
+      tags:
+      - Orders
+      operationId: openOrder
+  /v4/orders/{id}/partial-cancel:
+    post:
+      description: "Cancel a partial amount of an order.\n  - The cancelled amount will be posted as a credit toward the order balance once the order is finalized. This       will not affect the original `total` amount.\n  - This is supported for orders in approved, pending, submitted, open, opening, and finalizing statuses.\n  - This is not allowed once order is finalized. To update finalized orders, use the adjustments endpoint.\n  - You may also cancel on merchant dashboard."
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderPartialCancelV4RequestDto'
+      responses:
+        '200':
+          description: The partially cancelled order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+              examples:
+                partiallyCanceled:
+                  summary: Partially canceled order
+                  value:
+                    id: ord_123
+                    externalId: ext_order_123
+                    customerId: cust_123
+                    number: '00000001'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 55000
+                    merchantFee: 0
+                    customerFee: 0
+                    customerFeePercentage: null
+                    totalWithFees: 55000
+                    amountCanceledPrincipal: 10000
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: approved
+                    finalizedAt: null
+                    openedAt: null
+                    currency: usd
+                    selectedTermName: null
+                    selectedTermDays: null
+                    selectedPaymentType: null
+                    metadata: null
+                    paymentSchedule: []
+                partiallyCanceledDuringFinalizing:
+                  summary: Partially canceled order during multi-finalization
+                  value:
+                    id: ord_456
+                    externalId: ext_order_456
+                    customerId: cust_456
+                    number: '00000002'
+                    checkoutCode: null
+                    checkoutUrl: null
+                    total: 100000
+                    totalFinalized: 50000
+                    merchantFee: 0
+                    customerFee: 2500
+                    customerFeePercentage: 2.5
+                    totalWithFees: 102500
+                    amountCanceledPrincipal: 15000
+                    amountCanceledFee: 0
+                    amountRefundedPrincipal: 0
+                    amountRefundedFee: 0
+                    status: finalizing
+                    finalizedAt: null
+                    openedAt: '2024-01-15T10:00:00.000Z'
+                    currency: usd
+                    selectedTermName: Net 30
+                    selectedTermDays: 30
+                    selectedPaymentType: ach
+                    metadata: null
+                    paymentSchedule: []
+        '400':
+          description: Bad Request - Invalid request format or validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 400
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderCancelAmountExceedsOrderTotal:
+                  summary: Order cancel amount exceeds order total
+                  value:
+                    statusCode: 400
+                    code: order-cancel-amount-exceeds-total
+                    message: Amount to cancel is greater than the order total
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderCannotBeCanceled:
+                  summary: Order cannot be canceled
+                  value:
+                    statusCode: 422
+                    code: order-cannot-be-canceled
+                    message: Order with status finalized cannot be canceled. Finalized orders cannot be canceled. To update finalized orders, use the adjustments endpoint.
+                orderCancelVirtualCardNotAllowed:
+                  summary: Virtual card order cannot be canceled
+                  value:
+                    statusCode: 422
+                    code: order-cancel-virtual-card-not-allowed
+                    message: Orders using a virtual card cannot be canceled when in open status
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Cancel a partial amount of an order
+      tags:
+      - Orders
+      operationId: partialCancelOrder
+  /v4/orders/{id}/repay-estimate:
+    get:
+      description: 'Gets an order repayment estimate by Order ID.
+
+
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).'
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      - name: Slope-Link-Token
+        in: header
+        description: The link token generated when the customer granted you access to their Slope account.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The order repayment estimate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderRepayEstimateV4ResponseDto'
+              examples:
+                repaymentEstimate:
+                  summary: Order repayment estimate
+                  value:
+                    paymentAmount: 55000
+                    paymentMethod:
+                      id: pm_123
+                      type: ach
+                      name: Business Checking
+                      last4: '1234'
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFinalized:
+                  summary: Order not finalized
+                  value:
+                    statusCode: 422
+                    code: order-not-finalized
+                    message: Order must be finalized to be repaid
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Get repayment estimate
+      tags:
+      - Orders
+      operationId: getOrderRepayEstimate
+  /v4/orders/{id}/repay-full:
+    post:
+      description: 'Fully repay an order by Order ID.
+
+
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).'
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      - name: Slope-Link-Token
+        in: header
+        description: The link token generated when the customer granted you access to their Slope account.
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OrderRepayFullV4RequestDto'
+      responses:
+        '200':
+          description: The updated repayment estimate.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderRepayEstimateV4ResponseDto'
+              examples:
+                fullRepayment:
+                  summary: Full repayment completed
+                  value:
+                    paymentAmount: 0
+                    paymentMethod:
+                      id: pm_123
+                      type: ach
+                      name: Business Checking
+                      last4: '1234'
+        '400':
+          description: Bad Request - Invalid request format or validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 400
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                earlyRepaymentCompleted:
+                  summary: Early repayment completed
+                  value:
+                    statusCode: 400
+                    code: early-repayment-completed
+                    message: The order is fully paid.
+                paymentTermCannotEarlyRepay:
+                  summary: Payment term cannot early repay
+                  value:
+                    statusCode: 400
+                    code: invalid-payment-terms
+                    message: The selected payment terms do not support early repayments.
+                earlyRepaymentUnavailable:
+                  summary: Early repayment unavailable
+                  value:
+                    statusCode: 400
+                    code: early-repayment-unavailable
+                    message: Early repayment is unavailable for this order
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFinalized:
+                  summary: Order not finalized
+                  value:
+                    statusCode: 422
+                    code: order-not-finalized
+                    message: Order must be finalized to be repaid
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Repay an order in full
+      tags:
+      - Orders
+      operationId: repayOrderFull
+  /v4/orders/{orderId}/adjustments:
+    post:
+      description: Create an adjustment (eg. refund) for an order.
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOrderAdjustmentV4RequestDto'
+      responses:
+        '201':
+          description: The created adjustment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderAdjustmentV4ResponseDto'
+              examples:
+                success:
+                  summary: Successful refund adjustment creation
+                  value:
+                    id: ordadj_123
+                    createdAt: '2024-01-15T10:30:00.000Z'
+                    type: refund
+                    orderId: ord_123
+                    externalOrderId: ext_order_123
+                    externalId: ext_ordadj_123
+                    status: succeeded
+                    refund:
+                      amount: -1000000
+                      merchantFee: -10000
+                      payoutAccountId: payoutacct_123
+        '400':
+          description: Bad Request - Invalid request format or validation errors
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 400
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderAdjustmentTypeInvalid:
+                  summary: Order adjustment type invalid
+                  value:
+                    statusCode: 400
+                    code: order-adjustment-type-invalid
+                    message: Invalid order adjustment type
+                refundDataRequired:
+                  summary: Refund data required
+                  value:
+                    statusCode: 400
+                    code: refund-data-required
+                    message: Refund data is required for refund adjustments
+                refundAmountExceedsOrderTotal:
+                  summary: Refund amount exceeds order total
+                  value:
+                    statusCode: 400
+                    code: refund-amount-exceeds-order-total
+                    message: Refund amount cannot exceed order total
+                fullRefundNotAllowed:
+                  summary: Full refund not allowed
+                  value:
+                    statusCode: 400
+                    code: full-refund-not-allowed
+                    message: 'Full refund not allowed: order has already been refunded'
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                payoutAccountNotFound:
+                  summary: Payout account not found
+                  value:
+                    statusCode: 422
+                    code: payout-account-not-found
+                    message: Payout account not found or does not belong to merchant
+                orderNotFinalizingOrFinalized:
+                  summary: Order not finalizing or finalized
+                  value:
+                    statusCode: 422
+                    code: order-not-finalizing-or-finalized
+                    message: Order must be in "finalizing" or "finalized" status before refunds can be issued
+                orderAlreadyRefunded:
+                  summary: Order already refunded
+                  value:
+                    statusCode: 422
+                    code: order-already-refunded
+                    message: Order has already been fully refunded
+                orderRefundPending:
+                  summary: Order refund pending
+                  value:
+                    statusCode: 422
+                    code: order-refund-pending
+                    message: Order has a pending refund that must be completed before issuing another refund
+                payoutAccountNotSupported:
+                  summary: Payout account not supported
+                  value:
+                    statusCode: 422
+                    code: payout-account-not-supported
+                    message: Selected payout account does not support refunds
+                partialRefundAmountInvalid:
+                  summary: Partial refund amount invalid
+                  value:
+                    statusCode: 422
+                    code: partial-refund-amount-invalid
+                    message: Partial refund amount must be greater than 0 and not exceed remaining principal
+                refundFeesChanged:
+                  summary: Refund fees changed
+                  value:
+                    statusCode: 422
+                    code: refund-fees-changed
+                    message: Refund fees have changed. Please refresh the page and try again
+                virtualCardRefundNotAllowed:
+                  summary: Virtual card refund not allowed
+                  value:
+                    statusCode: 422
+                    code: virtual-card-refund-not-allowed
+                    message: Refunds are not allowed for virtual card orders. Please work directly with the merchant to get the funds back on the card.
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      summary: Create an order adjustment
+      tags:
+      - Orders
+      operationId: createOrderAdjustment
+  /v4/orders/{orderId}/adjustments/{id}:
+    get:
+      description: Get details about an order adjustment.
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        description: The Slope order ID or the partner external order ID
+        schema:
+          type: string
+      - name: id
+        required: true
+        in: path
+        description: The Slope order adjustment ID or the partner external order adjustment ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The order adjustment
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderAdjustmentV4ResponseDto'
+              examples:
+                adjustment:
+                  summary: Retrieved order adjustment
+                  value:
+                    id: ordadj_123
+                    createdAt: '2024-01-15T10:30:00.000Z'
+                    type: refund
+                    orderId: ord_123
+                    externalOrderId: ext_order_123
+                    externalId: ext_ordadj_123
+                    status: succeeded
+                    refund:
+                      amount: -1000000
+                      merchantFee: -10000
+                      payoutAccountId: payoutacct_123
+        '404':
+          description: Not Found - The requested resource was not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 404
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderNotFound:
+                  summary: Order not found
+                  value:
+                    statusCode: 404
+                    code: order-not-found
+                    message: Order not found
+        '422':
+          description: Unprocessable Entity - Request validation failed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 422
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples:
+                orderAdjustmentNotFound:
+                  summary: Order adjustment not found
+                  value:
+                    statusCode: 422
+                    code: order-adjustment-not-found
+                    message: Order adjustment not found or does not belong to merchant
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      summary: Get an order adjustment
+      tags:
+      - Orders
+      operationId: getOrderAdjustment
+  /v4/orders/{orderId}/items:
+    get:
+      description: Get all items for a specific order.
+      parameters:
+      - name: orderId
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: List of order items.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/V4ListOrderItemsV4ResponseDto'
+      summary: List order items
+      tags:
+      - Orders
+      operationId: listOrderItems
+components:
+  schemas:
+    SchedulePaymentSharedDto:
+      type: object
+      properties:
+        number:
+          type: number
+          description: The payment number in the schedule sequence
+          example: 1
+        date:
+          format: date-time
+          type: string
+          description: The due date for this payment
+          example: '2024-02-15T00:00:00Z'
+        principal:
+          type: number
+          description: The principal amount of this payment, in cents
+          example: 95000
+        customerFee:
+          type: number
+          description: The customer fee for this payment, in cents
+          example: 500
+        amount:
+          type: number
+          description: The total amount due for this payment, in cents
+          example: 105000
+        financingFee:
+          type: number
+          description: The financing fee for this payment, in cents
+          example: 2500
+      required:
+      - number
+      - date
+      - principal
+      - customerFee
+      - amount
+      - financingFee
+    OpenOrderSharedDto:
+      type: object
+      properties:
+        selectedQuoteId:
+          type: string
+          description: The ID of the selected quote. If this quote is not the same as the selected quote ID, the call will fail
+          example: quote_123
+    QuoteV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        expiresAt:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        processingFeeTotal:
+          type: number
+        totalWithFinancingFees:
+          type: number
+        totalWithFees:
+          type: number
+        financingFeePct:
+          type: number
+        financingFeeTotal:
+          type: number
+        apr:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePaymentSharedDto'
+      required:
+      - id
+      - name
+      - expiresAt
+      - status
+      - processingFeeTotal
+      - totalWithFinancingFees
+      - totalWithFees
+      - financingFeePct
+      - financingFeeTotal
+      - apr
+      - payments
+    FinalizeOrderV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Order ID
+        externalId:
+          type: string
+          description: Unique merchant generated external ID
+        customerId:
+          type: string
+          description: Slope Customer ID, null until order is claimed by customer
+        number:
+          type: string
+          description: Unique short & friendly order number
+        checkoutCode:
+          type: string
+          description: Unique code for Slope.JS widget
+        checkoutUrl:
+          type: string
+          description: Full URL for redirect flow
+        total:
+          type: number
+          description: Order total before customer fees
+        totalFinalized:
+          type: number
+          description: Total amount finalized for multi-finalization, null if not in finalizing/finalized state
+        merchantFee:
+          type: number
+          description: Merchant fees
+        customerFee:
+          type: number
+          description: Customer fees
+        customerFeePercentage:
+          type: number
+          description: Customer fee percentage
+        totalWithFees:
+          type: number
+          description: Order total with customer fees
+        amountCanceledPrincipal:
+          type: number
+          description: Amount canceled, in cents.
+        amountCanceledFee:
+          type: number
+          description: Amount canceled, in cents.
+        status:
+          description: Current order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatus'
+        finalizedAt:
+          format: date-time
+          type: string
+          description: Time when order was finalized, null if not finalized yet
+        openedAt:
+          format: date-time
+          type: string
+          description: Time when order was opened, null if not open yet
+        currency:
+          description: Currency of the order
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        selectedTermName:
+          type: string
+          description: The selected payment term name. Null if not selected yet.
+        selectedPaymentType:
+          description: The selected payment method type. Null if not selected yet.
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+        selectedTermDays:
+          type: number
+          description: The selected payment term days. Null if not selected yet.
+        paymentSchedule:
+          description: The payment schedules for the order
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPaymentScheduleV4ResponseDto'
+        metadata:
+          type: object
+          description: Any additional metadata to attach to the order
+        amountOutstanding:
+          type: number
+          description: Current amount outstanding on the order
+        apr:
+          type: number
+          description: Annual percentage rate from the selected quote. Null if no quote is selected yet.
+        quotes:
+          description: Quotes available for this order
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteV4ResponseDto'
+        transactionId:
+          type: string
+          description: The ledger entry ID for the finalized order transaction
+      required:
+      - id
+      - number
+      - checkoutCode
+      - checkoutUrl
+      - total
+      - merchantFee
+      - customerFee
+      - customerFeePercentage
+      - totalWithFees
+      - amountCanceledPrincipal
+      - amountCanceledFee
+      - status
+      - finalizedAt
+      - openedAt
+      - currency
+      - amountOutstanding
+      - transactionId
+    OrderItemPayeeSharedDto:
+      type: object
+      properties:
+        name:
+          type: string
+        province:
+          type: string
+        country:
+          type: string
+      required:
+      - name
+      - province
+      - country
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    OrderUiType:
+      type: string
+      enum:
+      - composable
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    ComposableOrderV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Order ID
+        currency:
+          type: string
+        total:
+          type: number
+          description: The total amount of the order, in cents
+        externalId:
+          type: string
+          description: The external ID of the order, used for merchant reference. Must be unique.
+        quotes:
+          description: Available quotes for this order
+          example:
+          - id: quote_123
+            name: Net 30
+            expiresAt: '2024-01-15T10:30:00Z'
+            status: approved
+            processingFeeTotal: 500
+            totalWithFees: 105000
+            financingFeePct: 2.5
+            financingFeeTotal: 2500
+            originalTotalWithFees: 105000
+            originalFinancingFeeTotal: 2500
+            originalFinancingFeePct: 2.5
+            apr: 30
+            payments:
+            - amount: 105000
+              date: '2024-02-15'
+          type: array
+          items:
+            $ref: '#/components/schemas/ComposableQuoteV4ResponseDto'
+        selectedQuoteId:
+          type: string
+          description: The ID of the selected quote
+        iframeUrls:
+          description: Embeddable URLs
+          allOf:
+          - $ref: '#/components/schemas/IframeUrlsDto'
+      required:
+      - id
+      - currency
+      - total
+      - externalId
+      - quotes
+      - selectedQuoteId
+      - iframeUrls
+    OrderPaymentScheduleV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
+          type: string
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    V4CreateOrderAdjustmentType:
+      type: string
+      enum:
+      - refund
+      description: The type of adjustment
+    CreateOrderAdjustmentRefundV4RequestDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to refund in cents
+          example: 1000
+        payoutAccountId:
+          type: string
+          description: The payout account ID to reverse the payout from, if the payout has been sent. If not provided, the payout account set when finalizing the order will be used.
+      required:
+      - amount
+    CreateOrderAdjustmentV4RequestDto:
+      type: object
+      properties:
+        type:
+          description: The type of adjustment
+          example: refund
+          allOf:
+          - $ref: '#/components/schemas/V4CreateOrderAdjustmentType'
+        externalId:
+          type: string
+          description: The partner assigned Order Adjustment external ID
+          example: ext_ordadj_123
+        refund:
+          description: Additional data when type is refund. Required if type is refund.
+          allOf:
+          - $ref: '#/components/schemas/CreateOrderAdjustmentRefundV4RequestDto'
+      required:
+      - type
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
+    OrderEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Order ID
+        externalId:
+          type: string
+          description: Unique merchant generated external ID
+        customerId:
+          type: string
+          description: Slope Customer ID, null until order is claimed by customer
+        number:
+          type: string
+          description: Unique short & friendly order number
+        checkoutCode:
+          type: string
+          description: Unique code for Slope.JS widget
+        checkoutUrl:
+          type: string
+          description: Full URL for redirect flow
+        total:
+          type: number
+          description: Order total before customer fees
+        totalFinalized:
+          type: number
+          description: Total amount finalized for multi-finalization, null if not in finalizing/finalized state
+        merchantFee:
+          type: number
+          description: Merchant fees
+        customerFee:
+          type: number
+          description: Customer fees
+        customerFeePercentage:
+          type: number
+          description: Customer fee percentage
+        totalWithFees:
+          type: number
+          description: Order total with customer fees
+        amountCanceledPrincipal:
+          type: number
+          description: Amount canceled, in cents.
+        amountCanceledFee:
+          type: number
+          description: Amount canceled, in cents.
+        status:
+          description: Current order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatus'
+        finalizedAt:
+          format: date-time
+          type: string
+          description: Time when order was finalized, null if not finalized yet
+        openedAt:
+          format: date-time
+          type: string
+          description: Time when order was opened, null if not open yet
+        currency:
+          description: Currency of the order
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        selectedTermName:
+          type: string
+          description: The selected payment term name. Null if not selected yet.
+        selectedPaymentType:
+          description: The selected payment method type. Null if not selected yet.
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+        selectedTermDays:
+          type: number
+          description: The selected payment term days. Null if not selected yet.
+        paymentSchedule:
+          description: The payment schedules for the order
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPaymentScheduleV4ResponseDto'
+        metadata:
+          type: object
+          description: Any additional metadata to attach to the order
+        amountOutstanding:
+          type: number
+          description: Current amount outstanding on the order
+        apr:
+          type: number
+          description: Annual percentage rate from the selected quote. Null if no quote is selected yet.
+        quotes:
+          description: Quotes available for this order
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteV4ResponseDto'
+      required:
+      - id
+      - number
+      - checkoutCode
+      - checkoutUrl
+      - total
+      - merchantFee
+      - customerFee
+      - customerFeePercentage
+      - totalWithFees
+      - amountCanceledPrincipal
+      - amountCanceledFee
+      - status
+      - finalizedAt
+      - openedAt
+      - currency
+      - amountOutstanding
+    OrderStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - submitted
+      - opening
+      - open
+      - finalizing
+      - finalized
+      - unpaid
+      - partiallyPaid
+      - complete
+      - defaulted
+      - rejected
+      - canceled
+      - refunded
+      - repayment
+    OrderAdjustmentV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: The adjustment ID
+          example: ordadj_123
+        createdAt:
+          format: date-time
+          type: string
+          description: When the adjustment was created
+        type:
+          description: The type of adjustment
+          allOf:
+          - $ref: '#/components/schemas/V4OrderAdjustmentType'
+        orderId:
+          type: string
+          description: The Slope assigned order ID this adjustment is for
+          example: ord_123
+        externalOrderId:
+          type: string
+          description: The partner external order ID this adjustment is for
+          example: ext_ord_123
+        externalId:
+          type: string
+          description: The partner external order adjustment ID
+          example: ext_order_adjustment_123
+        status:
+          description: The status of the adjustment
+          allOf:
+          - $ref: '#/components/schemas/V4MerchantAdjustmentStatus'
+        refund:
+          description: Additional data if the adjustment is a refund.
+          allOf:
+          - $ref: '#/components/schemas/OrderAdjustmentRefundV4ResponseDto'
+      required:
+      - id
+      - createdAt
+      - type
+      - orderId
+      - status
+    V4OrderAdjustmentType:
+      type: string
+      enum:
+      - refund
+      - dispute
+      description: The type of adjustment
+    OrderItemType:
+      type: string
+      enum:
+      - lineItem
+      - tax
+      - shipping
+      - discount
+      - adjustment
+    V4ListOrderItemsV4ResponseDto:
+      type: object
+      properties:
+        data:
+          description: List of order items
+          items:
+            type: array
+          type: array
+        metadata:
+          description: Pagination metadata
+          allOf:
+          - $ref: '#/components/schemas/PageMetaDto'
+      required:
+      - data
+      - metadata
+    PaymentMethodV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payment method id
+        customerId:
+          type: string
+          description: Customer ID
+        displayName:
+          type: number
+          description: A friendly display name of the payment method
+        type:
+          description: The type of payment method
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+      required:
+      - id
+      - customerId
+      - displayName
+      - type
+    OrderAdjustmentRefundV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The refunded amount, in cents
+          example: -1000
+        merchantFee:
+          type: number
+          description: The reversed merchant fee, in cents
+          example: -100
+        payoutAccountId:
+          type: string
+          description: The payout account ID the adjustment was sent to if one was set
+      required:
+      - amount
+      - merchantFee
+    OrderRepayFullV4RequestDto:
+      type: object
+      properties:
+        paymentAmount:
+          type: number
+          description: The same expected paymentAmount as returned by the estimate endpoint
+      required:
+      - paymentAmount
+    IframeUrlsDto:
+      type: object
+      properties:
+        checkbox:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - checkbox
+      - expiresAt
+    OrderPartialCancelV4RequestDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to cancel, in cents.
+          example: 100
+      required:
+      - amount
+    FinalizeOrderV4RequestDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to finalize, in cents. If less than the order total, the difference will be voided. If not provided, the full order amount will be finalized.
+          example: 50000
+        metadata:
+          type: object
+          description: A JSON object of metadata to merge with existing order metadata
+          example:
+            key: value
+    CreateOrderV4RequestDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total amount of the order, in cents. Must be greater than 0
+        currency:
+          description: The currency of the order
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        externalId:
+          type: string
+          description: The external ID of the order, used for merchant reference. Must be unique.
+        items:
+          description: The line items in the order.
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateOrderItemV4RequestDto'
+        customerId:
+          type: string
+          description: 'Optional: The Slope customer ID for this order. If set, only this Slope customer will be able to access the order.'
+        contactBusinessName:
+          type: string
+          description: The customer business name
+        contactEmail:
+          type: string
+          description: The customer email address
+        contactFirstName:
+          type: string
+          description: The customer first name
+        contactLastName:
+          type: string
+          description: The customer last name
+        contactDesiredLimit:
+          type: string
+          description: The desired funding limit for the customer, in cents.
+        contactPhone:
+          type: string
+          description: The customer phone number in E.164 format.
+        billingAddress:
+          description: The billing address of the order.
+          allOf:
+          - $ref: '#/components/schemas/AddressSharedDto'
+        taxId:
+          type: string
+          description: The Federal EIN / Tax ID of this business. Must be 9 digits.
+        payoutAccountId:
+          type: string
+          description: If provided, overrides the default payout account for this order
+        payeeExternalId:
+          type: string
+          description: The external ID of the payee receiving the payout for this order
+        payeeName:
+          type: string
+          description: The name of the payee receiving the payout for this order
+        resumeUrl:
+          type: string
+          description: (Optional) The URL to redirect the user if an order is approved offline. Relevant only if an order transitions from "pending" to "approved" status.
+        cancelUrl:
+          type: string
+          description: (Optional) The URL to redirect to if the user cancels the checkout. Relevant for redirect flow only
+        successUrl:
+          type: string
+          description: (Optional) The URL to redirect to if the user completes the checkout. Relevant for redirect flow only
+        metadata:
+          type: object
+          description: Any additional metadata to attach to the order. This takes in a object
+        uiType:
+          description: The type of integration that is being used.
+          allOf:
+          - $ref: '#/components/schemas/OrderUiType'
+      required:
+      - total
+      - currency
+      - externalId
+      - items
+    OrderRepayEstimateV4ResponseDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: The order ID
+        hasPendingPayments:
+          type: boolean
+          description: Whether the order has pending payments or another repayment in progress. If true, repayment will not be allowed.
+        outstandingPrincipal:
+          type: number
+          description: The outstanding principal amount in cents
+        outstandingCustomerFees:
+          type: number
+          description: The outstanding customer fees in cents
+        outstandingBalance:
+          type: number
+          description: The total outstanding balance in cents
+        proratedDiscount:
+          type: number
+          description: 'The discount amount in cents for paying off early. NOTE: This can 0 when the order is overdue or has already received previous discounts or refunds'
+        paymentAmount:
+          type: number
+          description: The total amount to be charged now
+        paymentMethod:
+          description: The payment method used to repay the order
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodV4ResponseDto'
+      required:
+      - orderId
+      - hasPendingPayments
+      - outstandingPrincipal
+      - outstandingCustomerFees
+      - outstandingBalance
+      - proratedDiscount
+      - paymentAmount
+      - paymentMethod
+    ComposableQuoteV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        expiresAt:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        processingFeeTotal:
+          type: number
+        totalWithFinancingFees:
+          type: number
+        totalWithFees:
+          type: number
+        financingFeePct:
+          type: number
+        financingFeeTotal:
+          type: number
+        apr:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePaymentSharedDto'
+        originalTotalWithFees:
+          type: number
+        originalFinancingFeeTotal:
+          type: number
+        originalFinancingFeePct:
+          type: number
+      required:
+      - id
+      - name
+      - expiresAt
+      - status
+      - processingFeeTotal
+      - totalWithFinancingFees
+      - totalWithFees
+      - financingFeePct
+      - financingFeeTotal
+      - apr
+      - payments
+      - originalTotalWithFees
+      - originalFinancingFeeTotal
+      - originalFinancingFeePct
+    CreateOrderItemV4RequestDto:
+      type: object
+      properties:
+        quantity:
+          type: number
+          description: The quantity of this item in the order
+        unitPrice:
+          type: number
+          description: The price per single unit of this item in cents
+        price:
+          type: number
+          description: The total price of this item in cents
+        type:
+          description: The type of the order item.
+          allOf:
+          - $ref: '#/components/schemas/OrderItemType'
+        name:
+          type: string
+          description: The name of the item
+        sku:
+          type: string
+          description: The SKU aka Stock Keeping Unit number of the item
+        externalId:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        imageUrl:
+          type: string
+        metadata:
+          type: object
+        payee:
+          $ref: '#/components/schemas/OrderItemPayeeSharedDto'
+      required:
+      - quantity
+      - unitPrice
+      - price
+    V4MerchantAdjustmentStatus:
+      type: string
+      enum:
+      - pending
+      - succeeded
+      - failed
+      description: The status of the adjustment
+    PaymentMethodType:
+      type: string
+      enum:
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

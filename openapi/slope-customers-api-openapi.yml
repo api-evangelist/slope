@@ -1,0 +1,801 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Customers API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Customers
+paths:
+  /v4/customers:
+    get:
+      description: Lists all customers using pagination. The list can be filtered with query params.
+      parameters:
+      - name: email
+        required: false
+        in: query
+        description: When specified, only customers with given email are returned.
+        schema:
+          type: string
+      - name: phone
+        required: false
+        in: query
+        description: E.164 format, When specified, only customers with given phone number are returned.
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of objects to list.
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 50
+      - name: orderBy
+        required: false
+        in: query
+        description: The object attribute(s) to sort by.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - createdAt
+            - id
+      - name: order
+        required: false
+        in: query
+        description: The direction to sort by, one of `asc` or `desc`.
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+      - name: beforeCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the previous page of objects.
+        schema:
+          type: string
+      - name: afterCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the next page of objects.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The paginated list of customers.
+          content:
+            application/json:
+              schema:
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/PageMetaDto'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CustomerEntityV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: List customers
+      tags:
+      - Customers
+      operationId: listCustomers
+  /v4/customers/{customerId}/credit:
+    get:
+      description: 'Get a customer''s credit summary.
+
+
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).
+
+
+        NOTE: Do not store this endpoint response as a customer''s credit limit may change dynamically. You should not use the credit response information to determine whether to display Slope as a payment option as there are other factors that determine eligibility.'
+      parameters:
+      - name: customerId
+        required: true
+        in: path
+        description: The Slope customer ID or the partner external customer ID
+        schema:
+          type: string
+      - name: Slope-Link-Token
+        in: header
+        description: The link token generated when the customer granted you access to their Slope account.
+        schema:
+          type: string
+      - name: Slope-Access-Token
+        in: header
+        description: The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The customers current credit information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerCreditV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Get a customer's credit
+      tags:
+      - Customers
+      operationId: getCustomerCredit
+  /v4/customers/{customerId}/orders:
+    get:
+      description: Lists all orders for a single customer using pagination.
+      parameters:
+      - name: customerId
+        required: true
+        in: path
+        description: The customer ID assigned by Slope
+        schema:
+          type: string
+      - name: status
+        required: false
+        in: query
+        description: When specified, only orders with the given status are returned.
+        schema:
+          enum:
+          - pending
+          - approved
+          - submitted
+          - opening
+          - open
+          - finalizing
+          - finalized
+          - unpaid
+          - partiallyPaid
+          - complete
+          - defaulted
+          - rejected
+          - canceled
+          - refunded
+          - repayment
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of objects to list.
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 50
+      - name: orderBy
+        required: false
+        in: query
+        description: The object attribute(s) to sort by.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - createdAt
+            - id
+      - name: order
+        required: false
+        in: query
+        description: The direction to sort by, one of `asc` or `desc`.
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+      - name: beforeCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the previous page of objects.
+        schema:
+          type: string
+      - name: afterCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the next page of objects.
+        schema:
+          type: string
+      - name: Slope-Link-Token
+        in: header
+        description: The link token generated when the customer granted you access to their Slope account.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The paginated list of customers orders.
+          content:
+            application/json:
+              schema:
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/PageMetaDto'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/CustomerOrderEntityV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: List customer's orders
+      tags:
+      - Customers
+      operationId: listCustomerOrders
+  /v4/customers/{customerId}/payment-methods:
+    get:
+      description: 'Lists a customer''s payment methods.
+
+
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).'
+      parameters:
+      - name: customerId
+        required: true
+        in: path
+        description: The Slope customer ID or the partner external customer ID
+        schema:
+          type: string
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of objects to list.
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 50
+      - name: orderBy
+        required: false
+        in: query
+        description: The object attribute(s) to sort by.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - createdAt
+            - id
+      - name: order
+        required: false
+        in: query
+        description: The direction to sort by, one of `asc` or `desc`.
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+      - name: beforeCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the previous page of objects.
+        schema:
+          type: string
+      - name: afterCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the next page of objects.
+        schema:
+          type: string
+      - name: Slope-Link-Token
+        in: header
+        description: The link token generated when the customer granted you access to their Slope account.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The paginated list of payment methods.
+          content:
+            application/json:
+              schema:
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/PageMetaDto'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PaymentMethodV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: List customer's payment methods
+      tags:
+      - Customers
+      operationId: listCustomerPaymentMethods
+  /v4/customers/{id}:
+    get:
+      description: Get a specific customer by ID or external ID.
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The Slope customer ID or the partner external customer ID
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The current customer.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEntityV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Get a customer
+      tags:
+      - Customers
+      operationId: getCustomer
+  /v4/customers/validate-metadata:
+    post:
+      description: Validate metadata against merchant schema and return validation results.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ValidateMetadataV4RequestDto'
+      responses:
+        '200':
+          description: Validation results for the provided metadata.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidateMetadataV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Validate metadata
+      tags:
+      - Customers
+      operationId: validateCustomerMetadata
+components:
+  schemas:
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
+    SchedulePaymentSharedDto:
+      type: object
+      properties:
+        number:
+          type: number
+          description: The payment number in the schedule sequence
+          example: 1
+        date:
+          format: date-time
+          type: string
+          description: The due date for this payment
+          example: '2024-02-15T00:00:00Z'
+        principal:
+          type: number
+          description: The principal amount of this payment, in cents
+          example: 95000
+        customerFee:
+          type: number
+          description: The customer fee for this payment, in cents
+          example: 500
+        amount:
+          type: number
+          description: The total amount due for this payment, in cents
+          example: 105000
+        financingFee:
+          type: number
+          description: The financing fee for this payment, in cents
+          example: 2500
+      required:
+      - number
+      - date
+      - principal
+      - customerFee
+      - amount
+      - financingFee
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    QuoteV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        expiresAt:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        processingFeeTotal:
+          type: number
+        totalWithFinancingFees:
+          type: number
+        totalWithFees:
+          type: number
+        financingFeePct:
+          type: number
+        financingFeeTotal:
+          type: number
+        apr:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePaymentSharedDto'
+      required:
+      - id
+      - name
+      - expiresAt
+      - status
+      - processingFeeTotal
+      - totalWithFinancingFees
+      - totalWithFees
+      - financingFeePct
+      - financingFeeTotal
+      - apr
+      - payments
+    ValidateMetadataV4ResponseDto:
+      type: object
+      properties:
+        isValid:
+          type: boolean
+          description: Whether the metadata is valid according to the schema
+        validFields:
+          type: object
+          description: Metadata fields that passed validation
+          example:
+            joinDateRange: L1
+            customerTier: gold
+        ignoredFields:
+          description: Fields that were ignored due to schema violations or unknown fields
+          example:
+          - unknownField
+          - invalidEnumValue
+          items:
+            type: array
+          type: array
+        errors:
+          description: Validation error messages
+          example:
+          - 'lastTransactionDateRange: must be one of L1, L2, L3, L4, L5'
+          items:
+            type: array
+          type: array
+        cleanedResult:
+          type: object
+          description: The cleaned metadata that would be saved
+          example:
+            joinDateRange: L1
+            customerTier: gold
+      required:
+      - isValid
+      - validFields
+      - ignoredFields
+      - errors
+      - cleanedResult
+    OrderPaymentScheduleV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
+          type: string
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    CustomerOrderEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Order ID
+        externalId:
+          type: string
+          description: Unique merchant generated external ID
+        customerId:
+          type: string
+          description: Slope Customer ID, null until order is claimed by customer
+        number:
+          type: string
+          description: Unique short & friendly order number
+        checkoutCode:
+          type: string
+          description: Unique code for Slope.JS widget
+        checkoutUrl:
+          type: string
+          description: Full URL for redirect flow
+        total:
+          type: number
+          description: Order total before customer fees
+        totalFinalized:
+          type: number
+          description: Total amount finalized for multi-finalization, null if not in finalizing/finalized state
+        merchantFee:
+          type: number
+          description: Merchant fees
+        customerFee:
+          type: number
+          description: Customer fees
+        customerFeePercentage:
+          type: number
+          description: Customer fee percentage
+        totalWithFees:
+          type: number
+          description: Order total with customer fees
+        amountCanceledPrincipal:
+          type: number
+          description: Amount canceled, in cents.
+        amountCanceledFee:
+          type: number
+          description: Amount canceled, in cents.
+        status:
+          description: Current order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatus'
+        finalizedAt:
+          format: date-time
+          type: string
+          description: Time when order was finalized, null if not finalized yet
+        openedAt:
+          format: date-time
+          type: string
+          description: Time when order was opened, null if not open yet
+        currency:
+          description: Currency of the order
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        selectedTermName:
+          type: string
+          description: The selected payment term name. Null if not selected yet.
+        selectedPaymentType:
+          description: The selected payment method type. Null if not selected yet.
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+        selectedTermDays:
+          type: number
+          description: The selected payment term days. Null if not selected yet.
+        paymentSchedule:
+          description: The payment schedules for the order
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPaymentScheduleV4ResponseDto'
+        metadata:
+          type: object
+          description: Any additional metadata to attach to the order
+        amountOutstanding:
+          type: number
+          description: The amount outstanding for the order, 0 if fully paid
+        apr:
+          type: number
+          description: Annual percentage rate from the selected quote. Null if no quote is selected yet.
+        quotes:
+          description: Quotes available for this order
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteV4ResponseDto'
+        paymentStatus:
+          description: The payment status for the order
+          allOf:
+          - $ref: '#/components/schemas/OrderPaymentSubstatus'
+      required:
+      - id
+      - number
+      - checkoutCode
+      - checkoutUrl
+      - total
+      - merchantFee
+      - customerFee
+      - customerFeePercentage
+      - totalWithFees
+      - amountCanceledPrincipal
+      - amountCanceledFee
+      - status
+      - finalizedAt
+      - openedAt
+      - currency
+      - amountOutstanding
+      - paymentStatus
+    OrderStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - submitted
+      - opening
+      - open
+      - finalizing
+      - finalized
+      - unpaid
+      - partiallyPaid
+      - complete
+      - defaulted
+      - rejected
+      - canceled
+      - refunded
+      - repayment
+    ValidateMetadataV4RequestDto:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: Metadata object to validate against merchant schema
+          example:
+            joinDateRange: L1
+            lastTransactionDateRange: L2
+            customerTier: gold
+      required:
+      - metadata
+    CustomerCreditV4ResponseDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The customer ID
+        preApprovedAmount:
+          type: number
+          description: The total pre-approved amount that the customer is given in cents for the given currency
+        outstandingAmount:
+          type: number
+          description: The outstanding amount that the customer has utilized scoped to your merchant
+        eligible:
+          type: boolean
+          description: Whether or not the customer is pre-approved for financing
+        pending:
+          type: boolean
+          description: Whether or not the customer account is pending review or action
+        currency:
+          description: Currency, lowercase `usd` for US dollars
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        shouldApply:
+          type: boolean
+          description: Whether or not the customer should apply or re-apply for financing
+      required:
+      - customerId
+      - preApprovedAmount
+      - outstandingAmount
+      - eligible
+      - pending
+      - currency
+      - shouldApply
+    OrderPaymentSubstatus:
+      type: string
+      enum:
+      - unpaid
+      - partiallyPaid
+      - completed
+      - refunded
+      - opening
+      - open
+      - canceled
+      description: The payment status for the order
+    PaymentMethodType:
+      type: string
+      enum:
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
+    PaymentMethodV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payment method id
+        customerId:
+          type: string
+          description: Customer ID
+        displayName:
+          type: number
+          description: A friendly display name of the payment method
+        type:
+          description: The type of payment method
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+      required:
+      - id
+      - customerId
+      - displayName
+      - type
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
+    CustomerEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Customer ID
+        email:
+          type: string
+          description: Customer email
+        businessName:
+          type: string
+          description: Customer business name
+        phone:
+          type: string
+          description: Customer phone number
+        externalId:
+          type: string
+          description: External ID
+      required:
+      - id
+      - email
+      - businessName
+      - phone
+      - externalId
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

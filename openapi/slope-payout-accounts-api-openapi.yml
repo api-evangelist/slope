@@ -1,0 +1,312 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Payout Accounts API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Payout Accounts
+paths:
+  /v4/payout-accounts:
+    post:
+      description: Create a payout account. This is used to customize the payout for a merchant's orders
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePayoutAccountV4RequestDto'
+      responses:
+        '200':
+          description: The created payout account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutAccountEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Create a payout account
+      tags:
+      - Payout Accounts
+      operationId: createPayoutAccount
+    get:
+      description: List payout accounts
+      parameters:
+      - name: limit
+        required: false
+        in: query
+        description: The maximum number of objects to list.
+        schema:
+          type: integer
+          minimum: 0
+          maximum: 50
+      - name: orderBy
+        required: false
+        in: query
+        description: The object attribute(s) to sort by.
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - createdAt
+            - id
+      - name: order
+        required: false
+        in: query
+        description: The direction to sort by, one of `asc` or `desc`.
+        schema:
+          enum:
+          - asc
+          - desc
+          type: string
+      - name: beforeCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the previous page of objects.
+        schema:
+          type: string
+      - name: afterCursor
+        required: false
+        in: query
+        description: The cursor used to fetch the next page of objects.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The paginated list of payout accounts.
+          content:
+            application/json:
+              schema:
+                properties:
+                  metadata:
+                    $ref: '#/components/schemas/PageMetaDto'
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/PayoutAccountEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: List payout accounts
+      tags:
+      - Payout Accounts
+      operationId: listPayoutAccounts
+  /v4/payout-accounts/{id}:
+    patch:
+      description: Update a payout account with externalId
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdatePayoutAccountV4RequestDto'
+      responses:
+        '200':
+          description: The updated payout account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutAccountEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Update a payout account
+      tags:
+      - Payout Accounts
+      operationId: updatePayoutAccount
+    get:
+      description: Get a payout account with id or externalId
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The found payout account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutAccountEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Get a payout account
+      tags:
+      - Payout Accounts
+      operationId: getPayoutAccount
+    delete:
+      description: Delete a payout account with an id
+      parameters:
+      - name: id
+        required: true
+        in: path
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The deleted payout account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PayoutAccountEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Delete a payout account
+      tags:
+      - Payout Accounts
+      operationId: deletePayoutAccount
+components:
+  schemas:
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    PayoutAccountType:
+      type: string
+      enum:
+      - checking
+      - savings
+      description: Account Type
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    UpdatePayoutAccountV4RequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name
+        isDefaultAccount:
+          type: boolean
+          description: Is default account
+    CreatePayoutAccountV4RequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: A nickname for this bank account
+        businessName:
+          type: string
+          description: The business name associated with the bank account
+        email:
+          type: string
+          description: The email address associated with the bank account for notifications
+        customerId:
+          type: string
+          description: The customer ID associated with the bank account. Only to be used if the payout account should be associated with a customer.
+        routingNumber:
+          type: string
+          description: Bank routing number
+        address:
+          description: Address
+          allOf:
+          - $ref: '#/components/schemas/AddressSharedDto'
+        accountNumber:
+          type: string
+          description: Bank account number
+        taxId:
+          type: string
+          description: Federal Tax ID
+        isDefaultAccount:
+          type: boolean
+          description: Whether the account is the default used for payouts. Defaults to false
+        accountType:
+          description: Account Type
+          allOf:
+          - $ref: '#/components/schemas/PayoutAccountType'
+        externalId:
+          type: string
+          description: External ID for your reference
+      required:
+      - name
+      - routingNumber
+      - address
+      - accountNumber
+      - taxId
+      - accountType
+    PayoutAccountEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payout account ID
+        name:
+          type: string
+          description: Name
+        externalId:
+          type: string
+          description: External ID
+        isDefaultAccount:
+          type: boolean
+          description: Whether this is the default account for the merchant
+        createdAt:
+          format: date-time
+          type: string
+          description: Timestamp of when account was create
+        updatedAt:
+          format: date-time
+          type: string
+          description: Timestamp of when account was last updated
+      required:
+      - id
+      - name
+      - isDefaultAccount
+      - createdAt
+      - updatedAt
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

@@ -1,0 +1,478 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Prescreens API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Prescreens
+paths:
+  /v4/prescreens:
+    post:
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePrescreenV4RequestDto'
+      responses:
+        '200':
+          description: The created prescreen.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrescreenEntityV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '409':
+          description: Conflict - Request conflicts with current state of the resource
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 409
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Create a prescreen
+      tags:
+      - Prescreens
+      operationId: createPrescreen
+    get:
+      description: Get all prescreens by customer ID, most recent prescreen first.
+      parameters:
+      - name: customerId
+        required: true
+        in: query
+        description: The customer ID to get prescreens for. The external customer ID is also accepted.
+        schema:
+          example: partner-customer-1234
+          type: string
+      responses:
+        '200':
+          description: The prescreens for the customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerPrescreensV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Get prescreens by customer ID
+      tags:
+      - Prescreens
+      operationId: listPrescreens
+  /v4/prescreens/{id}:
+    get:
+      description: Get a specific prescreen by ID.
+      parameters:
+      - name: id
+        required: true
+        in: path
+        description: The prescreen ID.
+        schema:
+          type: string
+      responses:
+        '200':
+          description: The prescreen
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PrescreenEntityV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '404':
+          description: Returned when the prescreen ID is not found
+        '500':
+          description: Returned when an internal server error occurs
+      security:
+      - apiKey: []
+      summary: Get a prescreen
+      tags:
+      - Prescreens
+      operationId: getPrescreen
+components:
+  schemas:
+    PrescreenSharedDto:
+      type: object
+      properties:
+        code:
+          type: string
+          description: The code of the reason
+          example: unmatched-kyb
+        message:
+          type: string
+          description: The message of the reason
+          example: KYB datat mismatch
+      required:
+      - code
+      - message
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    PrescreenStatus:
+      type: string
+      enum:
+      - pending
+      - succeeded
+      - failed
+      description: Status of the prescreen
+    PrescreenMetadataSharedDto:
+      type: object
+      properties:
+        yearEstablished:
+          type: number
+          description: Year of establishment of business
+          example: 2015
+        expectedMonthlySpendingCents:
+          type: number
+          description: Expected monthly spending in cents
+          example: 50000
+        joinDateRangeDays:
+          description: Join date range level
+          example: L5
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        lastTransactionAmountRange:
+          description: Last transaction amount range level
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        lastTransactionDateRange:
+          description: Last transaction date range
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        totalSpending90DaysRange:
+          description: Total spending in the last 90 days level
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        totalSpending365DaysRange:
+          description: Total spending in the last 365 days level
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        totalPurchases90DaysRange:
+          description: Total purchases count in the last 90 days
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        totalPurchases365DaysRange:
+          description: Total purchases count in the last 365 days
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        growthLevel:
+          description: Growth level
+          example: L7
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        smbNotVerified:
+          type: boolean
+          description: SMB not verified status
+          example: true
+        highValueCustomer:
+          type: boolean
+          description: High value customer status
+          example: false
+        purchasingDemandForecast6MonthsCents:
+          type: number
+          description: Purchasing demand forecast for the next 6 months in cents
+          example: 180000
+        buyerRiskLevelRange:
+          description: Buyer's risk level
+          example: L4
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        buyerStickinessRange:
+          description: Buyer stickiness/loyalty
+          example: L8
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        buyerPurchasingStabilityRange:
+          description: Buyer purchasing stability
+          example: L6
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        avgPurchaseIntervals365Range:
+          description: Average purchase intervals in the last 365 days
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        avgPurchaseIntervals730Range:
+          description: Average purchase intervals in the last 730 days
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        coefficientPurchaseIntervals365Range:
+          description: Coefficient of variation of purchase intervals in the last 365 days
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        coefficientPurchaseIntervals730Range:
+          description: Coefficient of variation of purchase intervals in the last 730 days
+          example: L3
+          allOf:
+          - $ref: '#/components/schemas/PrescreenLevelRange'
+        externalTransactionId:
+          type: string
+          description: The partner's transaction ID used to tie a prescreen to a specific transaction
+          example: '1234567890'
+        purchasingDemandFor6m:
+          type: string
+          description: A temporary field in order to bypass field validation. This field is expected to be removed.
+          example: C
+    CreatePrescreenV4RequestDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: The partner's unique ID of the customer
+          example: partner-customer-123
+        annualRevenueAmount:
+          type: number
+          description: Last 12 months revenue, in cents
+          example: 1000000
+        businessName:
+          type: string
+          description: The name of the business
+          example: Acme, Inc.
+        doingBusinessAs:
+          type: string
+          description: The customer's doing business as (DBA) name
+          example: Acme Storefront
+        address:
+          $ref: '#/components/schemas/AddressSharedDto'
+        email:
+          type: string
+          description: The email address of the business
+          example: info@acme.com
+        taxId:
+          type: string
+          description: The US Tax ID of the business (optional)
+          example: '123456789'
+        website:
+          type: string
+          description: The website of the business. If provided, must begin with http:// or https://
+          example: https://slopepay.com
+        phone:
+          type: string
+          description: The phone number of the business
+          example: '14155551234'
+        entityType:
+          description: The type of the business entity
+          example: LLC
+          allOf:
+          - $ref: '#/components/schemas/BusinessEntityType'
+        desiredLimit:
+          type: number
+          description: The desired funding limit for the customer, in cents.
+          example: 100000
+        metadata:
+          description: Additional metadata about the customer for prescreen evaluation
+          allOf:
+          - $ref: '#/components/schemas/PrescreenMetadataSharedDto'
+      required:
+      - externalId
+      - annualRevenueAmount
+      - businessName
+      - address
+      - email
+    CustomerPrescreensV4ResponseDto:
+      type: object
+      properties:
+        prescreens:
+          description: An array of prescreens for a customer
+          example:
+          - id: prescreen_xyz789
+            customerId: cust_def456
+            status: succeeded
+            approvalLikelihood: high
+            limitCents: 500000
+            bestAprPct: 15.99
+            reasons:
+            - code: good_credit_history
+              description: Customer has a strong credit history.
+            expiresAt: '2024-12-31T23:59:59.000Z'
+          - id: prescreen_uvw456
+            customerId: cust_def456
+            status: pending
+            approvalLikelihood: null
+            limitCents: null
+            bestAprPct: null
+            reasons: []
+            expiresAt: null
+          type: array
+          items:
+            $ref: '#/components/schemas/PrescreenEntityV4ResponseDto'
+      required:
+      - prescreens
+    PrescreenEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: ID of the prescreen
+          example: prescreen_123
+        customerId:
+          type: string
+          description: Slope Customer ID
+          example: customer_123
+        status:
+          description: Status of the prescreen
+          example: pending
+          allOf:
+          - $ref: '#/components/schemas/PrescreenStatus'
+        approvalLikelihood:
+          type: string
+          description: 'Likelihood of approval: high, med, low'
+          example: high
+        limitCents:
+          type: number
+          description: Evaluated limit of the prescreen, in cents
+          example: 100000
+        bestAprPct:
+          type: number
+          description: Best APR percentage, e.g 12.99
+          example: 12.99
+        reasons:
+          description: Reasons for the prescreen results
+          type: array
+          items:
+            $ref: '#/components/schemas/PrescreenSharedDto'
+        expiresAt:
+          format: date-time
+          type: string
+          description: When the prescreen expires, e.g 2025-01-01T00:00:00.000Z
+          example: '2025-01-01T00:00:00.000Z'
+        metadata:
+          description: Prescreen metadata provided by merchant
+          allOf:
+          - $ref: '#/components/schemas/PrescreenMetadataSharedDto'
+      required:
+      - id
+      - customerId
+      - status
+    PrescreenLevelRange:
+      type: string
+      enum:
+      - NA
+      - L0
+      - L1
+      - L2
+      - L3
+      - L4
+      - L5
+      - L6
+      - L7
+      - L8
+      - L9
+      - L10
+      - L11
+      description: Join date range level
+    BusinessEntityType:
+      type: string
+      enum:
+      - LLC
+      - S Corp
+      - Corporation
+      - Partnership
+      - Sole Proprietorship
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

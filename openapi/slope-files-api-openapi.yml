@@ -1,0 +1,109 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Files API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Files
+paths:
+  /v4/files/import:
+    post:
+      description: Import a file from a URL. The file will be downloaded and optionally attached to an order.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImportFileV4RequestDto'
+      responses:
+        '201':
+          description: The created order.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Import a file
+      tags:
+      - Files
+      operationId: importFile
+components:
+  schemas:
+    V4FilePurpose:
+      type: string
+      enum:
+      - order_invoice
+      description: The purpose of the file.
+    FileImportStatus:
+      type: string
+      enum:
+      - pending
+      - succeeded
+      - failed
+    ImportFileV4RequestDto:
+      type: object
+      properties:
+        url:
+          type: string
+        orderId:
+          type: string
+          description: The ID of the order to which the file will be attached.
+        purpose:
+          description: The purpose of the file.
+          allOf:
+          - $ref: '#/components/schemas/V4FilePurpose'
+        name:
+          type: string
+          description: The name of the file. If not provided, the name of the file will be parsed from the URL path or Content-Disposition header..
+        mimeType:
+          type: string
+          description: The MIME type of the file. If not provided, the MIME type will be parsed from the URL response header.
+        expectedMd5:
+          type: string
+          description: The expected MD5 hash of the file. If provided, the file will be validated against the expected MD5 hash and not imported if the hash does not match.
+        expectedSizeBytes:
+          type: number
+          description: The expected number of bytes to be downloaded. If provided, the file will be validated against the expected size and not imported if the size does not match.
+      required:
+      - url
+      - orderId
+      - purpose
+    FileV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        importUrl:
+          type: string
+          description: The URL the file was imported from.
+        importStatus:
+          allOf:
+          - $ref: '#/components/schemas/FileImportStatus'
+        orderId:
+          type: string
+        purpose:
+          type: string
+      required:
+      - id
+      - importStatus
+      - orderId
+      - purpose
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

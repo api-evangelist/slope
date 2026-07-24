@@ -1,0 +1,628 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Simulation API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Simulation
+paths:
+  /v4/simulation/approve-order:
+    post:
+      description: (Sandbox Only) Approve a pending order for testing purposes
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ApproveOrderV4RequestDto'
+      responses:
+        '200':
+          description: The approved order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Approve a pending order
+      tags:
+      - Simulation
+      operationId: simulateApproveOrder
+  /v4/simulation/close-customer-account:
+    post:
+      description: (Sandbox Only) Close a customer account for testing purposes. This allows re-using the same email for signup/application flows.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CloseCustomerAccountV4RequestDto'
+      responses:
+        '200':
+          description: The customer account was successfully closed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CloseCustomerAccountV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Close a customer account
+      tags:
+      - Simulation
+      operationId: simulateCloseCustomerAccount
+  /v4/simulation/customer:
+    post:
+      description: (Sandbox Only) Creates a test customer with a user password for the simulating the checkout process
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCustomerV4RequestDto'
+      responses:
+        '200':
+          description: The created test customer along with the email and password for login.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCustomerV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Create a testing customer
+      tags:
+      - Simulation
+      operationId: simulateCreateCustomer
+  /v4/simulation/customer/eligibility:
+    post:
+      description: (Sandbox Only) Updates a customer eligibility status and credit limit.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateCustomerEligibilityV4RequestDto'
+      responses:
+        '200':
+          description: The updated customer
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomerEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Update a customer eligibility
+      tags:
+      - Simulation
+      operationId: simulateUpdateCustomerEligibility
+  /v4/simulation/payment-methods/bank-account:
+    post:
+      description: (Sandbox Only) Create a bank account payment method for testing purposes
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationCreateBankAccountV4RequestDto'
+      responses:
+        '200':
+          description: The created payment method
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Create a test bank account
+      tags:
+      - Simulation
+      operationId: simulateCreateBankAccount
+  /v4/simulation/payment-methods/card:
+    post:
+      description: (Sandbox Only) Create a card payment method for testing purposes
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SimulationCreateCardV4RequestDto'
+      responses:
+        '200':
+          description: The created payment method
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Create a test card
+      tags:
+      - Simulation
+      operationId: simulateCreateCard
+  /v4/simulation/reject-order:
+    post:
+      description: (Sandbox Only) Reject an order for testing purposes. This is a terminal state.
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RejectOrderV4RequestDto'
+      responses:
+        '200':
+          description: The rejected order
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderEntityV4ResponseDto'
+      security:
+      - apiKey: []
+      summary: Reject an order
+      tags:
+      - Simulation
+      operationId: simulateRejectOrder
+components:
+  schemas:
+    SchedulePaymentSharedDto:
+      type: object
+      properties:
+        number:
+          type: number
+          description: The payment number in the schedule sequence
+          example: 1
+        date:
+          format: date-time
+          type: string
+          description: The due date for this payment
+          example: '2024-02-15T00:00:00Z'
+        principal:
+          type: number
+          description: The principal amount of this payment, in cents
+          example: 95000
+        customerFee:
+          type: number
+          description: The customer fee for this payment, in cents
+          example: 500
+        amount:
+          type: number
+          description: The total amount due for this payment, in cents
+          example: 105000
+        financingFee:
+          type: number
+          description: The financing fee for this payment, in cents
+          example: 2500
+      required:
+      - number
+      - date
+      - principal
+      - customerFee
+      - amount
+      - financingFee
+    QuoteV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        expiresAt:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        processingFeeTotal:
+          type: number
+        totalWithFinancingFees:
+          type: number
+        totalWithFees:
+          type: number
+        financingFeePct:
+          type: number
+        financingFeeTotal:
+          type: number
+        apr:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePaymentSharedDto'
+      required:
+      - id
+      - name
+      - expiresAt
+      - status
+      - processingFeeTotal
+      - totalWithFinancingFees
+      - totalWithFees
+      - financingFeePct
+      - financingFeeTotal
+      - apr
+      - payments
+    ApproveOrderV4RequestDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: The ID of the order to approve
+      required:
+      - orderId
+    CreateCustomerV4ResponseDto:
+      type: object
+      properties:
+        email:
+          type: string
+          description: The email address of the user
+        password:
+          type: string
+          description: The new password for the user
+        customerId:
+          type: string
+          description: The customerId for this user
+        linkToken:
+          type: string
+          description: The link token for the user if `isLinked` is true
+      required:
+      - email
+      - password
+      - customerId
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    OrderPaymentScheduleV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
+          type: string
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    CloseCustomerAccountV4ResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the operation
+        customerId:
+          type: string
+          description: ID of the closed customer account
+        email:
+          type: string
+          description: Email of the closed customer account
+      required:
+      - status
+      - customerId
+      - email
+    CloseCustomerAccountV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer account to close
+        email:
+          type: string
+          description: The email of the customer account to close
+    CreateCustomerV4RequestDto:
+      type: object
+      properties:
+        shortcutTypes:
+          type: array
+          description: The list of shortcuts to use for this customer. By default a blank customer without any limits is created.
+          items:
+            type: string
+            enum:
+            - skip-pre_qualify
+            - skip-compliance
+            - skip-banking
+            - skip-consumer_credit
+            - ineligible
+        phone:
+          type: string
+          description: The phone number of the customer. By default, "+16175551212" is used.
+        businessName:
+          type: string
+          description: The phone number of the customer. By default, "Slope Demo Customer" is used.
+        address:
+          description: The address of the customer. A default address is used if not provided.
+          allOf:
+          - $ref: '#/components/schemas/AddressSharedDto'
+        taxId:
+          type: string
+          description: The taxId of the customer, by default a random number is used.
+        password:
+          type: string
+          description: A customized password for this user. By default, "Pass1234" is used
+        isLinked:
+          type: boolean
+          description: If true, the customer will be linked to the merchant.
+        hasMasterLoanAgreement:
+          type: boolean
+          description: If true, the customer will be created with an active master loan agreement.
+        hasPreferences:
+          type: boolean
+          description: If true, the customer will be created with preferred terms and repayment method.
+        email:
+          type: string
+          description: The email address for the customer. If not provided, a demo email will be generated.
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
+    OrderEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Order ID
+        externalId:
+          type: string
+          description: Unique merchant generated external ID
+        customerId:
+          type: string
+          description: Slope Customer ID, null until order is claimed by customer
+        number:
+          type: string
+          description: Unique short & friendly order number
+        checkoutCode:
+          type: string
+          description: Unique code for Slope.JS widget
+        checkoutUrl:
+          type: string
+          description: Full URL for redirect flow
+        total:
+          type: number
+          description: Order total before customer fees
+        totalFinalized:
+          type: number
+          description: Total amount finalized for multi-finalization, null if not in finalizing/finalized state
+        merchantFee:
+          type: number
+          description: Merchant fees
+        customerFee:
+          type: number
+          description: Customer fees
+        customerFeePercentage:
+          type: number
+          description: Customer fee percentage
+        totalWithFees:
+          type: number
+          description: Order total with customer fees
+        amountCanceledPrincipal:
+          type: number
+          description: Amount canceled, in cents.
+        amountCanceledFee:
+          type: number
+          description: Amount canceled, in cents.
+        status:
+          description: Current order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatus'
+        finalizedAt:
+          format: date-time
+          type: string
+          description: Time when order was finalized, null if not finalized yet
+        openedAt:
+          format: date-time
+          type: string
+          description: Time when order was opened, null if not open yet
+        currency:
+          description: Currency of the order
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        selectedTermName:
+          type: string
+          description: The selected payment term name. Null if not selected yet.
+        selectedPaymentType:
+          description: The selected payment method type. Null if not selected yet.
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+        selectedTermDays:
+          type: number
+          description: The selected payment term days. Null if not selected yet.
+        paymentSchedule:
+          description: The payment schedules for the order
+          type: array
+          items:
+            $ref: '#/components/schemas/OrderPaymentScheduleV4ResponseDto'
+        metadata:
+          type: object
+          description: Any additional metadata to attach to the order
+        amountOutstanding:
+          type: number
+          description: Current amount outstanding on the order
+        apr:
+          type: number
+          description: Annual percentage rate from the selected quote. Null if no quote is selected yet.
+        quotes:
+          description: Quotes available for this order
+          type: array
+          items:
+            $ref: '#/components/schemas/QuoteV4ResponseDto'
+      required:
+      - id
+      - number
+      - checkoutCode
+      - checkoutUrl
+      - total
+      - merchantFee
+      - customerFee
+      - customerFeePercentage
+      - totalWithFees
+      - amountCanceledPrincipal
+      - amountCanceledFee
+      - status
+      - finalizedAt
+      - openedAt
+      - currency
+      - amountOutstanding
+    OrderStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - submitted
+      - opening
+      - open
+      - finalizing
+      - finalized
+      - unpaid
+      - partiallyPaid
+      - complete
+      - defaulted
+      - rejected
+      - canceled
+      - refunded
+      - repayment
+    SimulationCreateBankAccountV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer to create the bank account for
+      required:
+      - customerId
+    SimulationCreateCardV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer to create the card for
+        cardNumber:
+          type: string
+          description: The card number
+          default: '4242424242424242'
+        cardExpirationMonth:
+          type: string
+          description: The card expiration date
+          default: '01'
+        cardExpirationYear:
+          type: string
+          description: The card expiration year
+          default: '2050'
+      required:
+      - customerId
+    CustomerEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Customer ID
+        email:
+          type: string
+          description: Customer email
+        businessName:
+          type: string
+          description: Customer business name
+        phone:
+          type: string
+          description: Customer phone number
+        externalId:
+          type: string
+          description: External ID
+      required:
+      - id
+      - email
+      - businessName
+      - phone
+      - externalId
+    RejectOrderV4RequestDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: The Slope ID or external ID of the order to reject
+      required:
+      - orderId
+    UpdateCustomerEligibilityV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The customer ID to update.
+        complianceCompleted:
+          type: boolean
+          description: Whether the customer has completed compliance.
+        eligible:
+          type: boolean
+          description: The eligibility status to set for the customer.
+        creditLimit:
+          type: number
+          description: The credit limit to set for the customer. Must be 0 if `eligible` is false.
+      required:
+      - customerId
+      - complianceCompleted
+      - eligible
+      - creditLimit
+    PaymentMethodType:
+      type: string
+      enum:
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/

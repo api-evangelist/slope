@@ -1,0 +1,184 @@
+openapi: 3.0.0
+info:
+  title: Slope v4 Auth Persons API
+  description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
+  version: 1.0.0
+  contact:
+    name: Slope Developer Support
+    url: https://developers.slopepay.com/
+    email: support@slopepay.com
+servers:
+- url: https://api.slopepay.com
+  description: production
+- url: https://api.sandbox.slopepay.com
+  description: sandbox
+tags:
+- name: Persons
+paths:
+  /v4/customers/{customerId}/persons:
+    post:
+      description: Creates one or more persons for the given customer. Insert-only; existing persons cannot be updated. Only available before compliance is completed.
+      parameters:
+      - name: customerId
+        required: true
+        in: path
+        description: The Slope customer ID or the partner external customer ID
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreatePersonsV4RequestDto'
+      responses:
+        '200':
+          description: The created persons.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PersonV4ResponseDto'
+        '400':
+          description: Returned when improperly formatted or missing fields in request body
+        '401':
+          description: Returned when improper keys or headers are used in the request
+        '403':
+          description: Returned when the caller is not authorized to access the resource
+        '404':
+          description: Returned when the customer is not found
+        '500':
+          description: Internal Server Error - An unexpected error occurred
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  statusCode:
+                    type: integer
+                    description: HTTP status code
+                    example: 500
+                  code:
+                    type: string
+                    description: Unique error code identifying the specific error type
+                  message:
+                    type: string
+                    description: Human-readable error message explaining what went wrong
+                required:
+                - statusCode
+                - code
+                - message
+                additionalProperties: false
+              examples: {}
+      security:
+      - apiKey: []
+      summary: Create persons
+      tags:
+      - Persons
+      operationId: createPersons
+components:
+  schemas:
+    PersonV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        customerId:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dob:
+          type: string
+        isApplicant:
+          type: boolean
+        isOwner:
+          type: boolean
+        isController:
+          type: boolean
+        title:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressSharedDto'
+      required:
+      - id
+      - customerId
+      - isApplicant
+      - isOwner
+      - isController
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    CreatePersonV4RequestDto:
+      type: object
+      properties:
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressSharedDto'
+        dob:
+          type: string
+          description: Date of birth in ISO 8601 format (YYYY-MM-DD)
+        isApplicant:
+          type: boolean
+        isOwner:
+          type: boolean
+        isController:
+          type: boolean
+        title:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+          description: Phone number in E.164 format
+    CreatePersonsV4RequestDto:
+      type: object
+      properties:
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatePersonV4RequestDto'
+      required:
+      - persons
+  securitySchemes:
+    apiKey:
+      type: http
+      scheme: basic
+      description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+externalDocs:
+  description: Slope Developer Hub
+  url: https://developers.slopepay.com/
