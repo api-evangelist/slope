@@ -1,0 +1,15 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Slope v4 API
+  version: 1.0.0
+extends: openapi/slope-v4-openapi.json
+actions:
+- target: $.info
+  update:
+    x-apievangelist-enriched: '2026-07-21'
+    x-apievangelist-source: https://developers.slopepay.com/
+    x-product-category: embedded-credit-bnpl
+- target: $.paths[*][*]
+  description: Flag every write operation as supporting an idempotency-key header (developers.slopepay.com/docs/idempotency-1).
+  update:
+    x-idempotency: idempotency-key header supported on all POST operations

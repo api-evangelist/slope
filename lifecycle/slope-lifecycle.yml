@@ -1,0 +1,23 @@
+generated: '2026-07-21'
+method: searched
+versioning:
+  scheme: uri-path
+  current: v4
+  previous: v3
+  docs: https://developers.slopepay.com/docs/rfc-v4-api
+deprecation:
+  migration_guide: https://developers.slopepay.com/docs/rfc-v4-api
+  note: V3 API superseded by V4 (global Slope customer accounts). No dated Sunset date or RFC 8594 Sunset/Deprecation
+    headers documented.
+  sunset_header: false
+status_page: https://status.slopepay.com
+order_lifecycle:
+  docs: https://developers.slopepay.com/docs/order-statuses-and-lifecycle
+  states:
+  - approved
+  - open
+  - finalized
+  - canceled
+  intermediary:
+  - opening
+  - finalizing

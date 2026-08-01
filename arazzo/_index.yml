@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: derived
+workflows:
+- file: slope-create-order-and-finalize.yml
+  workflowId: createOrderAndFinalize
+  title: Create a Slope order and finalize it
+  summary: Create an order, wait for the customer to open it, then finalize for payout.
+- file: slope-refund-order.yml
+  workflowId: refundOrder
+  title: Refund a finalized Slope order
+  summary: Create a refund adjustment against an order and read it back.
+- file: slope-repay-order.yml
+  workflowId: repayOrder
+  title: Estimate and repay a Slope order
+  summary: Get a repayment estimate then fully repay an order (requires Slope-Link-Token).
+- file: slope-sandbox-approve-order.yml
+  workflowId: sandboxApproveOrder
+  title: Simulate an approved order in the sandbox
+  summary: Create a sandbox test customer, set eligibility, create an order, and approve it.

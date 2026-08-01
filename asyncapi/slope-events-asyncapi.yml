@@ -1,0 +1,96 @@
+asyncapi: 2.6.0
+info:
+  title: Slope Webhook Events
+  version: v4
+  description: Generated event surface for Slope webhooks. Payload schemas documented at https://developers.slopepay.com/docs/schema.
+    Signed via the Slope-Signature header (HMAC-SHA256).
+x-apievangelist:
+  generated: '2026-07-21'
+  method: generated
+  source: https://developers.slopepay.com/docs/event-types
+defaultContentType: application/json
+channels:
+  so.slope.customer.created:
+    subscribe:
+      summary: New customer is created
+      message:
+        name: so_slope_customer_created
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.customer.updated:
+    subscribe:
+      summary: Customer object updated by you or Slope (e.g. limit or overdue order count change)
+      message:
+        name: so_slope_customer_updated
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.customer.authorized:
+    subscribe:
+      summary: Customer authenticated into the Slope widget and authorized access to the merchant
+      message:
+        name: so_slope_customer_authorized
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.customer.authorization_revoked:
+    subscribe:
+      summary: Customer closed their account and unauthorized access to the merchant
+      message:
+        name: so_slope_customer_authorization_revoked
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.customer.application_submitted:
+    subscribe:
+      summary: Customer submitted an application to Slope
+      message:
+        name: so_slope_customer_application_submitted
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.customer.credit_decision_reached:
+    subscribe:
+      summary: Customer approved or rejected for a limit
+      message:
+        name: so_slope_customer_credit_decision_reached
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.prescreen.ready:
+    subscribe:
+      summary: Prescreen succeeded and the result is ready
+      message:
+        name: so_slope_prescreen_ready
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.order.opened:
+    subscribe:
+      summary: An order reached the open state
+      message:
+        name: so_slope_order_opened
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.order.finalizing:
+    subscribe:
+      summary: An order triggered finalize and is in the finalizing state
+      message:
+        name: so_slope_order_finalizing
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.order.finalized:
+    subscribe:
+      summary: An order reached the finalized state
+      message:
+        name: so_slope_order_finalized
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.order.adjustment.created:
+    subscribe:
+      summary: An order adjustment (refund) has been created
+      message:
+        name: so_slope_order_adjustment_created
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema
+  so.slope.transactions.updated:
+    subscribe:
+      summary: A repayment happened on an order
+      message:
+        name: so_slope_transactions_updated
+        contentType: application/json
+        x-schema-docs: https://developers.slopepay.com/docs/schema

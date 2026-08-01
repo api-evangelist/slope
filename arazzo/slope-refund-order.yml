@@ -1,0 +1,42 @@
+arazzo: 1.0.1
+info:
+  title: Refund a finalized Slope order
+  version: 1.0.0
+  summary: Create a refund adjustment against an order and read it back.
+sourceDescriptions:
+- name: slope
+  url: ../openapi/slope-v4-openapi.json
+  type: openapi
+workflows:
+- workflowId: refundOrder
+  summary: Create a refund adjustment against an order and read it back.
+  inputs:
+    type: object
+    properties:
+      orderId:
+        type: string
+      amount:
+        type: integer
+  steps:
+  - stepId: createOrderAdjustment
+    operationId: createOrderAdjustment
+    parameters:
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    requestBody:
+      contentType: application/json
+      payload:
+        type: refund
+        amount: $inputs.amount
+    outputs:
+      adjustmentId: $response.body#/id
+  - stepId: getOrderAdjustment
+    operationId: getOrderAdjustment
+    parameters:
+    - name: orderId
+      in: path
+      value: $inputs.orderId
+    - name: id
+      in: path
+      value: $steps.createOrderAdjustment.outputs.adjustmentId

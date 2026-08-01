@@ -1,0 +1,25 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/slope-v4-openapi.json
+standards:
+- id: oauth2
+  conforms: false
+  evidence: No oauth2 securityScheme; API uses HTTP Basic public/secret key pairs.
+- id: http-basic-auth
+  conforms: true
+  evidence: securitySchemes.apiKey type http scheme basic (RFC 7617).
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: Errors use a custom {statusCode,message,error} envelope, not application/problem+json.
+- id: idempotency-key
+  conforms: true
+  evidence: idempotency-key header documented for all POST endpoints; duplicate returns HTTP 409.
+- id: cursor-pagination
+  conforms: true
+  evidence: List endpoints use beforeCursor/afterCursor cursor pagination with metadata.total.
+- id: webhooks-hmac-signatures
+  conforms: true
+  evidence: Webhooks signed via Slope-Signature header (timestamp + HMAC-SHA256).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No documented Sunset/Deprecation header support.

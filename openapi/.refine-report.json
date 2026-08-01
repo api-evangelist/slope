@@ -1,0 +1,32 @@
+{
+  "provider": "slope",
+  "sources": [
+    "slope-auth-api-openapi.yml",
+    "slope-customers-api-openapi.yml",
+    "slope-files-api-openapi.yml",
+    "slope-orders-api-openapi.yml",
+    "slope-payout-accounts-api-openapi.yml",
+    "slope-persons-api-openapi.yml",
+    "slope-prescreens-api-openapi.yml",
+    "slope-simulation-api-openapi.yml",
+    "slope-transactions-api-openapi.yml",
+    "slope-user-links-api-openapi.yml"
+  ],
+  "outputs": [
+    "slope-auth-api-openapi.yml",
+    "slope-customers-api-openapi.yml",
+    "slope-files-api-openapi.yml",
+    "slope-orders-api-openapi.yml",
+    "slope-payout-accounts-api-openapi.yml",
+    "slope-persons-api-openapi.yml",
+    "slope-prescreens-api-openapi.yml",
+    "slope-simulation-api-openapi.yml",
+    "slope-transactions-api-openapi.yml",
+    "slope-user-links-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

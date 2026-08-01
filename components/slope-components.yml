@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/slope-checkout-js
+families:
+- family: Slope.js Checkout
+  kind: embedded-widget
+  description: Frontend JavaScript SDK that renders the Slope checkout modal/iframe on behalf of a customer.
+    Pre-loads an iframe on page load for instant modal open; driven by the checkoutCode returned from
+    POST /v4/orders.
+  docs: https://developers.slopepay.com/docs/slope-checkout-js
+- family: Low-code redirect flow
+  kind: hosted-redirect
+  description: Redirect the customer to the hosted checkoutUrl (checkout.slope.so / pay.slope.so) instead
+    of embedding Slope.js.
+  docs: https://developers.slopepay.com/docs/low-code-redirect-flow
+- family: User Link iframe
+  kind: embedded-iframe
+  description: Authenticated embed of logged-in user data via a link token (POST /v4/user-links/{linkToken}/iframe-url).
+  docs: https://developers.slopepay.com/reference/post_v4-user-links-linktoken-iframe-url-1

@@ -1,0 +1,19 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/rfc-v4-api
+scheme: major-api-version
+current: v4
+note: Slope does not publish a dated public changelog; the V3->V4 migration guide is the primary documented
+  change record.
+entries:
+- version: v4
+  type: major
+  breaking: true
+  highlights:
+  - 'Global Slope customer accounts: customers apply once and use a single account across any Slope merchant.'
+  - customer field removed from order creation; no POST /v4/customers endpoints (GET only).
+  - checkoutCode returned automatically on order creation (no separate /orders/intent call) and no longer
+    expires.
+  - Slope.js SDK pre-loads an iframe on page load for instant modal open.
+  - Simple GET filter query params supported (e.g. /v4/orders?status=open).
+  docs: https://developers.slopepay.com/docs/rfc-v4-api

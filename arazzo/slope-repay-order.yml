@@ -1,0 +1,40 @@
+arazzo: 1.0.1
+info:
+  title: Estimate and repay a Slope order
+  version: 1.0.0
+  summary: Get a repayment estimate then fully repay an order (requires Slope-Link-Token).
+sourceDescriptions:
+- name: slope
+  url: ../openapi/slope-v4-openapi.json
+  type: openapi
+workflows:
+- workflowId: repayOrder
+  summary: Get a repayment estimate then fully repay an order (requires Slope-Link-Token).
+  inputs:
+    type: object
+    properties:
+      orderId:
+        type: string
+      linkToken:
+        type: string
+  steps:
+  - stepId: getOrderRepayEstimate
+    operationId: getOrderRepayEstimate
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.orderId
+    - name: Slope-Link-Token
+      in: header
+      value: $inputs.linkToken
+    outputs:
+      estimate: $response.body
+  - stepId: repayOrderFull
+    operationId: repayOrderFull
+    parameters:
+    - name: id
+      in: path
+      value: $inputs.orderId
+    - name: Slope-Link-Token
+      in: header
+      value: $inputs.linkToken

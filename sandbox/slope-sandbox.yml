@@ -1,0 +1,57 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/testing
+environments:
+  sandbox:
+    api_base: https://api.sandbox.slopepay.com/v4
+    dashboard: https://dashboard.sandbox.slopepay.com/developers
+    demo: https://demo.slopepay.com/
+  production:
+    api_base: https://api.slopepay.com/v4
+    dashboard: https://dashboard.slopepay.com/developers
+key_prefixes:
+  public_sandbox: pk_sndbx_
+  secret_sandbox: sk_sndbx_
+  public_production: pk_prod_
+  secret_production: sk_prod_
+test_cards:
+- number: '4242424242424242'
+  behavior: Card auth will succeed
+- number: '4544249167673670'
+  behavior: Card auth will fail
+test_bank_accounts:
+- value: custom_high_bal
+  behavior: Bank charges succeed; high-balance account passes pre-qualification with $100k limits (Plaid
+    username, any password)
+- value: custom_low_bal
+  behavior: Bank charges fail; regular $100-$200 balance, gets a rejection screen (Plaid username, any
+    password)
+simulation_triggers:
+- trigger: Order total = $1,337.99 (133799 cents)
+  behavior: Displays a rejection error during checkout
+- trigger: POST /v4/simulation/approve-order
+  behavior: Approve a pending order (sandbox only)
+- trigger: POST /v4/simulation/reject-order
+  behavior: Reject an order - terminal state (sandbox only)
+- trigger: POST /v4/simulation/customer
+  behavior: Create a test customer with a user password
+- trigger: POST /v4/simulation/customer/eligibility
+  behavior: Update a customer eligibility status and credit limit
+- trigger: POST /v4/simulation/close-customer-account
+  behavior: Close a customer account to re-use the same email
+- trigger: POST /v4/simulation/payment-methods/card
+  behavior: Create a card payment method for testing
+- trigger: POST /v4/simulation/payment-methods/bank-account
+  behavior: Create a bank account payment method for testing
+demo_customer_types:
+- type: New
+  behavior: Ineligible by default; requires pre-qualification
+- type: Qualified
+  behavior: Pre-qualified customer with default limits; skips compliance
+- type: Skip Compliance
+  behavior: Skips the compliance onboarding step
+- type: Skip Customer Credit
+  behavior: Skips the consumer credit consent form step
+- type: Skip Banking
+  behavior: Continue on the banking step without connecting a bank
+note: Default sandbox behavior approves all orders. Card CVV/expiry fields may be any value.

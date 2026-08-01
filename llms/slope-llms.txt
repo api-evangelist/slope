@@ -1,0 +1,70 @@
+# Slope API Documentation
+
+> Welcome to the Slope developer hub. You'll find comprehensive guides and documentation to help you start working with Slope as quickly as possible, as well as support if you get stuck. Let's jump right in!
+
+## Guides
+- [Checkout integration options](https://developers.slopepay.com/docs/checkout-integration-options.md)
+- [Migrating from V3 API](https://developers.slopepay.com/docs/rfc-v4-api.md)
+- [Demo site & sample code](https://developers.slopepay.com/docs/getting-started.md): We recommend playing around at [demo.slopepay.com](https://demo.slopepay.com) to get a sense of what an integrated widget experience is like.
+- [End to end checkout API flow](https://developers.slopepay.com/docs/payment-flow.md)
+- [Flow of Funds](https://developers.slopepay.com/docs/flow-of-funds.md): This page describes the general flow of funds once an order is placed. Slight variations depending on the integration need may exist.
+- [Order statuses and lifecycle](https://developers.slopepay.com/docs/order-statuses-and-lifecycle.md)
+- [Glossary](https://developers.slopepay.com/docs/key-terms.md): A guide of common key terms used within the Slope ecosystem
+- [Authentication](https://developers.slopepay.com/docs/authentication-1.md)
+- [Logging & Errors](https://developers.slopepay.com/docs/errors-1.md)
+- [Idempotency & external IDs](https://developers.slopepay.com/docs/idempotency-1.md)
+- [Pagination for list endpoints](https://developers.slopepay.com/docs/pagination-1.md)
+- [Sandbox testing and mock data](https://developers.slopepay.com/docs/testing.md): Testing the sandbox environment and simulating different approval and error behaviors
+- [Rate limits](https://developers.slopepay.com/docs/rate-limits.md)
+- [Slope.js SDK API](https://developers.slopepay.com/docs/slope-checkout-js.md)
+- [Low-code redirect flow](https://developers.slopepay.com/docs/low-code-redirect-flow.md)
+- [Pre Qualify flow (optional)](https://developers.slopepay.com/docs/pre-qualify-flow.md)
+- [Draw Funds (optional)](https://developers.slopepay.com/docs/draw-funds-optional.md)
+- [No code integration overview](https://developers.slopepay.com/docs/lowno-code-overview.md)
+- [Customer Authorization](https://developers.slopepay.com/docs/customer-authorization.md)
+- [Webhooks](https://developers.slopepay.com/docs/webhooks-overview.md)
+- [Event Types](https://developers.slopepay.com/docs/event-types.md)
+- [Event Schema](https://developers.slopepay.com/docs/schema.md)
+- [Signature Verification](https://developers.slopepay.com/docs/signature-verification.md)
+
+## API Reference
+- [Generate a new session](https://developers.slopepay.com/reference/post_v4-auth-session-1.md): Generate a short-lived session token used initialize a Slope.js flow on behalf of a customer, skipping the need for the customer to login.
+- [Generate an access token](https://developers.slopepay.com/reference/post_v4-auth-token-1.md): Given a `authorizationCode`, generate a long-lived access token to make API requests on behalf of a customer.
+- [List customers](https://developers.slopepay.com/reference/get_v4-customers-1.md): Lists all customers using pagination. The list can be filtered with query params.
+- [Get a customer's credit](https://developers.slopepay.com/reference/get_v4-customers-customerid-credit-1.md): Get a customer's credit summary.  A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).  NOTE: Do not store this endpoint response as a customer's credit limit may change dynamically. You should not use the credit response information to determine whether to display Slope as a payment option as there are other factors that determine eligibility.
+- [List customer's orders](https://developers.slopepay.com/reference/get_v4-customers-customerid-orders-1.md): Lists all orders for a single customer using pagination.
+- [List customer's payment methods](https://developers.slopepay.com/reference/get_v4-customers-customerid-payment-methods-1.md): Lists a customer's payment methods.  A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).
+- [Get a customer](https://developers.slopepay.com/reference/get_v4-customers-id-1.md): Get a specific customer by ID or external ID.
+- [Validate metadata](https://developers.slopepay.com/reference/post_v4-customers-validate-metadata-1.md): Validate metadata against merchant schema and return validation results.
+- [Import a file](https://developers.slopepay.com/reference/post_v4-files-import-1.md): Import a file from a URL. The file will be downloaded and optionally attached to an order.
+- [Create an order](https://developers.slopepay.com/reference/post_v4-orders-1.md): Creates a new order for checkout. Returns both a code for Slope.JS widget and full URL for redirect flow
+- [List orders](https://developers.slopepay.com/reference/get_v4-orders-1.md): Lists all orders using pagination.
+- [Get an order](https://developers.slopepay.com/reference/get_v4-orders-id-1.md): Gets an order by ID.
+- [Cancel an order](https://developers.slopepay.com/reference/post_v4-orders-id-cancel-1.md): An API to cancel an order. This is not allowed once order is finalized. You may also cancel on merchant dashboard.
+- [Finalize an order](https://developers.slopepay.com/reference/post_v4-orders-id-finalize-1.md): Moves an order from the "open" state to the "finalized" state.
+- [Open an order](https://developers.slopepay.com/reference/post_v4-orders-id-open-1.md): Optional API call during checkout flow. Only used by developers that utilize the submitted status. Moves an order from the "submitted" state to the "open" state.
+- [Cancel a partial amount of an order](https://developers.slopepay.com/reference/post_v4-orders-id-partial-cancel-1.md): Cancel a partial amount of an order.   - The cancelled amount will be posted as a credit toward the order balance once the order is finalized. This       will not affect the original `total` amount.   - This is supported for orders in approved, pending, submitted, open, opening, and finalizing statuses.   - This is not allowed once order is finalized. To update finalized orders, use the adjustments endpoint.   - You may also cancel on merchant dashboard.
+- [Get repayment estimate](https://developers.slopepay.com/reference/get_v4-orders-id-repay-estimate-1.md): Gets an order repayment estimate by Order ID.  A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).
+- [Repay an order in full](https://developers.slopepay.com/reference/post_v4-orders-id-repay-full-1.md): Fully repay an order by Order ID.  A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).
+- [Create an order adjustment](https://developers.slopepay.com/reference/post_v4-orders-orderid-adjustments-1.md): Create an adjustment (eg. refund) for an order.
+- [Get an order adjustment](https://developers.slopepay.com/reference/get_v4-orders-orderid-adjustments-id-1.md): Get details about an order adjustment.
+- [List order items](https://developers.slopepay.com/reference/get_v4-orders-orderid-items-1.md): Get all items for a specific order.
+- [Create a payout account](https://developers.slopepay.com/reference/post_v4-payout-accounts-1.md): Create a payout account. This is used to customize the payout for a merchant's orders
+- [List payout accounts](https://developers.slopepay.com/reference/get_v4-payout-accounts-1.md): List payout accounts
+- [Update a payout account](https://developers.slopepay.com/reference/patch_v4-payout-accounts-id-1.md): Update a payout account with externalId
+- [Get a payout account](https://developers.slopepay.com/reference/get_v4-payout-accounts-id-1.md): Get a payout account with id or externalId
+- [Delete a payout account](https://developers.slopepay.com/reference/delete_v4-payout-accounts-id-1.md): Delete a payout account with an id
+- [Create a prescreen](https://developers.slopepay.com/reference/post_v4-prescreens-1.md)
+- [Get prescreens by customer ID](https://developers.slopepay.com/reference/get_v4-prescreens-1.md): Get all prescreens by customer ID, most recent prescreen first.
+- [Get a prescreen](https://developers.slopepay.com/reference/get_v4-prescreens-id-1.md): Get a specific prescreen by ID.
+- [Approve a pending order](https://developers.slopepay.com/reference/post_v4-simulation-approve-order-1.md): (Sandbox Only) Approve a pending order for testing purposes
+- [Close a customer account](https://developers.slopepay.com/reference/post_v4-simulation-close-customer-account-1.md): (Sandbox Only) Close a customer account for testing purposes. This allows re-using the same email for signup/application flows.
+- [Create a testing customer](https://developers.slopepay.com/reference/post_v4-simulation-customer-1.md): (Sandbox Only) Creates a test customer with a user password for the simulating the checkout process
+- [Update a customer eligibility](https://developers.slopepay.com/reference/post_v4-simulation-customer-eligibility-1.md): (Sandbox Only) Updates a customer eligibility status and credit limit.
+- [Create a test bank account](https://developers.slopepay.com/reference/post_v4-simulation-payment-methods-bank-account-1.md): (Sandbox Only) Create a bank account payment method for testing purposes
+- [Create a test card](https://developers.slopepay.com/reference/post_v4-simulation-payment-methods-card-1.md): (Sandbox Only) Create a card payment method for testing purposes
+- [Reject an order](https://developers.slopepay.com/reference/post_v4-simulation-reject-order-1.md): (Sandbox Only) Reject an order for testing purposes. This is a terminal state.
+- [List transactions](https://developers.slopepay.com/reference/get_v4-transactions-1.md): Lists all transactions using pagination
+- [Generate an access token](https://developers.slopepay.com/reference/post_v4-user-links-linktoken-access-token-1.md): Given a `linkToken`, generate a short-lived access token used to embed an authenticated user your application.
+- [Generate an iframe URL for a user with link token](https://developers.slopepay.com/reference/post_v4-user-links-linktoken-iframe-url-1.md): Generate a URL that can be used to embed logged in user data in an iframe.
+- [Create persons](https://developers.slopepay.com/reference/post_v4-customers-customerid-persons.md): Creates one or more persons for the given customer. Insert-only; existing persons cannot be updated. Only available before compliance is completed.

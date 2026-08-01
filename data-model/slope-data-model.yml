@@ -1,0 +1,89 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/slope-v4-openapi.json
+note: Entity-relationship graph derived from Slope v4 OpenAPI resource paths and id-reference fields (customerId,
+  orderId, adjustmentId, payoutAccountId, transactionId).
+entities:
+- name: Customer
+  id: customerId
+  external_id: externalId
+  paths:
+  - /v4/customers
+  - /v4/customers/{id}
+- name: Order
+  id: id
+  external_id: externalId
+  paths:
+  - /v4/orders
+  - /v4/orders/{id}
+  status_enum:
+  - approved
+  - open
+  - finalized
+  - canceled
+  - opening
+  - finalizing
+- name: OrderItem
+  paths:
+  - /v4/orders/{orderId}/items
+- name: OrderAdjustment
+  id: adjustmentId
+  paths:
+  - /v4/orders/{orderId}/adjustments
+  - /v4/orders/{orderId}/adjustments/{id}
+  note: Refunds / adjustments against an order.
+- name: PaymentMethod
+  paths:
+  - /v4/customers/{customerId}/payment-methods
+- name: PayoutAccount
+  id: id
+  external_id: externalId
+  paths:
+  - /v4/payout-accounts
+  - /v4/payout-accounts/{id}
+- name: Prescreen
+  id: id
+  paths:
+  - /v4/prescreens
+  - /v4/prescreens/{id}
+- name: Transaction
+  id: transactionId
+  paths:
+  - /v4/transactions
+- name: Person
+  paths:
+  - /v4/customers/{customerId}/persons
+  note: KYC persons attached to a customer.
+relationships:
+- from: Order
+  type: belongs_to
+  to: Customer
+  via: customerId
+- from: Order
+  type: has_many
+  to: OrderItem
+  via: orderId
+- from: Order
+  type: has_many
+  to: OrderAdjustment
+  via: orderId
+- from: Customer
+  type: has_many
+  to: Order
+  via: customerId
+- from: Customer
+  type: has_many
+  to: PaymentMethod
+  via: customerId
+- from: Customer
+  type: has_many
+  to: Person
+  via: customerId
+- from: Customer
+  type: has_many
+  to: Prescreen
+  via: customerId
+- from: Transaction
+  type: belongs_to
+  to: Order
+  via: orderId

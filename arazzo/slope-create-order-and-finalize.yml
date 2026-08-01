@@ -1,0 +1,51 @@
+arazzo: 1.0.1
+info:
+  title: Create a Slope order and finalize it
+  version: 1.0.0
+  summary: Create an order, wait for the customer to open it, then finalize for payout.
+sourceDescriptions:
+- name: slope
+  url: ../openapi/slope-v4-openapi.json
+  type: openapi
+workflows:
+- workflowId: createOrderAndFinalize
+  summary: Create an order, wait for the customer to open it, then finalize for payout.
+  inputs:
+    type: object
+    properties:
+      amount:
+        type: integer
+      currency:
+        type: string
+        default: usd
+      externalId:
+        type: string
+  steps:
+  - stepId: createOrder
+    operationId: createOrder
+    requestBody:
+      contentType: application/json
+      payload:
+        amount: $inputs.amount
+        currency: $inputs.currency
+        externalId: $inputs.externalId
+    outputs:
+      orderId: $response.body#/id
+      checkoutCode: $response.body#/checkoutCode
+      checkoutUrl: $response.body#/checkoutUrl
+  - stepId: getOrder
+    operationId: getOrder
+    parameters:
+    - name: id
+      in: path
+      value: $steps.createOrder.outputs.orderId
+    outputs:
+      status: $response.body#/status
+  - stepId: finalizeOrder
+    operationId: finalizeOrder
+    parameters:
+    - name: id
+      in: path
+      value: $steps.createOrder.outputs.orderId
+    outputs:
+      status: $response.body#/status

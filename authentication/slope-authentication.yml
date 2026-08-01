@@ -1,0 +1,13 @@
+generated: '2026-07-21'
+method: derived
+source: openapi/slope-v4-openapi.json
+summary:
+  types:
+  - http
+schemes:
+- name: apiKey
+  type: http
+  scheme: basic
+  description: Basic HTTP authentication using the base64 hash of `public_key:secret_key`.
+  sources:
+  - openapi/slope-v4-openapi.json

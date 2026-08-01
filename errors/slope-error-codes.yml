@@ -1,0 +1,46 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/errors-1
+format: custom
+envelope:
+  fields:
+  - name: statusCode
+    description: HTTP status code
+  - name: message
+    description: Human readable message
+  - name: error
+    description: The error type
+  example:
+    statusCode: 404
+    message: customer not found
+    error: Not Found
+request_id_headers:
+- X-Amzn-RequestId (returned by gateway)
+- X-Request-ID (optional client-supplied UUID, echoed back)
+problems:
+- status: 400
+  title: Bad Request
+  remediation: Improperly formatted or missing fields in request body.
+- status: 401
+  title: Unauthorized
+  remediation: Improper keys or headers used in the request.
+- status: 403
+  title: Forbidden
+  remediation: Caller is not authorized to access the resource.
+- status: 404
+  title: Not Found
+  remediation: The referenced resource (e.g. customer, order) was not found.
+- status: 409
+  title: Conflict
+  remediation: Duplicate idempotency-key replay, OR a duplicate externalId (error code conflictingExternalId,
+    existing object returned). Retry with a unique idempotency-key/externalId or GET the existing object.
+- status: 429
+  title: Too Many Requests
+  remediation: Rate limit (2000 req/min) exceeded. Honor the Retry-After header.
+- status: 500
+  title: Internal Server Error
+  remediation: An error on Slope's side. Log X-Amzn-RequestId and retry / contact support.
+known_error_codes:
+- code: conflictingExternalId
+  status: 409
+  meaning: An object with the supplied externalId already exists; the existing (duplicate) object is returned.

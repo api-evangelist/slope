@@ -1,0 +1,64 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/
+authentication:
+  style: HTTP Basic
+  credential: base64(public_key:secret_key)
+  header: Authorization
+  docs: https://developers.slopepay.com/docs/authentication-1
+  see: authentication/slope-authentication.yml
+idempotency:
+  supported: true
+  header: idempotency-key
+  scope: all POST endpoints
+  conflict_status: 409
+  external_id:
+    field: externalId
+    unique: true
+    conflict_code: conflictingExternalId
+  docs: https://developers.slopepay.com/docs/idempotency-1
+pagination:
+  style: cursor
+  params:
+  - limit (default 50)
+  - orderBy
+  - order (asc|desc)
+  - beforeCursor
+  - afterCursor
+  response:
+    container: metadata
+    fields:
+    - total
+    - beforeCursor
+    - afterCursor
+  endpoints:
+  - /v4/customers
+  - /v4/orders
+  - /v4/payout-accounts
+  docs: https://developers.slopepay.com/docs/pagination-1
+request_tracing:
+  gateway_header: X-Amzn-RequestId
+  client_header: X-Request-ID (optional, echoed)
+  docs: https://developers.slopepay.com/docs/errors-1
+versioning:
+  scheme: uri-path
+  current: v4
+  see: lifecycle/slope-lifecycle.yml
+error_envelope:
+  fields:
+  - statusCode
+  - message
+  - error
+  see: errors/slope-error-codes.yml
+rate_limit_signaling:
+  limit: 2000 req/min per IP + auth key
+  status: 429
+  headers:
+  - Retry-After
+  - X-RateLimit-Limit
+  - X-RateLimit-Remaining
+  - X-RateLimit-Reset
+  see: rate-limits/slope-rate-limits.yml
+link_flow:
+  header: Slope-Link-Token
+  note: Required on customer credit / payment-methods / repayment endpoints in addition to auth headers.

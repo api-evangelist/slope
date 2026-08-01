@@ -1,7 +1,25 @@
 aid: slope
+accessModel:
+  pricing: unknown
+  onboarding: self-serve
+  trial: false
+  try_now: false
+  public: false
+  label: Self-serve signup
+  confidence: medium
+  source:
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/slope.png
 name: Slope
-description: 'Slope is a company surfaced as a portfolio company of ggv-capital and added to the API Evangelist
-  network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.'
+description: Slope is a fintech company providing credit infrastructure for business lending - an embedded
+  buy-now-pay-later (BNPL) and working-capital solution that lets merchants offer flexible net-terms financing
+  to their business (B2B) buyers at checkout with no added risk. Its platform combines an embedded line-of-credit
+  product, the SlopeScore business cash-flow score for underwriting, and a developer API (v4) for creating
+  customers and orders, driving checkout via the Slope.js widget or a hosted redirect, finalizing orders
+  for payout, issuing refunds/adjustments, handling repayments, and subscribing to webhook events. Slope
+  is backed by GGV Capital and has announced a relationship with Amazon.
 url: https://raw.githubusercontent.com/api-evangelist/slope/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,11 +29,158 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-21'
 tags:
 - Company
 - Fintech
-apis: []
+- Payments
+- Embedded Finance
+- BNPL
+- Lending
+- Credit
+- B2B
+- Checkout
+apis:
+- aid: slope:slope-auth-api
+  name: Slope Auth API
+  description: The Auth API from Slope — 2 operation(s) for auth.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Auth
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-auth-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-customers-api
+  name: Slope Customers API
+  description: The Customers API from Slope — 6 operation(s) for customers.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Customers
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-customers-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-files-api
+  name: Slope Files API
+  description: The Files API from Slope — 1 operation(s) for files.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Files
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-files-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-orders-api
+  name: Slope Orders API
+  description: The Orders API from Slope — 11 operation(s) for orders.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Orders
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-orders-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-payout-accounts-api
+  name: Slope Payout Accounts API
+  description: The Payout Accounts API from Slope — 2 operation(s) for payout accounts.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Payout Accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-payout-accounts-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-persons-api
+  name: Slope Persons API
+  description: The Persons API from Slope — 1 operation(s) for persons.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Persons
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-persons-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-prescreens-api
+  name: Slope Prescreens API
+  description: The Prescreens API from Slope — 2 operation(s) for prescreens.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Prescreens
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-prescreens-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-simulation-api
+  name: Slope Simulation API
+  description: The Simulation API from Slope — 7 operation(s) for simulation.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Simulation
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-simulation-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-transactions-api
+  name: Slope Transactions API
+  description: The Transactions API from Slope — 1 operation(s) for transactions.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - Transactions
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-transactions-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
+- aid: slope:slope-user-links-api
+  name: Slope User Links API
+  description: The User Links API from Slope — 2 operation(s) for user links.
+  humanURL: https://developers.slopepay.com/
+  baseURL: https://api.slopepay.com
+  tags:
+  - User Links
+  properties:
+  - type: OpenAPI
+    url: openapi/slope-user-links-api-openapi.yml
+  - type: APIReference
+    url: https://developers.slopepay.com/reference
+  - type: Documentation
+    url: https://developers.slopepay.com/docs/getting-started
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
@@ -24,3 +189,80 @@ maintainers:
 common:
 - type: Website
   url: https://www.slopepay.com/
+- type: DeveloperPortal
+  url: https://developers.slopepay.com/
+- type: Documentation
+  url: https://developers.slopepay.com/docs/getting-started
+- type: APIReference
+  url: https://developers.slopepay.com/reference
+- type: GettingStarted
+  url: https://developers.slopepay.com/docs/getting-started
+- type: Support
+  url: https://www.slopepay.com/contact#support
+- type: Blog
+  url: https://www.slopepay.com/blog
+- type: Login
+  url: https://dashboard.slopepay.com/
+- type: TermsOfService
+  url: https://www.slopepay.com/terms
+- type: PrivacyPolicy
+  url: https://www.slopepay.com/privacy
+- type: StatusPage
+  url: https://status.slopepay.com
+- type: Deprecation
+  url: https://developers.slopepay.com/docs/rfc-v4-api
+- type: LLMsTxt
+  url: llms/slope-llms.txt
+- type: MCPServer
+  url: mcp/slope-mcp.yml
+- type: Overlay
+  url: overlays/slope-v4-overlay.yaml
+- type: Conformance
+  url: conformance/slope-conformance.yml
+- type: ErrorCatalog
+  url: errors/slope-error-codes.yml
+- type: Lifecycle
+  url: lifecycle/slope-lifecycle.yml
+- type: Sandbox
+  url: sandbox/slope-sandbox.yml
+- type: Conventions
+  url: conventions/slope-conventions.yml
+- type: Idempotency
+  url: conventions/slope-conventions.yml
+- type: RateLimits
+  url: rate-limits/slope-rate-limits.yml
+- type: ChangeLog
+  url: changelog/slope-changelog.yml
+- type: Components
+  url: components/slope-components.yml
+- type: DataModel
+  url: data-model/slope-data-model.yml
+- type: Webhooks
+  url: asyncapi/slope-webhooks.yml
+- type: AsyncAPI
+  url: asyncapi/slope-events-asyncapi.yml
+- type: Authentication
+  url: authentication/slope-authentication.yml
+- type: DomainSecurity
+  url: security/slope-domain-security.yml
+- type: AgenticAccess
+  url: agentic-access/slope-agentic-access.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: Arazzo
+  name: Create a Slope order and finalize it
+  url: arazzo/slope-create-order-and-finalize.yml
+- type: Arazzo
+  name: Refund a finalized Slope order
+  url: arazzo/slope-refund-order.yml
+- type: Arazzo
+  name: Estimate and repay a Slope order
+  url: arazzo/slope-repay-order.yml
+- type: Arazzo
+  name: Simulate an approved order in the sandbox
+  url: arazzo/slope-sandbox-approve-order.yml
+x-enrichment:
+  date: '2026-07-21'
+  status: enriched
+  artifacts_added: 28
+  pass: local-v1

@@ -1,0 +1,50 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/webhooks-overview
+spec_type: Webhooks
+delivery:
+  transport: HTTPS POST (JSON body)
+  expected_response: 2xx within 5 seconds
+  retries: exponential backoff until 2xx
+  ordering: events may arrive out of order; endpoint must be idempotent
+configuration:
+  sandbox: https://dashboard.sandbox.slopepay.com/developers
+  production: https://dashboard.slopepay.com/developers
+signing:
+  header: Slope-Signature
+  format: <timestamp>;<algorithm>=<hmac>,<algorithm>=<hmac>
+  algorithm: HMAC-SHA256 over `${timestamp}.${JSON.stringify(body)}` with the webhook secret
+  replay_protection: reject timestamps older than ~5 minutes
+  supports_key_rotation: true
+  docs: https://developers.slopepay.com/docs/signature-verification
+source_ips:
+  sandbox:
+  - 18.219.53.61
+  production:
+  - 54.156.84.33
+schema_docs: https://developers.slopepay.com/docs/schema
+events:
+- type: so.slope.customer.created
+  description: New customer is created
+- type: so.slope.customer.updated
+  description: Customer object updated by you or Slope (e.g. limit or overdue order count change)
+- type: so.slope.customer.authorized
+  description: Customer authenticated into the Slope widget and authorized access to the merchant
+- type: so.slope.customer.authorization_revoked
+  description: Customer closed their account and unauthorized access to the merchant
+- type: so.slope.customer.application_submitted
+  description: Customer submitted an application to Slope
+- type: so.slope.customer.credit_decision_reached
+  description: Customer approved or rejected for a limit
+- type: so.slope.prescreen.ready
+  description: Prescreen succeeded and the result is ready
+- type: so.slope.order.opened
+  description: An order reached the open state
+- type: so.slope.order.finalizing
+  description: An order triggered finalize and is in the finalizing state
+- type: so.slope.order.finalized
+  description: An order reached the finalized state
+- type: so.slope.order.adjustment.created
+  description: An order adjustment (refund) has been created
+- type: so.slope.transactions.updated
+  description: A repayment happened on an order

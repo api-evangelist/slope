@@ -1,0 +1,12 @@
+generated: '2026-07-21'
+method: searched
+source: https://developers.slopepay.com/docs/rate-limits
+limit_count: 2000
+window: minute
+scope: per client IP + authentication key
+exceeded_status: 429
+headers:
+- Retry-After
+- X-RateLimit-Limit
+- X-RateLimit-Remaining
+- X-RateLimit-Reset

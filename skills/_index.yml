@@ -1,0 +1,34 @@
+generated: '2026-07-21'
+method: generated
+api: openapi/slope-v4-openapi.json
+skills:
+- file: slope-create-order-and-checkout.md
+  name: Create a Slope order and drive checkout
+  api: openapi/slope-v4-openapi.json
+  operations:
+  - createOrder
+  - getOrder
+  - openOrder
+  - finalizeOrder
+- file: slope-refund-order.md
+  name: Refund or partially cancel a Slope order
+  api: openapi/slope-v4-openapi.json
+  operations:
+  - partialCancelOrder
+  - createOrderAdjustment
+  - getOrderAdjustment
+- file: slope-repay-order.md
+  name: Estimate and repay a Slope order
+  api: openapi/slope-v4-openapi.json
+  operations:
+  - getOrderRepayEstimate
+  - repayOrderFull
+- file: slope-sandbox-test-order-flow.md
+  name: Simulate an approved order end-to-end in the Slope sandbox
+  api: openapi/slope-v4-openapi.json
+  operations:
+  - simulateCreateCustomer
+  - simulateUpdateCustomerEligibility
+  - createOrder
+  - simulateApproveOrder
+  - simulateRejectOrder

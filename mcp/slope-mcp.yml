@@ -1,0 +1,130 @@
+generated: '2026-07-21'
+method: derived
+status: candidate
+source: openapi/slope-v4-openapi.json
+note: Candidate tool list derived from Slope v4 OpenAPI operations. No official hosted Slope MCP server
+  was found (searched developers.slopepay.com, npm @modelcontextprotocol, MCP registries) as of 2026-07-21.
+server:
+  name: slope
+  transport: http
+tools:
+- name: createAuthSession
+  description: Generate a new session
+  source_operation: openapi/slope-v4-openapi.json#createAuthSession
+- name: createAuthToken
+  description: Generate an access token
+  source_operation: openapi/slope-v4-openapi.json#createAuthToken
+- name: listCustomers
+  description: List customers
+  source_operation: openapi/slope-v4-openapi.json#listCustomers
+- name: getCustomerCredit
+  description: Get a customer's credit
+  source_operation: openapi/slope-v4-openapi.json#getCustomerCredit
+- name: listCustomerOrders
+  description: List customer's orders
+  source_operation: openapi/slope-v4-openapi.json#listCustomerOrders
+- name: listCustomerPaymentMethods
+  description: List customer's payment methods
+  source_operation: openapi/slope-v4-openapi.json#listCustomerPaymentMethods
+- name: getCustomer
+  description: Get a customer
+  source_operation: openapi/slope-v4-openapi.json#getCustomer
+- name: validateCustomerMetadata
+  description: Validate metadata
+  source_operation: openapi/slope-v4-openapi.json#validateCustomerMetadata
+- name: importFile
+  description: Import a file
+  source_operation: openapi/slope-v4-openapi.json#importFile
+- name: createOrder
+  description: Create an order
+  source_operation: openapi/slope-v4-openapi.json#createOrder
+- name: listOrders
+  description: List orders
+  source_operation: openapi/slope-v4-openapi.json#listOrders
+- name: getOrder
+  description: Get an order
+  source_operation: openapi/slope-v4-openapi.json#getOrder
+- name: cancelOrder
+  description: Cancel an order
+  source_operation: openapi/slope-v4-openapi.json#cancelOrder
+- name: finalizeOrder
+  description: Finalize an order
+  source_operation: openapi/slope-v4-openapi.json#finalizeOrder
+- name: openOrder
+  description: Open an order
+  source_operation: openapi/slope-v4-openapi.json#openOrder
+- name: partialCancelOrder
+  description: Cancel a partial amount of an order
+  source_operation: openapi/slope-v4-openapi.json#partialCancelOrder
+- name: getOrderRepayEstimate
+  description: Get repayment estimate
+  source_operation: openapi/slope-v4-openapi.json#getOrderRepayEstimate
+- name: repayOrderFull
+  description: Repay an order in full
+  source_operation: openapi/slope-v4-openapi.json#repayOrderFull
+- name: createOrderAdjustment
+  description: Create an order adjustment
+  source_operation: openapi/slope-v4-openapi.json#createOrderAdjustment
+- name: getOrderAdjustment
+  description: Get an order adjustment
+  source_operation: openapi/slope-v4-openapi.json#getOrderAdjustment
+- name: listOrderItems
+  description: List order items
+  source_operation: openapi/slope-v4-openapi.json#listOrderItems
+- name: createPayoutAccount
+  description: Create a payout account
+  source_operation: openapi/slope-v4-openapi.json#createPayoutAccount
+- name: listPayoutAccounts
+  description: List payout accounts
+  source_operation: openapi/slope-v4-openapi.json#listPayoutAccounts
+- name: updatePayoutAccount
+  description: Update a payout account
+  source_operation: openapi/slope-v4-openapi.json#updatePayoutAccount
+- name: getPayoutAccount
+  description: Get a payout account
+  source_operation: openapi/slope-v4-openapi.json#getPayoutAccount
+- name: deletePayoutAccount
+  description: Delete a payout account
+  source_operation: openapi/slope-v4-openapi.json#deletePayoutAccount
+- name: createPrescreen
+  description: Create a prescreen
+  source_operation: openapi/slope-v4-openapi.json#createPrescreen
+- name: listPrescreens
+  description: Get prescreens by customer ID
+  source_operation: openapi/slope-v4-openapi.json#listPrescreens
+- name: getPrescreen
+  description: Get a prescreen
+  source_operation: openapi/slope-v4-openapi.json#getPrescreen
+- name: simulateApproveOrder
+  description: Approve a pending order
+  source_operation: openapi/slope-v4-openapi.json#simulateApproveOrder
+- name: simulateCloseCustomerAccount
+  description: Close a customer account
+  source_operation: openapi/slope-v4-openapi.json#simulateCloseCustomerAccount
+- name: simulateCreateCustomer
+  description: Create a testing customer
+  source_operation: openapi/slope-v4-openapi.json#simulateCreateCustomer
+- name: simulateUpdateCustomerEligibility
+  description: Update a customer eligibility
+  source_operation: openapi/slope-v4-openapi.json#simulateUpdateCustomerEligibility
+- name: simulateCreateBankAccount
+  description: Create a test bank account
+  source_operation: openapi/slope-v4-openapi.json#simulateCreateBankAccount
+- name: simulateCreateCard
+  description: Create a test card
+  source_operation: openapi/slope-v4-openapi.json#simulateCreateCard
+- name: simulateRejectOrder
+  description: Reject an order
+  source_operation: openapi/slope-v4-openapi.json#simulateRejectOrder
+- name: listTransactions
+  description: List transactions
+  source_operation: openapi/slope-v4-openapi.json#listTransactions
+- name: createUserLinkAccessToken
+  description: Generate an access token
+  source_operation: openapi/slope-v4-openapi.json#createUserLinkAccessToken
+- name: createUserLinkIframeUrl
+  description: Generate an iframe URL for a user with link token
+  source_operation: openapi/slope-v4-openapi.json#createUserLinkIframeUrl
+- name: createPersons
+  description: Create persons
+  source_operation: openapi/slope-v4-openapi.json#createPersons
