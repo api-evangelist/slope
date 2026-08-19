@@ -1,0 +1,1029 @@
+{
+  "item": [
+    {
+      "id": "e171379f-9816-4250-97c7-6f30770e613a",
+      "name": "Prescreens",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "14a568b6-a716-4f5a-aa13-a0bd64945fb2",
+          "name": "Create a prescreen",
+          "request": {
+            "name": "Create a prescreen",
+            "description": {},
+            "url": {
+              "path": [
+                "v4",
+                "prescreens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"externalId\": \"<string>\",\n  \"annualRevenueAmount\": \"<number>\",\n  \"businessName\": \"<string>\",\n  \"address\": {\n    \"line1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"<string>\",\n  \"doingBusinessAs\": \"<string>\",\n  \"taxId\": \"<string>\",\n  \"website\": \"<string>\",\n  \"phone\": \"<string>\",\n  \"entityType\": \"<string>\",\n  \"desiredLimit\": \"<number>\",\n  \"metadata\": {\n    \"yearEstablished\": \"<number>\",\n    \"expectedMonthlySpendingCents\": \"<number>\",\n    \"joinDateRangeDays\": \"<string>\",\n    \"lastTransactionAmountRange\": \"<string>\",\n    \"lastTransactionDateRange\": \"<string>\",\n    \"totalSpending90DaysRange\": \"<string>\",\n    \"totalSpending365DaysRange\": \"<string>\",\n    \"totalPurchases90DaysRange\": \"<string>\",\n    \"totalPurchases365DaysRange\": \"<string>\",\n    \"growthLevel\": \"<string>\",\n    \"smbNotVerified\": \"<boolean>\",\n    \"highValueCustomer\": \"<boolean>\",\n    \"purchasingDemandForecast6MonthsCents\": \"<number>\",\n    \"buyerRiskLevelRange\": \"<string>\",\n    \"buyerStickinessRange\": \"<string>\",\n    \"buyerPurchasingStabilityRange\": \"<string>\",\n    \"avgPurchaseIntervals365Range\": \"<string>\",\n    \"avgPurchaseIntervals730Range\": \"<string>\",\n    \"coefficientPurchaseIntervals365Range\": \"<string>\",\n    \"coefficientPurchaseIntervals730Range\": \"<string>\",\n    \"externalTransactionId\": \"<string>\",\n    \"purchasingDemandFor6m\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8abdac9c-3b95-4a37-9b80-d839789e26d0",
+              "name": "The created prescreen.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"partner-customer-123\",\n  \"annualRevenueAmount\": 1000000,\n  \"businessName\": \"Acme, Inc.\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"info@acme.com\",\n  \"doingBusinessAs\": \"Acme Storefront\",\n  \"taxId\": \"123456789\",\n  \"website\": \"https://slopepay.com\",\n  \"phone\": \"14155551234\",\n  \"entityType\": \"LLC\",\n  \"desiredLimit\": 100000,\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"prescreen_123\",\n  \"customerId\": \"customer_123\",\n  \"status\": \"pending\",\n  \"approvalLikelihood\": \"high\",\n  \"limitCents\": 100000,\n  \"bestAprPct\": 12.99,\n  \"reasons\": [\n    {\n      \"code\": \"unmatched-kyb\",\n      \"message\": \"KYB datat mismatch\"\n    },\n    {\n      \"code\": \"unmatched-kyb\",\n      \"message\": \"KYB datat mismatch\"\n    }\n  ],\n  \"expiresAt\": \"2025-01-01T00:00:00.000Z\",\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d25b227b-8eab-445b-a204-d77df9eae294",
+              "name": "Returned when improperly formatted or missing fields in request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"partner-customer-123\",\n  \"annualRevenueAmount\": 1000000,\n  \"businessName\": \"Acme, Inc.\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"info@acme.com\",\n  \"doingBusinessAs\": \"Acme Storefront\",\n  \"taxId\": \"123456789\",\n  \"website\": \"https://slopepay.com\",\n  \"phone\": \"14155551234\",\n  \"entityType\": \"LLC\",\n  \"desiredLimit\": 100000,\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ac4e4f6d-8282-4330-b737-d7f2c94dc0ca",
+              "name": "Returned when improper keys or headers are used in the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"partner-customer-123\",\n  \"annualRevenueAmount\": 1000000,\n  \"businessName\": \"Acme, Inc.\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"info@acme.com\",\n  \"doingBusinessAs\": \"Acme Storefront\",\n  \"taxId\": \"123456789\",\n  \"website\": \"https://slopepay.com\",\n  \"phone\": \"14155551234\",\n  \"entityType\": \"LLC\",\n  \"desiredLimit\": 100000,\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8d583810-e343-4a01-800e-103d3b532dff",
+              "name": "Returned when the caller is not authorized to access the resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"partner-customer-123\",\n  \"annualRevenueAmount\": 1000000,\n  \"businessName\": \"Acme, Inc.\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"info@acme.com\",\n  \"doingBusinessAs\": \"Acme Storefront\",\n  \"taxId\": \"123456789\",\n  \"website\": \"https://slopepay.com\",\n  \"phone\": \"14155551234\",\n  \"entityType\": \"LLC\",\n  \"desiredLimit\": 100000,\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0da51e9e-b728-44a7-b3c0-700546fb5881",
+              "name": "Conflict - Request conflicts with current state of the resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"partner-customer-123\",\n  \"annualRevenueAmount\": 1000000,\n  \"businessName\": \"Acme, Inc.\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"info@acme.com\",\n  \"doingBusinessAs\": \"Acme Storefront\",\n  \"taxId\": \"123456789\",\n  \"website\": \"https://slopepay.com\",\n  \"phone\": \"14155551234\",\n  \"entityType\": \"LLC\",\n  \"desiredLimit\": 100000,\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 409,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c316c07a-1f6b-4658-b5ad-3c366ac78720",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"externalId\": \"partner-customer-123\",\n  \"annualRevenueAmount\": 1000000,\n  \"businessName\": \"Acme, Inc.\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"email\": \"info@acme.com\",\n  \"doingBusinessAs\": \"Acme Storefront\",\n  \"taxId\": \"123456789\",\n  \"website\": \"https://slopepay.com\",\n  \"phone\": \"14155551234\",\n  \"entityType\": \"LLC\",\n  \"desiredLimit\": 100000,\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "df8fc814-ecef-43e0-8ec4-d1d2cd93cc9f",
+          "name": "Get prescreens by customer ID",
+          "request": {
+            "name": "Get prescreens by customer ID",
+            "description": {
+              "content": "Get all prescreens by customer ID, most recent prescreen first.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "prescreens"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "customerId",
+                  "value": "<string>",
+                  "description": "(Required) The customer ID to get prescreens for. The external customer ID is also accepted."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "6ec851b5-567a-4cfa-8069-adc2f7ba4507",
+              "name": "The prescreens for the customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customerId",
+                      "value": "partner-customer-1234"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"prescreens\": [\n    {\n      \"id\": \"prescreen_123\",\n      \"customerId\": \"customer_123\",\n      \"status\": \"pending\",\n      \"approvalLikelihood\": \"high\",\n      \"limitCents\": 100000,\n      \"bestAprPct\": 12.99,\n      \"reasons\": [\n        {\n          \"code\": \"unmatched-kyb\",\n          \"message\": \"KYB datat mismatch\"\n        },\n        {\n          \"code\": \"unmatched-kyb\",\n          \"message\": \"KYB datat mismatch\"\n        }\n      ],\n      \"expiresAt\": \"2025-01-01T00:00:00.000Z\",\n      \"metadata\": {\n        \"yearEstablished\": 2015,\n        \"expectedMonthlySpendingCents\": 50000,\n        \"joinDateRangeDays\": \"L5\",\n        \"lastTransactionAmountRange\": \"L3\",\n        \"lastTransactionDateRange\": \"L3\",\n        \"totalSpending90DaysRange\": \"L3\",\n        \"totalSpending365DaysRange\": \"L3\",\n        \"totalPurchases90DaysRange\": \"L3\",\n        \"totalPurchases365DaysRange\": \"L3\",\n        \"growthLevel\": \"L7\",\n        \"smbNotVerified\": true,\n        \"highValueCustomer\": false,\n        \"purchasingDemandForecast6MonthsCents\": 180000,\n        \"buyerRiskLevelRange\": \"L4\",\n        \"buyerStickinessRange\": \"L8\",\n        \"buyerPurchasingStabilityRange\": \"L6\",\n        \"avgPurchaseIntervals365Range\": \"L3\",\n        \"avgPurchaseIntervals730Range\": \"L3\",\n        \"coefficientPurchaseIntervals365Range\": \"L3\",\n        \"coefficientPurchaseIntervals730Range\": \"L3\",\n        \"externalTransactionId\": \"1234567890\",\n        \"purchasingDemandFor6m\": \"C\"\n      }\n    },\n    {\n      \"id\": \"prescreen_123\",\n      \"customerId\": \"customer_123\",\n      \"status\": \"pending\",\n      \"approvalLikelihood\": \"high\",\n      \"limitCents\": 100000,\n      \"bestAprPct\": 12.99,\n      \"reasons\": [\n        {\n          \"code\": \"unmatched-kyb\",\n          \"message\": \"KYB datat mismatch\"\n        },\n        {\n          \"code\": \"unmatched-kyb\",\n          \"message\": \"KYB datat mismatch\"\n        }\n      ],\n      \"expiresAt\": \"2025-01-01T00:00:00.000Z\",\n      \"metadata\": {\n        \"yearEstablished\": 2015,\n        \"expectedMonthlySpendingCents\": 50000,\n        \"joinDateRangeDays\": \"L5\",\n        \"lastTransactionAmountRange\": \"L3\",\n        \"lastTransactionDateRange\": \"L3\",\n        \"totalSpending90DaysRange\": \"L3\",\n        \"totalSpending365DaysRange\": \"L3\",\n        \"totalPurchases90DaysRange\": \"L3\",\n        \"totalPurchases365DaysRange\": \"L3\",\n        \"growthLevel\": \"L7\",\n        \"smbNotVerified\": true,\n        \"highValueCustomer\": false,\n        \"purchasingDemandForecast6MonthsCents\": 180000,\n        \"buyerRiskLevelRange\": \"L4\",\n        \"buyerStickinessRange\": \"L8\",\n        \"buyerPurchasingStabilityRange\": \"L6\",\n        \"avgPurchaseIntervals365Range\": \"L3\",\n        \"avgPurchaseIntervals730Range\": \"L3\",\n        \"coefficientPurchaseIntervals365Range\": \"L3\",\n        \"coefficientPurchaseIntervals730Range\": \"L3\",\n        \"externalTransactionId\": \"1234567890\",\n        \"purchasingDemandFor6m\": \"C\"\n      }\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c704083c-faa1-4b1d-a0b4-714851c18aad",
+              "name": "Returned when improperly formatted or missing fields in request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customerId",
+                      "value": "partner-customer-1234"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "187b37fd-a5c1-4001-b95d-ad0a949adf92",
+              "name": "Returned when improper keys or headers are used in the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customerId",
+                      "value": "partner-customer-1234"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d5e78dde-51c6-4191-8068-0bbff07103f3",
+              "name": "Returned when the caller is not authorized to access the resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customerId",
+                      "value": "partner-customer-1234"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8a7e111f-05de-4e2f-b309-e387c711a9b0",
+              "name": "Returned when an internal server error occurs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "customerId",
+                      "value": "partner-customer-1234"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4e9f9d61-d73d-4a02-94d5-a263be7f3a13",
+          "name": "Get a prescreen",
+          "request": {
+            "name": "Get a prescreen",
+            "description": {
+              "content": "Get a specific prescreen by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "prescreens",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The prescreen ID."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1d31f25b-74e4-4d5e-8bee-30a30c36fc6d",
+              "name": "The prescreen",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The prescreen ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"prescreen_123\",\n  \"customerId\": \"customer_123\",\n  \"status\": \"pending\",\n  \"approvalLikelihood\": \"high\",\n  \"limitCents\": 100000,\n  \"bestAprPct\": 12.99,\n  \"reasons\": [\n    {\n      \"code\": \"unmatched-kyb\",\n      \"message\": \"KYB datat mismatch\"\n    },\n    {\n      \"code\": \"unmatched-kyb\",\n      \"message\": \"KYB datat mismatch\"\n    }\n  ],\n  \"expiresAt\": \"2025-01-01T00:00:00.000Z\",\n  \"metadata\": {\n    \"yearEstablished\": 2015,\n    \"expectedMonthlySpendingCents\": 50000,\n    \"joinDateRangeDays\": \"L5\",\n    \"lastTransactionAmountRange\": \"L3\",\n    \"lastTransactionDateRange\": \"L3\",\n    \"totalSpending90DaysRange\": \"L3\",\n    \"totalSpending365DaysRange\": \"L3\",\n    \"totalPurchases90DaysRange\": \"L3\",\n    \"totalPurchases365DaysRange\": \"L3\",\n    \"growthLevel\": \"L7\",\n    \"smbNotVerified\": true,\n    \"highValueCustomer\": false,\n    \"purchasingDemandForecast6MonthsCents\": 180000,\n    \"buyerRiskLevelRange\": \"L4\",\n    \"buyerStickinessRange\": \"L8\",\n    \"buyerPurchasingStabilityRange\": \"L6\",\n    \"avgPurchaseIntervals365Range\": \"L3\",\n    \"avgPurchaseIntervals730Range\": \"L3\",\n    \"coefficientPurchaseIntervals365Range\": \"L3\",\n    \"coefficientPurchaseIntervals730Range\": \"L3\",\n    \"externalTransactionId\": \"1234567890\",\n    \"purchasingDemandFor6m\": \"C\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9f051196-e637-4114-b017-bd23c1ef32f1",
+              "name": "Returned when improperly formatted or missing fields in request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The prescreen ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8b5fce19-c197-407d-9e45-5e32bf5c63ca",
+              "name": "Returned when improper keys or headers are used in the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The prescreen ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "05dac47d-6d5e-475b-9b5e-df57c58b2be2",
+              "name": "Returned when the caller is not authorized to access the resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The prescreen ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9960c4a0-00ce-454e-a7b6-482e08ff3daa",
+              "name": "Returned when the prescreen ID is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The prescreen ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3777690f-402f-452f-9549-898137263db7",
+              "name": "Returned when an internal server error occurs",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "prescreens",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The prescreen ID."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7327f988-ce18-4438-9301-c03caabe5ba6",
+    "name": "Slope v4 Auth Prescreens API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}

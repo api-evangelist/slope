@@ -1,0 +1,650 @@
+{
+  "item": [
+    {
+      "id": "bae38479-2285-4a6f-9063-459a33465946",
+      "name": "Payout Accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "fc4492c4-9330-4e07-a61a-df2cded945f0",
+          "name": "Create a payout account",
+          "request": {
+            "name": "Create a payout account",
+            "description": {
+              "content": "Create a payout account. This is used to customize the payout for a merchant's orders",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "payout-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"routingNumber\": \"<string>\",\n  \"address\": {\n    \"line1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"line2\": \"<string>\"\n  },\n  \"accountNumber\": \"<string>\",\n  \"taxId\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"businessName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"isDefaultAccount\": \"<boolean>\",\n  \"externalId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "01d634f4-cd7c-4c2a-b726-86fe970a2bd2",
+              "name": "The created payout account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "payout-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"routingNumber\": \"<string>\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"accountNumber\": \"<string>\",\n  \"taxId\": \"<string>\",\n  \"accountType\": \"<string>\",\n  \"businessName\": \"<string>\",\n  \"email\": \"<string>\",\n  \"customerId\": \"<string>\",\n  \"isDefaultAccount\": \"<boolean>\",\n  \"externalId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"isDefaultAccount\": true,\n  \"createdAt\": \"1967-07-16T19:21:33.836Z\",\n  \"updatedAt\": \"1987-04-29T09:23:40.079Z\",\n  \"externalId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de29390d-cdf3-456c-a3de-36b42e4420e3",
+          "name": "List payout accounts",
+          "request": {
+            "name": "List payout accounts",
+            "description": {
+              "content": "List payout accounts",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "payout-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The maximum number of objects to list."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "The object attribute(s) to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "The object attribute(s) to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "The direction to sort by, one of `asc` or `desc`."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCursor",
+                  "value": "<string>",
+                  "description": "The cursor used to fetch the previous page of objects."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCursor",
+                  "value": "<string>",
+                  "description": "The cursor used to fetch the next page of objects."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8b375a2f-9775-4046-9718-63e92f787619",
+              "name": "The paginated list of payout accounts.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "payout-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "beforeCursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "afterCursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"total\": 8789.086343518662,\n    \"beforeCursor\": \"string\",\n    \"afterCursor\": \"string\"\n  },\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"isDefaultAccount\": false,\n      \"createdAt\": \"1972-07-16T16:06:12.294Z\",\n      \"updatedAt\": \"1967-04-14T02:27:13.369Z\",\n      \"externalId\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"isDefaultAccount\": true,\n      \"createdAt\": \"1966-08-30T04:29:25.335Z\",\n      \"updatedAt\": \"1974-10-14T18:40:23.797Z\",\n      \"externalId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "92d84416-b367-44e9-9ed8-1d0e2e26ac9d",
+          "name": "Update a payout account",
+          "request": {
+            "name": "Update a payout account",
+            "description": {
+              "content": "Update a payout account with externalId",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "payout-accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PATCH",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"<string>\",\n  \"isDefaultAccount\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dc77ce5b-b0c1-4c08-8da5-68d0beab97a9",
+              "name": "The updated payout account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "payout-accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PATCH",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"<string>\",\n  \"isDefaultAccount\": \"<boolean>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"isDefaultAccount\": true,\n  \"createdAt\": \"1967-07-16T19:21:33.836Z\",\n  \"updatedAt\": \"1987-04-29T09:23:40.079Z\",\n  \"externalId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f2b30253-a975-4f3a-af52-71a0af884e04",
+          "name": "Get a payout account",
+          "request": {
+            "name": "Get a payout account",
+            "description": {
+              "content": "Get a payout account with id or externalId",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "payout-accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8a2caffd-91f3-4b5e-aecb-fe195004d450",
+              "name": "The found payout account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "payout-accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"isDefaultAccount\": true,\n  \"createdAt\": \"1967-07-16T19:21:33.836Z\",\n  \"updatedAt\": \"1987-04-29T09:23:40.079Z\",\n  \"externalId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "59ec636e-e7a2-471e-8998-a54e7a2deb4b",
+          "name": "Delete a payout account",
+          "request": {
+            "name": "Delete a payout account",
+            "description": {
+              "content": "Delete a payout account with an id",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "payout-accounts",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "342c7e48-83e2-4dcc-8ce2-950a13ecab1f",
+              "name": "The deleted payout account.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "payout-accounts",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"name\": \"string\",\n  \"isDefaultAccount\": true,\n  \"createdAt\": \"1967-07-16T19:21:33.836Z\",\n  \"updatedAt\": \"1987-04-29T09:23:40.079Z\",\n  \"externalId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3cea7e81-6193-468c-9890-c7d4f3e9e8d0",
+    "name": "Slope v4 Auth Payout Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}

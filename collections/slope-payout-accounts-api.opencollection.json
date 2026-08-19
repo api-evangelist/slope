@@ -1,0 +1,159 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth Payout Accounts API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Payout Accounts",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List payout accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/payout-accounts",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to list."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "The object attribute(s) to sort by."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by, one of `asc` or `desc`."
+              },
+              {
+                "name": "beforeCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the previous page of objects."
+              },
+              {
+                "name": "afterCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the next page of objects."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "List payout accounts"
+        },
+        {
+          "info": {
+            "name": "Create a payout account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/payout-accounts",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Create a payout account. This is used to customize the payout for a merchant's orders"
+        },
+        {
+          "info": {
+            "name": "Get a payout account",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/payout-accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get a payout account with id or externalId"
+        },
+        {
+          "info": {
+            "name": "Update a payout account",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "https://api.slopepay.com/v4/payout-accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Update a payout account with externalId"
+        },
+        {
+          "info": {
+            "name": "Delete a payout account",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.slopepay.com/v4/payout-accounts/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Delete a payout account with an id"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,459 @@
+{
+  "item": [
+    {
+      "id": "8b3c6223-343c-4fbf-88aa-775160bf3a44",
+      "name": "Persons",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "01f868f9-bdf1-408f-8110-957c9a1a2a26",
+          "name": "Create persons",
+          "request": {
+            "name": "Create persons",
+            "description": {
+              "content": "Creates one or more persons for the given customer. Insert-only; existing persons cannot be updated. Only available before compliance is completed.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "customers",
+                ":customerId",
+                "persons"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "customerId",
+                  "description": "(Required) The Slope customer ID or the partner external customer ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"country\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postalCode\": \"<string>\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"<string>\",\n        \"city\": \"<string>\",\n        \"country\": \"<string>\",\n        \"state\": \"<string>\",\n        \"postalCode\": \"<string>\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "23a26ce3-a38b-4b45-9c52-25539a817b8d",
+              "name": "The created persons.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "customers",
+                    ":customerId",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) The Slope customer ID or the partner external customer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"customerId\": \"string\",\n  \"isApplicant\": true,\n  \"isOwner\": false,\n  \"isController\": true,\n  \"firstName\": \"string\",\n  \"lastName\": \"string\",\n  \"dob\": \"string\",\n  \"title\": \"string\",\n  \"email\": \"string\",\n  \"phone\": \"string\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7df053e9-c29e-4f8d-b84f-e663deb8b11e",
+              "name": "Returned when improperly formatted or missing fields in request body",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "customers",
+                    ":customerId",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) The Slope customer ID or the partner external customer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cfea7cfa-3cb0-45a0-bad1-0245250f9e66",
+              "name": "Returned when improper keys or headers are used in the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "customers",
+                    ":customerId",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) The Slope customer ID or the partner external customer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "faa19bac-7b2c-46fb-abee-13da3915ca96",
+              "name": "Returned when the caller is not authorized to access the resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "customers",
+                    ":customerId",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) The Slope customer ID or the partner external customer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6c907f0e-b38f-459e-9804-1196ecdbbe18",
+              "name": "Returned when the customer is not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "customers",
+                    ":customerId",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) The Slope customer ID or the partner external customer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "487c7b72-66cf-4e88-9f9b-07121db40d1d",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "customers",
+                    ":customerId",
+                    "persons"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "customerId",
+                      "description": "(Required) The Slope customer ID or the partner external customer ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"persons\": [\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    },\n    {\n      \"firstName\": \"<string>\",\n      \"lastName\": \"<string>\",\n      \"address\": {\n        \"line1\": \"123 Main St\",\n        \"city\": \"San Francisco\",\n        \"country\": \"US\",\n        \"state\": \"CA\",\n        \"postalCode\": \"94107\",\n        \"line2\": \"<string>\"\n      },\n      \"dob\": \"<string>\",\n      \"isApplicant\": \"<boolean>\",\n      \"isOwner\": \"<boolean>\",\n      \"isController\": \"<boolean>\",\n      \"title\": \"<string>\",\n      \"email\": \"<string>\",\n      \"phone\": \"<string>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "511fb25d-7aa7-4310-b4ba-a2e37f679d6e",
+    "name": "Slope v4 Auth Persons API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}

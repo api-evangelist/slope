@@ -1,0 +1,46 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth Persons API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Persons",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create persons",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/customers/:customerId/persons",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Slope customer ID or the partner external customer ID"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Creates one or more persons for the given customer. Insert-only; existing persons cannot be updated. Only available before compliance is completed."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

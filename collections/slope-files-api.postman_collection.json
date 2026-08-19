@@ -1,0 +1,147 @@
+{
+  "item": [
+    {
+      "id": "94261783-fe14-4262-b3e9-4c09d8dba1e3",
+      "name": "Files",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3bf281ea-288e-4878-bff2-d7f53929d009",
+          "name": "Import a file",
+          "request": {
+            "name": "Import a file",
+            "description": {
+              "content": "Import a file from a URL. The file will be downloaded and optionally attached to an order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "files",
+                "import"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"url\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"purpose\": \"<string>\",\n  \"name\": \"<string>\",\n  \"mimeType\": \"<string>\",\n  \"expectedMd5\": \"<string>\",\n  \"expectedSizeBytes\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6ea2b4a6-3ab2-462f-8285-9f2bcc859f9b",
+              "name": "The created order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "files",
+                    "import"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"url\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"purpose\": \"<string>\",\n  \"name\": \"<string>\",\n  \"mimeType\": \"<string>\",\n  \"expectedMd5\": \"<string>\",\n  \"expectedSizeBytes\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"importStatus\": \"failed\",\n  \"orderId\": \"string\",\n  \"purpose\": \"string\",\n  \"importUrl\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "ff43a006-4dc8-4465-a43b-b449e998d2cb",
+    "name": "Slope v4 Auth Files API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}

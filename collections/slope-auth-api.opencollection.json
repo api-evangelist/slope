@@ -1,0 +1,60 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Auth",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate a new session",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/auth/session",
+            "headers": [
+              {
+                "name": "Slope-Access-Token",
+                "value": ""
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Generate a short-lived session token used initialize a Slope.js flow on behalf of a customer, skipping the need for the customer to login."
+        },
+        {
+          "info": {
+            "name": "Generate an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/auth/token",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Given a `authorizationCode`, generate a long-lived access token to make API requests on behalf of a customer."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

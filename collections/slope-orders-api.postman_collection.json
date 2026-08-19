@@ -1,0 +1,3480 @@
+{
+  "item": [
+    {
+      "id": "7ec8432a-5153-4808-a498-445b48e45d7f",
+      "name": "Orders",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "61af52fd-0866-43da-ba6d-a56bacea3098",
+          "name": "Create an order",
+          "request": {
+            "name": "Create an order",
+            "description": {
+              "content": "Creates a new order for checkout. Returns both a code for Slope.JS widget and full URL for redirect flow",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.",
+                "key": "Slope-Access-Token",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"total\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ],\n  \"customerId\": \"<string>\",\n  \"contactBusinessName\": \"<string>\",\n  \"contactEmail\": \"<string>\",\n  \"contactFirstName\": \"<string>\",\n  \"contactLastName\": \"<string>\",\n  \"contactDesiredLimit\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"billingAddress\": {\n    \"line1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"payoutAccountId\": \"<string>\",\n  \"payeeExternalId\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"resumeUrl\": \"<string>\",\n  \"cancelUrl\": \"<string>\",\n  \"successUrl\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"uiType\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "6b7bd42c-eba7-44b8-a255-a921add000e3",
+              "name": "The created order. Returns either a standard order or a composable order depending on the uiType.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.",
+                    "key": "Slope-Access-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ],\n  \"customerId\": \"<string>\",\n  \"contactBusinessName\": \"<string>\",\n  \"contactEmail\": \"<string>\",\n  \"contactFirstName\": \"<string>\",\n  \"contactLastName\": \"<string>\",\n  \"contactDesiredLimit\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"billingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"payoutAccountId\": \"<string>\",\n  \"payeeExternalId\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"resumeUrl\": \"<string>\",\n  \"cancelUrl\": \"<string>\",\n  \"successUrl\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"uiType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_123\",\n  \"externalId\": \"ext_order_123\",\n  \"customerId\": \"cust_123\",\n  \"number\": \"00000001\",\n  \"checkoutCode\": \"ABC123\",\n  \"checkoutUrl\": \"https://checkout.slope.so/ABC123\",\n  \"total\": 55000,\n  \"merchantFee\": 0,\n  \"customerFee\": 0,\n  \"customerFeePercentage\": null,\n  \"totalWithFees\": 55000,\n  \"amountCanceledPrincipal\": 0,\n  \"amountCanceledFee\": 0,\n  \"amountRefundedPrincipal\": 0,\n  \"amountRefundedFee\": 0,\n  \"status\": \"approved\",\n  \"finalizedAt\": null,\n  \"openedAt\": null,\n  \"currency\": \"usd\",\n  \"selectedTermName\": null,\n  \"selectedTermDays\": null,\n  \"selectedPaymentType\": null,\n  \"metadata\": null,\n  \"paymentSchedule\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "77f18c55-1fbf-4953-912e-017fea6a30e4",
+              "name": "Bad Request - Invalid request format or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.",
+                    "key": "Slope-Access-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ],\n  \"customerId\": \"<string>\",\n  \"contactBusinessName\": \"<string>\",\n  \"contactEmail\": \"<string>\",\n  \"contactFirstName\": \"<string>\",\n  \"contactLastName\": \"<string>\",\n  \"contactDesiredLimit\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"billingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"payoutAccountId\": \"<string>\",\n  \"payeeExternalId\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"resumeUrl\": \"<string>\",\n  \"cancelUrl\": \"<string>\",\n  \"successUrl\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"uiType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"customer\": {\n    \"externalId\": \"\",\n    \"customerMerchants\": []\n  },\n  \"code\": \"customer-no-preferred-payment-method\",\n  \"message\": \"Please add or update your repayment method on your Slope Portal in order to use Pay Later for Business. For assistance, contact <mailto:support@slopepay.com|support@slopepay.com>.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4b1c6118-e8ec-415a-a2b4-5f8e8e5f5e03",
+              "name": "Conflict - Request conflicts with current state of the resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.",
+                    "key": "Slope-Access-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ],\n  \"customerId\": \"<string>\",\n  \"contactBusinessName\": \"<string>\",\n  \"contactEmail\": \"<string>\",\n  \"contactFirstName\": \"<string>\",\n  \"contactLastName\": \"<string>\",\n  \"contactDesiredLimit\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"billingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"payoutAccountId\": \"<string>\",\n  \"payeeExternalId\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"resumeUrl\": \"<string>\",\n  \"cancelUrl\": \"<string>\",\n  \"successUrl\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"uiType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Conflict",
+              "code": 409,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 409,\n  \"order\": {\n    \"id\": \"ord_example_id\",\n    \"checkoutCode\": null,\n    \"checkoutUrl\": null,\n    \"customerFeePercentage\": null,\n    \"selectedTermName\": null,\n    \"selectedTermDays\": null,\n    \"selectedPaymentType\": null,\n    \"paymentSchedule\": [],\n    \"apr\": null\n  },\n  \"code\": \"order_external_id_conflict\",\n  \"message\": \"A different order ord_example_id with the same external ID already exists ext_order_123.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "992ec401-6ae1-4927-b80c-4d8213cd5be8",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.",
+                    "key": "Slope-Access-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ],\n  \"customerId\": \"<string>\",\n  \"contactBusinessName\": \"<string>\",\n  \"contactEmail\": \"<string>\",\n  \"contactFirstName\": \"<string>\",\n  \"contactLastName\": \"<string>\",\n  \"contactDesiredLimit\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"billingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"payoutAccountId\": \"<string>\",\n  \"payeeExternalId\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"resumeUrl\": \"<string>\",\n  \"cancelUrl\": \"<string>\",\n  \"successUrl\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"uiType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-customer-not-found\",\n  \"message\": \"Customer not found or does not belong to merchant\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a635156-ea67-43f4-a751-e31db7e1df67",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) The access token returned from exchanging the short lived authorizationCode /v4/auth/token endpoint.",
+                    "key": "Slope-Access-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"total\": \"<number>\",\n  \"currency\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"items\": [\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    },\n    {\n      \"quantity\": \"<number>\",\n      \"unitPrice\": \"<number>\",\n      \"price\": \"<number>\",\n      \"type\": \"<string>\",\n      \"name\": \"<string>\",\n      \"sku\": \"<string>\",\n      \"externalId\": \"<string>\",\n      \"description\": \"<string>\",\n      \"url\": \"<string>\",\n      \"imageUrl\": \"<string>\",\n      \"metadata\": \"<object>\",\n      \"payee\": {\n        \"name\": \"<string>\",\n        \"province\": \"<string>\",\n        \"country\": \"<string>\"\n      }\n    }\n  ],\n  \"customerId\": \"<string>\",\n  \"contactBusinessName\": \"<string>\",\n  \"contactEmail\": \"<string>\",\n  \"contactFirstName\": \"<string>\",\n  \"contactLastName\": \"<string>\",\n  \"contactDesiredLimit\": \"<string>\",\n  \"contactPhone\": \"<string>\",\n  \"billingAddress\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"payoutAccountId\": \"<string>\",\n  \"payeeExternalId\": \"<string>\",\n  \"payeeName\": \"<string>\",\n  \"resumeUrl\": \"<string>\",\n  \"cancelUrl\": \"<string>\",\n  \"successUrl\": \"<string>\",\n  \"metadata\": \"<object>\",\n  \"uiType\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f2c3653-e045-4016-afaf-f4a52b6d5275",
+          "name": "List orders",
+          "request": {
+            "name": "List orders",
+            "description": {
+              "content": "Lists all orders using pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "When specified, only orders with the given status are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "customerId",
+                  "value": "<string>",
+                  "description": "When specified, only orders with the given Slope assigned Customer ID or partner assigned Customer ID are returned."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The maximum number of objects to list."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "The object attribute(s) to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "The object attribute(s) to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "The direction to sort by, one of `asc` or `desc`."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCursor",
+                  "value": "<string>",
+                  "description": "The cursor used to fetch the previous page of objects."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCursor",
+                  "value": "<string>",
+                  "description": "The cursor used to fetch the next page of objects."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3ed6afce-2816-4d7a-9ce2-2bee3a649468",
+              "name": "The paginated list of orders.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "customerId",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "beforeCursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "afterCursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"total\": 9463.86000511983,\n    \"beforeCursor\": \"string\",\n    \"afterCursor\": \"string\"\n  },\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"number\": \"string\",\n      \"checkoutCode\": \"string\",\n      \"checkoutUrl\": \"string\",\n      \"total\": 1839.0480963888856,\n      \"merchantFee\": 8647.254419575303,\n      \"customerFee\": 8290.349331635774,\n      \"customerFeePercentage\": 24.78763969782638,\n      \"totalWithFees\": 7521.008378613994,\n      \"amountCanceledPrincipal\": 9943.829411435692,\n      \"amountCanceledFee\": 6359.002532303302,\n      \"status\": \"finalizing\",\n      \"finalizedAt\": \"2026-05-22T17:20:35.129Z\",\n      \"openedAt\": \"2018-12-17T08:19:19.133Z\",\n      \"currency\": \"<string>\",\n      \"amountOutstanding\": 860.9532747450521,\n      \"externalId\": \"string\",\n      \"customerId\": \"string\",\n      \"totalFinalized\": 2125.8953703418583,\n      \"selectedTermName\": \"string\",\n      \"selectedPaymentType\": \"customer_wallet\",\n      \"selectedTermDays\": 5571.864259548683,\n      \"paymentSchedule\": [\n        {\n          \"amount\": 4604.529108611823,\n          \"date\": \"2012-03-12T18:08:37.543Z\"\n        },\n        {\n          \"amount\": 4133.945193911674,\n          \"date\": \"1988-04-11T05:00:51.312Z\"\n        }\n      ],\n      \"metadata\": {},\n      \"apr\": 6846.373487543457,\n      \"quotes\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"expiresAt\": \"string\",\n          \"status\": \"rejected\",\n          \"processingFeeTotal\": 3801.5917094946317,\n          \"totalWithFinancingFees\": 1461.719300346933,\n          \"totalWithFees\": 9215.680200683946,\n          \"financingFeePct\": 5602.188247251376,\n          \"financingFeeTotal\": 511.3589066496793,\n          \"apr\": 4685.308222528326,\n          \"payments\": [\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"expiresAt\": \"string\",\n          \"status\": \"approved\",\n          \"processingFeeTotal\": 9439.831858862943,\n          \"totalWithFinancingFees\": 741.9623500583372,\n          \"totalWithFees\": 9042.783431093265,\n          \"financingFeePct\": 1239.4630139806172,\n          \"financingFeeTotal\": 5104.756450331799,\n          \"apr\": 9881.380607127514,\n          \"payments\": [\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"number\": \"string\",\n      \"checkoutCode\": \"string\",\n      \"checkoutUrl\": \"string\",\n      \"total\": 8664.52283280657,\n      \"merchantFee\": 1801.6972128990637,\n      \"customerFee\": 6905.204982248826,\n      \"customerFeePercentage\": 6991.814968721781,\n      \"totalWithFees\": 2050.5167436492875,\n      \"amountCanceledPrincipal\": 7613.0267924114405,\n      \"amountCanceledFee\": 1093.8622370082874,\n      \"status\": \"open\",\n      \"finalizedAt\": \"1949-06-08T01:39:05.831Z\",\n      \"openedAt\": \"1979-07-18T09:08:42.217Z\",\n      \"currency\": \"<string>\",\n      \"amountOutstanding\": 7470.559750544645,\n      \"externalId\": \"string\",\n      \"customerId\": \"string\",\n      \"totalFinalized\": 3483.751192888662,\n      \"selectedTermName\": \"string\",\n      \"selectedPaymentType\": \"wire\",\n      \"selectedTermDays\": 2402.348211616615,\n      \"paymentSchedule\": [\n        {\n          \"amount\": 9970.777902233247,\n          \"date\": \"1982-11-02T02:58:58.162Z\"\n        },\n        {\n          \"amount\": 8981.712032248824,\n          \"date\": \"2010-09-15T15:41:37.963Z\"\n        }\n      ],\n      \"metadata\": {},\n      \"apr\": 7169.1875378078685,\n      \"quotes\": [\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"expiresAt\": \"string\",\n          \"status\": \"rejected\",\n          \"processingFeeTotal\": 6488.589470275615,\n          \"totalWithFinancingFees\": 2625.134337695141,\n          \"totalWithFees\": 3528.9751190906636,\n          \"financingFeePct\": 1351.409188496262,\n          \"financingFeeTotal\": 3465.221476297895,\n          \"apr\": 9434.722350140797,\n          \"payments\": [\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        },\n        {\n          \"id\": \"string\",\n          \"name\": \"string\",\n          \"expiresAt\": \"string\",\n          \"status\": \"rejected\",\n          \"processingFeeTotal\": 1631.2147273469336,\n          \"totalWithFinancingFees\": 2554.5507818795645,\n          \"totalWithFees\": 5203.964195179642,\n          \"financingFeePct\": 2442.0606290952505,\n          \"financingFeeTotal\": 3733.8995643306394,\n          \"apr\": 6280.553425254767,\n          \"payments\": [\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            },\n            {\n              \"number\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"date\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"principal\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"customerFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"amount\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              },\n              \"financingFee\": {\n                \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n              }\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5ff7a9e6-4be9-4b78-8259-c28e82a8cab2",
+          "name": "Get an order",
+          "request": {
+            "name": "Get an order",
+            "description": {
+              "content": "Gets an order by ID.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "58a79e96-e1d2-402a-88e2-947188fbf5b3",
+              "name": "The current order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_123\",\n  \"externalId\": \"ext_order_123\",\n  \"customerId\": \"cust_123\",\n  \"number\": \"00000001\",\n  \"checkoutCode\": null,\n  \"checkoutUrl\": null,\n  \"total\": 1000000,\n  \"totalFinalized\": 1000000,\n  \"merchantFee\": 0,\n  \"customerFee\": 25000,\n  \"customerFeePercentage\": 2.5,\n  \"totalWithFees\": 1025000,\n  \"amountCanceledPrincipal\": 0,\n  \"amountCanceledFee\": 0,\n  \"amountRefundedPrincipal\": 0,\n  \"amountRefundedFee\": 0,\n  \"status\": \"finalized\",\n  \"finalizedAt\": \"2024-01-15T10:30:00.000Z\",\n  \"openedAt\": \"2024-01-15T10:00:00.000Z\",\n  \"currency\": \"usd\",\n  \"selectedTermName\": \"Net 30\",\n  \"selectedTermDays\": 30,\n  \"selectedPaymentType\": \"ach\",\n  \"metadata\": null,\n  \"paymentSchedule\": [\n    {\n      \"amount\": 1025000,\n      \"date\": \"2024-02-14\"\n    }\n  ],\n  \"amountOutstanding\": 1025000,\n  \"apr\": 30\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3e1bb9d6-cb4d-4856-8d1f-635fa98f555c",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4cf84178-8357-4af4-8ceb-610f52680f5f",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f35c6a55-8187-4838-8fdc-64344fab6d1f",
+          "name": "Cancel an order",
+          "request": {
+            "name": "Cancel an order",
+            "description": {
+              "content": "An API to cancel an order. This is not allowed once order is finalized. You may also cancel on merchant dashboard.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id",
+                "cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3c5a14d2-5735-4339-af0a-b9d7cc238a65",
+              "name": "The canceled order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_123\",\n  \"externalId\": \"ext_order_123\",\n  \"customerId\": \"cust_123\",\n  \"number\": \"00000001\",\n  \"checkoutCode\": null,\n  \"checkoutUrl\": null,\n  \"total\": 55000,\n  \"merchantFee\": 0,\n  \"customerFee\": 0,\n  \"customerFeePercentage\": null,\n  \"totalWithFees\": 0,\n  \"amountCanceledPrincipal\": 55000,\n  \"amountCanceledFee\": 0,\n  \"amountRefundedPrincipal\": 0,\n  \"amountRefundedFee\": 0,\n  \"status\": \"canceled\",\n  \"finalizedAt\": null,\n  \"openedAt\": null,\n  \"currency\": \"usd\",\n  \"selectedTermName\": null,\n  \"selectedTermDays\": null,\n  \"selectedPaymentType\": null,\n  \"metadata\": null,\n  \"paymentSchedule\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d92c6951-ac9c-4765-a4d0-7d1969ab7ddd",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "42da758d-ef09-416a-8efa-56017da65092",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-cannot-be-canceled\",\n  \"message\": \"Order with status finalized cannot be canceled. Finalized orders cannot be canceled. To update finalized orders, use the adjustments endpoint.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "677c0ce4-1d4f-44d9-9cb8-5c94e1d6fb0a",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "346f97d0-c25d-493f-80f1-10c57225fb61",
+          "name": "Finalize an order",
+          "request": {
+            "name": "Finalize an order",
+            "description": {
+              "content": "Moves an order from the \"open\" state to the \"finalized\" state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id",
+                "finalize"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\",\n  \"metadata\": \"<object>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "fe341707-7727-4fe4-a869-9e71a020f3f4",
+              "name": "The finalized order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "finalize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 50000,\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_123\",\n  \"externalId\": \"ext_order_123\",\n  \"customerId\": \"cust_123\",\n  \"number\": \"00000001\",\n  \"checkoutCode\": null,\n  \"checkoutUrl\": null,\n  \"total\": 1000000,\n  \"totalFinalized\": 1000000,\n  \"merchantFee\": 0,\n  \"customerFee\": 25000,\n  \"customerFeePercentage\": 2.5,\n  \"totalWithFees\": 1025000,\n  \"amountCanceledPrincipal\": 0,\n  \"amountCanceledFee\": 0,\n  \"amountRefundedPrincipal\": 0,\n  \"amountRefundedFee\": 0,\n  \"status\": \"finalized\",\n  \"finalizedAt\": \"2024-01-15T10:30:00.000Z\",\n  \"openedAt\": \"2024-01-15T10:00:00.000Z\",\n  \"currency\": \"usd\",\n  \"selectedTermName\": \"Net 30\",\n  \"selectedTermDays\": 30,\n  \"selectedPaymentType\": \"ach\",\n  \"metadata\": null,\n  \"paymentSchedule\": [\n    {\n      \"amount\": 1025000,\n      \"date\": \"2024-02-14\"\n    }\n  ],\n  \"amountOutstanding\": 1025000,\n  \"apr\": 30\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "38ce5859-35eb-4239-a95a-f8668aafe9f4",
+              "name": "Bad Request - Invalid request format or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "finalize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 50000,\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"order\": {\n    \"id\": \"ord_example_not_open\",\n    \"status\": \"approved\"\n  },\n  \"code\": \"order-not-open\",\n  \"message\": \"The order does not have an open status and cannot be finalized.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "56691fd6-d8ef-4661-bd81-235084ac43b5",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "finalize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 50000,\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "26e0a136-7c33-472a-99ec-3c6f520ce5b9",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "finalize"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 50000,\n  \"metadata\": {\n    \"key\": \"value\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5fc186aa-ec23-46f4-8964-493995a796eb",
+          "name": "Open an order",
+          "request": {
+            "name": "Open an order",
+            "description": {
+              "content": "Optional API call during checkout flow. Only used by developers that utilize the submitted status. Moves an order from the \"submitted\" state to the \"open\" state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id",
+                "open"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"selectedQuoteId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "4f370209-9e16-41c3-b568-86ece8ebe022",
+              "name": "The opened order.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "open"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedQuoteId\": \"quote_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_123\",\n  \"externalId\": \"ext_order_123\",\n  \"customerId\": \"cust_123\",\n  \"number\": \"00000001\",\n  \"checkoutCode\": null,\n  \"checkoutUrl\": null,\n  \"total\": 55000,\n  \"merchantFee\": 0,\n  \"customerFee\": 0,\n  \"customerFeePercentage\": null,\n  \"totalWithFees\": 55000,\n  \"amountCanceledPrincipal\": 0,\n  \"amountCanceledFee\": 0,\n  \"amountRefundedPrincipal\": 0,\n  \"amountRefundedFee\": 0,\n  \"status\": \"open\",\n  \"finalizedAt\": null,\n  \"openedAt\": \"2024-01-15T10:30:00Z\",\n  \"currency\": \"usd\",\n  \"selectedTermName\": \"Net 30\",\n  \"selectedTermDays\": 30,\n  \"selectedPaymentType\": \"ach\",\n  \"metadata\": null,\n  \"paymentSchedule\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5a85f829-c765-49e0-844d-cd666f222fdf",
+              "name": "Bad Request - Invalid request format or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "open"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedQuoteId\": \"quote_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"code\": \"invalid-payment-method\",\n  \"message\": \"The payment method is missing or invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "338d5af4-b006-4c4c-b134-25d65f5985c2",
+              "name": "Payment Required - Payment is required to complete the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "open"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedQuoteId\": \"quote_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Payment Required",
+              "code": 402,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 402,\n  \"code\": \"payment_authorization_failed\",\n  \"message\": \"Payment authorization failed\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "791457a1-d18c-41fb-883a-3ec25d0d5d7b",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "open"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedQuoteId\": \"quote_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e554552-fa87-4577-bc8b-2856063cbc68",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "open"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedQuoteId\": \"quote_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-status-invalid\",\n  \"message\": \"The order's current status is unexpected or invalid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93a8d970-963c-4319-8ecd-72343316f6ac",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "open"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"selectedQuoteId\": \"quote_123\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "da9e561a-0ab3-461b-b83d-666118712589",
+          "name": "Cancel a partial amount of an order",
+          "request": {
+            "name": "Cancel a partial amount of an order",
+            "description": {
+              "content": "Cancel a partial amount of an order.\n  - The cancelled amount will be posted as a credit toward the order balance once the order is finalized. This       will not affect the original `total` amount.\n  - This is supported for orders in approved, pending, submitted, open, opening, and finalizing statuses.\n  - This is not allowed once order is finalized. To update finalized orders, use the adjustments endpoint.\n  - You may also cancel on merchant dashboard.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id",
+                "partial-cancel"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"amount\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "92d0a6c4-11e1-4e4a-8d4c-e4adb4875998",
+              "name": "The partially cancelled order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "partial-cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ord_123\",\n  \"externalId\": \"ext_order_123\",\n  \"customerId\": \"cust_123\",\n  \"number\": \"00000001\",\n  \"checkoutCode\": null,\n  \"checkoutUrl\": null,\n  \"total\": 55000,\n  \"merchantFee\": 0,\n  \"customerFee\": 0,\n  \"customerFeePercentage\": null,\n  \"totalWithFees\": 55000,\n  \"amountCanceledPrincipal\": 10000,\n  \"amountCanceledFee\": 0,\n  \"amountRefundedPrincipal\": 0,\n  \"amountRefundedFee\": 0,\n  \"status\": \"approved\",\n  \"finalizedAt\": null,\n  \"openedAt\": null,\n  \"currency\": \"usd\",\n  \"selectedTermName\": null,\n  \"selectedTermDays\": null,\n  \"selectedPaymentType\": null,\n  \"metadata\": null,\n  \"paymentSchedule\": []\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a7180cfc-084f-4f40-8a7e-f86fa65f84b9",
+              "name": "Bad Request - Invalid request format or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "partial-cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"code\": \"order-cancel-amount-exceeds-total\",\n  \"message\": \"Amount to cancel is greater than the order total\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7ba1950d-edc0-4c36-80d0-6ef2b4bd1632",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "partial-cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "df6bcb7d-66f8-49df-8b31-8ed67eb0896b",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "partial-cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-cannot-be-canceled\",\n  \"message\": \"Order with status finalized cannot be canceled. Finalized orders cannot be canceled. To update finalized orders, use the adjustments endpoint.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f35fed3b-d25a-496b-984b-3777be6b084b",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "partial-cancel"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 100\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9cc4ecbf-6cdc-45e4-afec-88a9a91d5f12",
+          "name": "Get repayment estimate",
+          "request": {
+            "name": "Get repayment estimate",
+            "description": {
+              "content": "Gets an order repayment estimate by Order ID.\n\nA `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id",
+                "repay-estimate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The link token generated when the customer granted you access to their Slope account.",
+                "key": "Slope-Link-Token",
+                "value": "<string>"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "514ed0c4-6348-47d7-b3d2-ceb25144a819",
+              "name": "The order repayment estimate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentAmount\": 55000,\n  \"paymentMethod\": {\n    \"id\": \"pm_123\",\n    \"type\": \"ach\",\n    \"name\": \"Business Checking\",\n    \"last4\": \"1234\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9c0914f5-c100-40dd-97a8-100362f05d79",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-not-finalized\",\n  \"message\": \"Order must be finalized to be repaid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8b322f73-1a69-46d1-8df5-5ecd3d7a809a",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-estimate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "364dda13-d2f4-4a01-b613-43db5d3228d7",
+          "name": "Repay an order in full",
+          "request": {
+            "name": "Repay an order in full",
+            "description": {
+              "content": "Fully repay an order by Order ID.\n\nA `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":id",
+                "repay-full"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "The link token generated when the customer granted you access to their Slope account.",
+                "key": "Slope-Link-Token",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"paymentAmount\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "a5b7a178-f8df-4d61-aff2-f85cda37b540",
+              "name": "The updated repayment estimate.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-full"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAmount\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"paymentAmount\": 0,\n  \"paymentMethod\": {\n    \"id\": \"pm_123\",\n    \"type\": \"ach\",\n    \"name\": \"Business Checking\",\n    \"last4\": \"1234\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e3e5766-7630-41a7-ad38-9a2bc822935c",
+              "name": "Bad Request - Invalid request format or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-full"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAmount\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"code\": \"early-repayment-completed\",\n  \"message\": \"The order is fully paid.\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ff141f26-8f3b-4420-bc5f-45e9534c10f2",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-full"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAmount\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-not-finalized\",\n  \"message\": \"Order must be finalized to be repaid\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "97fbac9e-9fd6-4121-afea-980fb62e70e5",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":id",
+                    "repay-full"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "The link token generated when the customer granted you access to their Slope account.",
+                    "key": "Slope-Link-Token",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"paymentAmount\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0372c11d-f789-4424-9663-02ce89d7e7d8",
+          "name": "Create an order adjustment",
+          "request": {
+            "name": "Create an order adjustment",
+            "description": {
+              "content": "Create an adjustment (eg. refund) for an order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":orderId",
+                "adjustments"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"<string>\",\n  \"externalId\": \"<string>\",\n  \"refund\": {\n    \"amount\": \"<number>\",\n    \"payoutAccountId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11ff2d43-77de-4a50-874a-3d5860d6c5fc",
+              "name": "The created adjustment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"refund\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"refund\": {\n    \"amount\": 1000,\n    \"payoutAccountId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Created",
+              "code": 201,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ordadj_123\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"type\": \"refund\",\n  \"orderId\": \"ord_123\",\n  \"externalOrderId\": \"ext_order_123\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"status\": \"succeeded\",\n  \"refund\": {\n    \"amount\": -1000000,\n    \"merchantFee\": -10000,\n    \"payoutAccountId\": \"payoutacct_123\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3fa6b858-83ad-439b-9a96-8f16a59406b1",
+              "name": "Bad Request - Invalid request format or validation errors",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"refund\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"refund\": {\n    \"amount\": 1000,\n    \"payoutAccountId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 400,\n  \"code\": \"order-adjustment-type-invalid\",\n  \"message\": \"Invalid order adjustment type\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c786b5cd-17ee-4228-9629-60dbf079863b",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"refund\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"refund\": {\n    \"amount\": 1000,\n    \"payoutAccountId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "48976541-c599-4be5-878a-eb142d01050a",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"refund\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"refund\": {\n    \"amount\": 1000,\n    \"payoutAccountId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"payout-account-not-found\",\n  \"message\": \"Payout account not found or does not belong to merchant\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "37c79e61-adc9-45b6-be07-0132d0cd5ba7",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"type\": \"refund\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"refund\": {\n    \"amount\": 1000,\n    \"payoutAccountId\": \"<string>\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "25d4839a-c0fd-4edb-9eba-e181a467a569",
+          "name": "Get an order adjustment",
+          "request": {
+            "name": "Get an order adjustment",
+            "description": {
+              "content": "Get details about an order adjustment.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":orderId",
+                "adjustments",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) The Slope order ID or the partner external order ID"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "id",
+                  "description": "(Required) The Slope order adjustment ID or the partner external order adjustment ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "05a32d66-6fa9-43f4-89f3-b842511736cd",
+              "name": "The order adjustment",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order adjustment ID or the partner external order adjustment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"ordadj_123\",\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"type\": \"refund\",\n  \"orderId\": \"ord_123\",\n  \"externalOrderId\": \"ext_order_123\",\n  \"externalId\": \"ext_ordadj_123\",\n  \"status\": \"succeeded\",\n  \"refund\": {\n    \"amount\": -1000000,\n    \"merchantFee\": -10000,\n    \"payoutAccountId\": \"payoutacct_123\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "af136254-089e-4d9f-bf6b-299a1e33f54e",
+              "name": "Not Found - The requested resource was not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order adjustment ID or the partner external order adjustment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 404,\n  \"code\": \"order-not-found\",\n  \"message\": \"Order not found\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1726fb5b-0f13-4745-8780-ca6875f583e2",
+              "name": "Unprocessable Entity - Request validation failed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order adjustment ID or the partner external order adjustment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unprocessable Entity (WebDAV) (RFC 4918)",
+              "code": 422,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 422,\n  \"code\": \"order-adjustment-not-found\",\n  \"message\": \"Order adjustment not found or does not belong to merchant\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3673208b-2c24-41cf-b899-30f42e8cf0fc",
+              "name": "Internal Server Error - An unexpected error occurred",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "adjustments",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) The Slope order ID or the partner external order ID"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) The Slope order adjustment ID or the partner external order adjustment ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusCode\": 500,\n  \"code\": \"string\",\n  \"message\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "98302625-524a-42d7-8b0d-c8d8eed24c25",
+          "name": "List order items",
+          "request": {
+            "name": "List order items",
+            "description": {
+              "content": "Get all items for a specific order.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "orders",
+                ":orderId",
+                "items"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "orderId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1589035d-55d1-4903-a5bb-b52219c956d2",
+              "name": "List of order items.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "orders",
+                    ":orderId",
+                    "items"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "orderId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    [],\n    []\n  ],\n  \"metadata\": {\n    \"total\": 9155.370891940127,\n    \"beforeCursor\": \"string\",\n    \"afterCursor\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "255ad738-120e-4453-be1a-5e79ffdefb48",
+    "name": "Slope v4 Auth Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,843 @@
+{
+  "item": [
+    {
+      "id": "cc371377-17cb-42f9-a250-a9594ef752cc",
+      "name": "Simulation",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a1048faa-e64f-439a-b4d6-dfc4207f0e55",
+          "name": "Approve a pending order",
+          "request": {
+            "name": "Approve a pending order",
+            "description": {
+              "content": "(Sandbox Only) Approve a pending order for testing purposes",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "approve-order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "caf969c6-cc7e-4557-a3c7-f000979377c7",
+              "name": "The approved order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "approve-order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"number\": \"string\",\n  \"checkoutCode\": \"string\",\n  \"checkoutUrl\": \"string\",\n  \"total\": 5475.115538523556,\n  \"merchantFee\": 3911.523466547482,\n  \"customerFee\": 138.54798163111525,\n  \"customerFeePercentage\": 568.3878340297665,\n  \"totalWithFees\": 2700.432039210936,\n  \"amountCanceledPrincipal\": 5693.153655703489,\n  \"amountCanceledFee\": 7818.380416148536,\n  \"status\": \"finalizing\",\n  \"finalizedAt\": \"2002-08-10T10:45:48.595Z\",\n  \"openedAt\": \"2017-03-22T20:31:47.373Z\",\n  \"currency\": \"mxn\",\n  \"amountOutstanding\": 281.59144954833516,\n  \"externalId\": \"string\",\n  \"customerId\": \"string\",\n  \"totalFinalized\": 5013.504362709849,\n  \"selectedTermName\": \"string\",\n  \"selectedPaymentType\": \"customer_wallet\",\n  \"selectedTermDays\": 884.1221817458022,\n  \"paymentSchedule\": [\n    {\n      \"amount\": 118.59707157313437,\n      \"date\": \"1967-11-06T06:08:46.949Z\"\n    },\n    {\n      \"amount\": 6522.986371409117,\n      \"date\": \"1963-06-29T01:19:19.272Z\"\n    }\n  ],\n  \"metadata\": {},\n  \"apr\": 774.9567312231176,\n  \"quotes\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7902.341995168314,\n      \"totalWithFinancingFees\": 2485.58570373552,\n      \"totalWithFees\": 7383.336809472587,\n      \"financingFeePct\": 1173.9090632946081,\n      \"financingFeeTotal\": 4295.291543884396,\n      \"apr\": 3714.129637247993,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 314.6671528266609,\n      \"totalWithFinancingFees\": 9994.598786756316,\n      \"totalWithFees\": 2315.115427452099,\n      \"financingFeePct\": 1466.0639424245426,\n      \"financingFeeTotal\": 8070.847285324467,\n      \"apr\": 8585.188497895346,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "33f1dd78-5967-4d03-8595-2370155de71d",
+          "name": "Close a customer account",
+          "request": {
+            "name": "Close a customer account",
+            "description": {
+              "content": "(Sandbox Only) Close a customer account for testing purposes. This allows re-using the same email for signup/application flows.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "close-customer-account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "dc1b4a11-2b0d-46d3-8978-315f460fc9f0",
+              "name": "The customer account was successfully closed",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "close-customer-account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\",\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"status\": \"string\",\n  \"customerId\": \"string\",\n  \"email\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22cea7ad-ac99-46c6-a0e4-7488154f518f",
+          "name": "Create a testing customer",
+          "request": {
+            "name": "Create a testing customer",
+            "description": {
+              "content": "(Sandbox Only) Creates a test customer with a user password for the simulating the checkout process",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "customer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shortcutTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": \"<string>\",\n  \"businessName\": \"<string>\",\n  \"address\": {\n    \"line1\": \"<string>\",\n    \"city\": \"<string>\",\n    \"country\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"password\": \"<string>\",\n  \"isLinked\": \"<boolean>\",\n  \"hasMasterLoanAgreement\": \"<boolean>\",\n  \"hasPreferences\": \"<boolean>\",\n  \"email\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1f539534-e3f7-46fe-8524-2c45bf4568bc",
+              "name": "The created test customer along with the email and password for login.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "customer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shortcutTypes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"phone\": \"<string>\",\n  \"businessName\": \"<string>\",\n  \"address\": {\n    \"line1\": \"123 Main St\",\n    \"city\": \"San Francisco\",\n    \"country\": \"US\",\n    \"state\": \"CA\",\n    \"postalCode\": \"94107\",\n    \"line2\": \"<string>\"\n  },\n  \"taxId\": \"<string>\",\n  \"password\": \"<string>\",\n  \"isLinked\": \"<boolean>\",\n  \"hasMasterLoanAgreement\": \"<boolean>\",\n  \"hasPreferences\": \"<boolean>\",\n  \"email\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"email\": \"string\",\n  \"password\": \"string\",\n  \"customerId\": \"string\",\n  \"linkToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6b0ac204-769f-4379-bbd4-465f7634d964",
+          "name": "Update a customer eligibility",
+          "request": {
+            "name": "Update a customer eligibility",
+            "description": {
+              "content": "(Sandbox Only) Updates a customer eligibility status and credit limit.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "customer",
+                "eligibility"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"complianceCompleted\": \"<boolean>\",\n  \"eligible\": \"<boolean>\",\n  \"creditLimit\": \"<number>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "170c1adc-c563-429b-aac3-70d5212e7458",
+              "name": "The updated customer",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "customer",
+                    "eligibility"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\",\n  \"complianceCompleted\": \"<boolean>\",\n  \"eligible\": \"<boolean>\",\n  \"creditLimit\": \"<number>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"email\": \"string\",\n  \"businessName\": \"string\",\n  \"phone\": \"string\",\n  \"externalId\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c97809c8-1909-4ea6-ab90-3f81a42e600a",
+          "name": "Create a test bank account",
+          "request": {
+            "name": "Create a test bank account",
+            "description": {
+              "content": "(Sandbox Only) Create a bank account payment method for testing purposes",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "payment-methods",
+                "bank-account"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "e68b4a32-0844-424e-b5df-6fe31003fec2",
+              "name": "The created payment method",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "payment-methods",
+                    "bank-account"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"number\": \"string\",\n  \"checkoutCode\": \"string\",\n  \"checkoutUrl\": \"string\",\n  \"total\": 3668.798000728325,\n  \"merchantFee\": 260.54012430580366,\n  \"customerFee\": 4002.101777653524,\n  \"customerFeePercentage\": 3281.2777174995,\n  \"totalWithFees\": 8889.314702755664,\n  \"amountCanceledPrincipal\": 2820.0217236535987,\n  \"amountCanceledFee\": 2399.8864104367003,\n  \"status\": \"approved\",\n  \"finalizedAt\": \"2001-06-19T12:23:02.855Z\",\n  \"openedAt\": \"2025-06-05T17:20:14.188Z\",\n  \"currency\": \"mxn\",\n  \"amountOutstanding\": 5447.6396511803605,\n  \"externalId\": \"string\",\n  \"customerId\": \"string\",\n  \"totalFinalized\": 3978.567642026377,\n  \"selectedTermName\": \"string\",\n  \"selectedPaymentType\": \"virtual_card\",\n  \"selectedTermDays\": 2284.798115282385,\n  \"paymentSchedule\": [\n    {\n      \"amount\": 1664.4420041921014,\n      \"date\": \"1978-09-03T21:35:27.541Z\"\n    },\n    {\n      \"amount\": 3684.1242525114735,\n      \"date\": \"1996-12-25T02:14:34.431Z\"\n    }\n  ],\n  \"metadata\": {},\n  \"apr\": 1540.8217579550687,\n  \"quotes\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7346.858375209804,\n      \"totalWithFinancingFees\": 7884.605553933018,\n      \"totalWithFees\": 276.49794842221854,\n      \"financingFeePct\": 2082.1907230264824,\n      \"financingFeeTotal\": 4123.763701643355,\n      \"apr\": 2670.388622865818,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7085.472922608519,\n      \"totalWithFinancingFees\": 2655.239402563119,\n      \"totalWithFees\": 7484.491019168382,\n      \"financingFeePct\": 4634.255642657249,\n      \"financingFeeTotal\": 2585.0221097095728,\n      \"apr\": 9246.725163379608,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "b8bd3180-af5b-4c05-9935-01258ee28f2e",
+          "name": "Create a test card",
+          "request": {
+            "name": "Create a test card",
+            "description": {
+              "content": "(Sandbox Only) Create a card payment method for testing purposes",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "payment-methods",
+                "card"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"customerId\": \"<string>\",\n  \"cardNumber\": \"4242424242424242\",\n  \"cardExpirationMonth\": \"01\",\n  \"cardExpirationYear\": \"2050\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3ec773e0-610f-46e7-acb6-9292ff360fe3",
+              "name": "The created payment method",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "payment-methods",
+                    "card"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customerId\": \"<string>\",\n  \"cardNumber\": \"4242424242424242\",\n  \"cardExpirationMonth\": \"01\",\n  \"cardExpirationYear\": \"2050\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"number\": \"string\",\n  \"checkoutCode\": \"string\",\n  \"checkoutUrl\": \"string\",\n  \"total\": 3668.798000728325,\n  \"merchantFee\": 260.54012430580366,\n  \"customerFee\": 4002.101777653524,\n  \"customerFeePercentage\": 3281.2777174995,\n  \"totalWithFees\": 8889.314702755664,\n  \"amountCanceledPrincipal\": 2820.0217236535987,\n  \"amountCanceledFee\": 2399.8864104367003,\n  \"status\": \"approved\",\n  \"finalizedAt\": \"2001-06-19T12:23:02.855Z\",\n  \"openedAt\": \"2025-06-05T17:20:14.188Z\",\n  \"currency\": \"mxn\",\n  \"amountOutstanding\": 5447.6396511803605,\n  \"externalId\": \"string\",\n  \"customerId\": \"string\",\n  \"totalFinalized\": 3978.567642026377,\n  \"selectedTermName\": \"string\",\n  \"selectedPaymentType\": \"virtual_card\",\n  \"selectedTermDays\": 2284.798115282385,\n  \"paymentSchedule\": [\n    {\n      \"amount\": 1664.4420041921014,\n      \"date\": \"1978-09-03T21:35:27.541Z\"\n    },\n    {\n      \"amount\": 3684.1242525114735,\n      \"date\": \"1996-12-25T02:14:34.431Z\"\n    }\n  ],\n  \"metadata\": {},\n  \"apr\": 1540.8217579550687,\n  \"quotes\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7346.858375209804,\n      \"totalWithFinancingFees\": 7884.605553933018,\n      \"totalWithFees\": 276.49794842221854,\n      \"financingFeePct\": 2082.1907230264824,\n      \"financingFeeTotal\": 4123.763701643355,\n      \"apr\": 2670.388622865818,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7085.472922608519,\n      \"totalWithFinancingFees\": 2655.239402563119,\n      \"totalWithFees\": 7484.491019168382,\n      \"financingFeePct\": 4634.255642657249,\n      \"financingFeeTotal\": 2585.0221097095728,\n      \"apr\": 9246.725163379608,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "52e02925-a09c-4c59-877e-edb912e78b1d",
+          "name": "Reject an order",
+          "request": {
+            "name": "Reject an order",
+            "description": {
+              "content": "(Sandbox Only) Reject an order for testing purposes. This is a terminal state.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "simulation",
+                "reject-order"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"orderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "3b02b59c-ac6c-4a0f-bf0c-9700b1849aec",
+              "name": "The rejected order",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "simulation",
+                    "reject-order"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"orderId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"string\",\n  \"number\": \"string\",\n  \"checkoutCode\": \"string\",\n  \"checkoutUrl\": \"string\",\n  \"total\": 3668.798000728325,\n  \"merchantFee\": 260.54012430580366,\n  \"customerFee\": 4002.101777653524,\n  \"customerFeePercentage\": 3281.2777174995,\n  \"totalWithFees\": 8889.314702755664,\n  \"amountCanceledPrincipal\": 2820.0217236535987,\n  \"amountCanceledFee\": 2399.8864104367003,\n  \"status\": \"approved\",\n  \"finalizedAt\": \"2001-06-19T12:23:02.855Z\",\n  \"openedAt\": \"2025-06-05T17:20:14.188Z\",\n  \"currency\": \"mxn\",\n  \"amountOutstanding\": 5447.6396511803605,\n  \"externalId\": \"string\",\n  \"customerId\": \"string\",\n  \"totalFinalized\": 3978.567642026377,\n  \"selectedTermName\": \"string\",\n  \"selectedPaymentType\": \"virtual_card\",\n  \"selectedTermDays\": 2284.798115282385,\n  \"paymentSchedule\": [\n    {\n      \"amount\": 1664.4420041921014,\n      \"date\": \"1978-09-03T21:35:27.541Z\"\n    },\n    {\n      \"amount\": 3684.1242525114735,\n      \"date\": \"1996-12-25T02:14:34.431Z\"\n    }\n  ],\n  \"metadata\": {},\n  \"apr\": 1540.8217579550687,\n  \"quotes\": [\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7346.858375209804,\n      \"totalWithFinancingFees\": 7884.605553933018,\n      \"totalWithFees\": 276.49794842221854,\n      \"financingFeePct\": 2082.1907230264824,\n      \"financingFeeTotal\": 4123.763701643355,\n      \"apr\": 2670.388622865818,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    },\n    {\n      \"id\": \"string\",\n      \"name\": \"string\",\n      \"expiresAt\": \"string\",\n      \"status\": \"approved\",\n      \"processingFeeTotal\": 7085.472922608519,\n      \"totalWithFinancingFees\": 2655.239402563119,\n      \"totalWithFees\": 7484.491019168382,\n      \"financingFeePct\": 4634.255642657249,\n      \"financingFeeTotal\": 2585.0221097095728,\n      \"apr\": 9246.725163379608,\n      \"payments\": [\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        },\n        {\n          \"number\": 1,\n          \"date\": \"2024-02-15T00:00:00Z\",\n          \"principal\": 95000,\n          \"customerFee\": 500,\n          \"amount\": 105000,\n          \"financingFee\": 2500\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f30ee0d0-96a1-44fa-965d-99d99f7736c1",
+    "name": "Slope v4 Auth Simulation API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}

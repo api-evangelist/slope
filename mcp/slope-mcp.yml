@@ -128,3 +128,9 @@ tools:
 - name: createPersons
   description: Create persons
   source_operation: openapi/slope-v4-openapi.json#createPersons
+deployment:
+  mode: none
+  verified: derived
+  tools: 40
+  checked: '2026-08-12'
+  source: catalog MCP census

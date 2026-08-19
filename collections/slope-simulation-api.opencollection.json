@@ -1,0 +1,158 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth Simulation API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Simulation",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Approve a pending order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/approve-order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Approve a pending order for testing purposes"
+        },
+        {
+          "info": {
+            "name": "Close a customer account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/close-customer-account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Close a customer account for testing purposes. This allows re-using the same email for signup/application flows."
+        },
+        {
+          "info": {
+            "name": "Create a testing customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/customer",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Creates a test customer with a user password for the simulating the checkout process"
+        },
+        {
+          "info": {
+            "name": "Update a customer eligibility",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/customer/eligibility",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Updates a customer eligibility status and credit limit."
+        },
+        {
+          "info": {
+            "name": "Create a test bank account",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/payment-methods/bank-account",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Create a bank account payment method for testing purposes"
+        },
+        {
+          "info": {
+            "name": "Create a test card",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/payment-methods/card",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Create a card payment method for testing purposes"
+        },
+        {
+          "info": {
+            "name": "Reject an order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/simulation/reject-order",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "(Sandbox Only) Reject an order for testing purposes. This is a terminal state."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

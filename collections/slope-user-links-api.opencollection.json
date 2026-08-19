@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth User Links API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "User Links",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate an access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/user-links/:linkToken/access-token",
+            "params": [
+              {
+                "name": "linkToken",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Given a `linkToken`, generate a short-lived access token used to embed an authenticated user your application."
+        },
+        {
+          "info": {
+            "name": "Generate an iframe URL for a user with link token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/user-links/:linkToken/iframe-url",
+            "params": [
+              {
+                "name": "linkToken",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "page",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Generate a URL that can be used to embed logged in user data in an iframe."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

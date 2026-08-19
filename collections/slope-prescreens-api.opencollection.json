@@ -1,0 +1,86 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth Prescreens API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Prescreens",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get prescreens by customer ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/prescreens",
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "query",
+                "description": "The customer ID to get prescreens for. The external customer ID is also accepted."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get all prescreens by customer ID, most recent prescreen first."
+        },
+        {
+          "info": {
+            "name": "Create a prescreen",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/prescreens",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Create a prescreen"
+        },
+        {
+          "info": {
+            "name": "Get a prescreen",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/prescreens/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The prescreen ID."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get a specific prescreen by ID."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

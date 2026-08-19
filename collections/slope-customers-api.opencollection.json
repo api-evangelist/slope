@@ -1,0 +1,282 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth Customers API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Customers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List customers",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/customers",
+            "params": [
+              {
+                "name": "email",
+                "value": "",
+                "type": "query",
+                "description": "When specified, only customers with given email are returned."
+              },
+              {
+                "name": "phone",
+                "value": "",
+                "type": "query",
+                "description": "E.164 format, When specified, only customers with given phone number are returned."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to list."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "The object attribute(s) to sort by."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by, one of `asc` or `desc`."
+              },
+              {
+                "name": "beforeCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the previous page of objects."
+              },
+              {
+                "name": "afterCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the next page of objects."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Lists all customers using pagination. The list can be filtered with query params."
+        },
+        {
+          "info": {
+            "name": "Get a customer's credit",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/customers/:customerId/credit",
+            "headers": [
+              {
+                "name": "Slope-Link-Token",
+                "value": ""
+              },
+              {
+                "name": "Slope-Access-Token",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Slope customer ID or the partner external customer ID"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get a customer's credit summary.\n\nA `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).\n\nNOTE: Do not store this endpoint response as a customer's credit limit may change dynamically. You should not use the credit response information to determine whether to display Slope as a payment option as there are other factors that determine eligibility."
+        },
+        {
+          "info": {
+            "name": "List customer's orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/customers/:customerId/orders",
+            "headers": [
+              {
+                "name": "Slope-Link-Token",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The customer ID assigned by Slope"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "When specified, only orders with the given status are returned."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to list."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "The object attribute(s) to sort by."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by, one of `asc` or `desc`."
+              },
+              {
+                "name": "beforeCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the previous page of objects."
+              },
+              {
+                "name": "afterCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the next page of objects."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Lists all orders for a single customer using pagination."
+        },
+        {
+          "info": {
+            "name": "List customer's payment methods",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/customers/:customerId/payment-methods",
+            "headers": [
+              {
+                "name": "Slope-Link-Token",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "customerId",
+                "value": "",
+                "type": "path",
+                "description": "The Slope customer ID or the partner external customer ID"
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to list."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "The object attribute(s) to sort by."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by, one of `asc` or `desc`."
+              },
+              {
+                "name": "beforeCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the previous page of objects."
+              },
+              {
+                "name": "afterCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the next page of objects."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Lists a customer's payment methods.\n\nA `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow)."
+        },
+        {
+          "info": {
+            "name": "Get a customer",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/customers/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The Slope customer ID or the partner external customer ID"
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Get a specific customer by ID or external ID."
+        },
+        {
+          "info": {
+            "name": "Validate metadata",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.slopepay.com/v4/customers/validate-metadata",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Validate metadata against merchant schema and return validation results."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

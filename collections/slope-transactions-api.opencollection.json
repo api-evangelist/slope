@@ -1,0 +1,66 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Slope v4 Auth Transactions API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Transactions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List transactions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.slopepay.com/v4/transactions",
+            "params": [
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "The maximum number of objects to list."
+              },
+              {
+                "name": "orderBy",
+                "value": "",
+                "type": "query",
+                "description": "The object attribute(s) to sort by."
+              },
+              {
+                "name": "order",
+                "value": "",
+                "type": "query",
+                "description": "The direction to sort by, one of `asc` or `desc`."
+              },
+              {
+                "name": "beforeCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the previous page of objects."
+              },
+              {
+                "name": "afterCursor",
+                "value": "",
+                "type": "query",
+                "description": "The cursor used to fetch the next page of objects."
+              }
+            ],
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Lists all transactions using pagination"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

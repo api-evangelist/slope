@@ -1,0 +1,186 @@
+{
+  "item": [
+    {
+      "id": "a375fee8-33e2-4c08-8746-458658c73523",
+      "name": "Transactions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "2f4a70de-72df-4b75-9528-534a70dfe5c8",
+          "name": "List transactions",
+          "request": {
+            "name": "List transactions",
+            "description": {
+              "content": "Lists all transactions using pagination",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v4",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "<integer>",
+                  "description": "The maximum number of objects to list."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "The object attribute(s) to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "orderBy",
+                  "value": "<string>",
+                  "description": "The object attribute(s) to sort by."
+                },
+                {
+                  "disabled": false,
+                  "key": "order",
+                  "value": "<string>",
+                  "description": "The direction to sort by, one of `asc` or `desc`."
+                },
+                {
+                  "disabled": false,
+                  "key": "beforeCursor",
+                  "value": "<string>",
+                  "description": "The cursor used to fetch the previous page of objects."
+                },
+                {
+                  "disabled": false,
+                  "key": "afterCursor",
+                  "value": "<string>",
+                  "description": "The cursor used to fetch the next page of objects."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c5b950b2-5a37-4ba4-8511-72e6581d77a7",
+              "name": "The paginated list of transactions.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v4",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "limit",
+                      "value": "<integer>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "orderBy",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "order",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "beforeCursor",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "afterCursor",
+                      "value": "<string>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"metadata\": {\n    \"total\": 1442.108906989701,\n    \"beforeCursor\": \"string\",\n    \"afterCursor\": \"string\"\n  },\n  \"data\": [\n    {\n      \"id\": \"string\",\n      \"amount\": 1060.0449822068758,\n      \"currency\": \"mxn\",\n      \"type\": \"order_refund\",\n      \"postedAt\": \"1967-05-17T11:16:59.093Z\",\n      \"orderId\": \"string\",\n      \"adjustmentId\": \"string\",\n      \"sourceTransactionIds\": [\n        [],\n        []\n      ],\n      \"feeAmount\": 9725.266883285714,\n      \"feeTransactionId\": \"string\"\n    },\n    {\n      \"id\": \"string\",\n      \"amount\": 2333.694850139618,\n      \"currency\": \"usd\",\n      \"type\": \"order_refund\",\n      \"postedAt\": \"2002-05-15T15:54:08.502Z\",\n      \"orderId\": \"string\",\n      \"adjustmentId\": \"string\",\n      \"sourceTransactionIds\": [\n        [],\n        []\n      ],\n      \"feeAmount\": 4808.058764139111,\n      \"feeTransactionId\": \"string\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.slopepay.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "c5d9bfbf-e169-46f7-8356-dae01eb157da",
+    "name": "Slope v4 Auth Transactions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.\n\nContact Support:\n Name: Slope Developer Support\n Email: support@slopepay.com",
+      "type": "text/plain"
+    }
+  }
+}
