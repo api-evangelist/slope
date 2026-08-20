@@ -47,6 +47,8 @@ apis:
   humanURL: https://developers.slopepay.com/
   baseURL: https://api.slopepay.com
   tags:
+  - Authentication
+  tags_raw:
   - Auth
   properties:
   - type: OpenAPI
@@ -75,6 +77,8 @@ apis:
   humanURL: https://developers.slopepay.com/
   baseURL: https://api.slopepay.com
   tags:
+  - File
+  tags_raw:
   - Files
   properties:
   - type: OpenAPI
@@ -89,6 +93,8 @@ apis:
   humanURL: https://developers.slopepay.com/
   baseURL: https://api.slopepay.com
   tags:
+  - Order
+  tags_raw:
   - Orders
   properties:
   - type: OpenAPI
@@ -159,6 +165,8 @@ apis:
   humanURL: https://developers.slopepay.com/
   baseURL: https://api.slopepay.com
   tags:
+  - Transaction
+  tags_raw:
   - Transactions
   properties:
   - type: OpenAPI
