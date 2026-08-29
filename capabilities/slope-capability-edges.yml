@@ -1,0 +1,36 @@
+slug: slope
+provider: Slope
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 2
+edges:
+- tag: Prescreens
+  spec_file: slope-prescreens-api-openapi.yml
+  capability_id: BC-1320.20
+  capability_id_l1: BC-1320
+  capability_name: Credit Underwriting & Decisioning Management
+  confidence: 0.75
+  evidence: POST /v4/prescreens  createPrescreen; PrescreenStatus, PrescreenLevelRange, BusinessEntityType
+  reason: Prescreening a business entity to establish an indicative credit level range is pre-approval
+    credit assessment for the vendor's embedded line-of-credit product. Sits between origination intake
+    and underwriting decisioning; decisioning is the closer fit given the returned credit level.
+- tag: Orders
+  spec_file: slope-orders-api-openapi.yml
+  capability_id: BC-1320.30
+  capability_id_l1: BC-1320
+  capability_name: Loan Servicing Management
+  confidence: 0.7
+  evidence: POST /v4/orders/{id}/repay-full  repayOrderFull  Repay an order in full; GET /v4/orders/{id}/repay-estimate  getOrderRepayEstimate  Get
+    repayment estimate; OrderPaymentScheduleV4ResponseDto
+  reason: 'Orders here are BNPL credit drawdowns: they are opened, finalized, carry payment schedules,
+    and are repaid with estimates and adjustments. That is servicing of an extended credit facility rather
+    than generic commerce order management.'
