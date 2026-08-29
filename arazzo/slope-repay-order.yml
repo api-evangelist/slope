@@ -4,8 +4,8 @@ info:
   version: 1.0.0
   summary: Get a repayment estimate then fully repay an order (requires Slope-Link-Token).
 sourceDescriptions:
-- name: slope
-  url: ../openapi/slope-v4-openapi.json
+- name: ordersApi
+  url: ../openapi/slope-orders-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: repayOrder

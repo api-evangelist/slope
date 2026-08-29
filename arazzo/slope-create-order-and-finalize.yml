@@ -4,8 +4,8 @@ info:
   version: 1.0.0
   summary: Create an order, wait for the customer to open it, then finalize for payout.
 sourceDescriptions:
-- name: slope
-  url: ../openapi/slope-v4-openapi.json
+- name: ordersApi
+  url: ../openapi/slope-orders-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: createOrderAndFinalize

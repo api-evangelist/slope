@@ -4,8 +4,11 @@ info:
   version: 1.0.0
   summary: Create a sandbox test customer, set eligibility, create an order, and approve it.
 sourceDescriptions:
-- name: slope
-  url: ../openapi/slope-v4-openapi.json
+- name: ordersApi
+  url: ../openapi/slope-orders-api-openapi.yml
+  type: openapi
+- name: simulationApi
+  url: ../openapi/slope-simulation-api-openapi.yml
   type: openapi
 workflows:
 - workflowId: sandboxApproveOrder
