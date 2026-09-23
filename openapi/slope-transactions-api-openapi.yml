@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Slope v4 Auth Transactions API
+  title: Slope v4 Transactions API
   description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
   version: 1.0.0
   contact:
@@ -80,11 +80,6 @@ paths:
       operationId: listTransactions
 components:
   schemas:
-    Currency:
-      type: string
-      enum:
-      - mxn
-      - usd
     PageMetaDto:
       type: object
       properties:
@@ -96,6 +91,22 @@ components:
           type: string
       required:
       - total
+    MerchantLedgerType:
+      type: string
+      enum:
+      - order
+      - fee
+      - order_refund
+      - fee_refund
+      - dispute
+      - payout
+      - unknown
+      description: The type of transaction
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
     GetTransactionV4ResponseDto:
       type: object
       properties:
@@ -140,17 +151,6 @@ components:
       - currency
       - type
       - postedAt
-    MerchantLedgerType:
-      type: string
-      enum:
-      - order
-      - fee
-      - order_refund
-      - fee_refund
-      - dispute
-      - payout
-      - unknown
-      description: The type of transaction
   securitySchemes:
     apiKey:
       type: http

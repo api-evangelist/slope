@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Slope v4 Auth Orders API
+  title: Slope v4 Orders API
   description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
   version: 1.0.0
   contact:
@@ -1123,7 +1123,15 @@ paths:
       operationId: openOrder
   /v4/orders/{id}/partial-cancel:
     post:
-      description: "Cancel a partial amount of an order.\n  - The cancelled amount will be posted as a credit toward the order balance once the order is finalized. This       will not affect the original `total` amount.\n  - This is supported for orders in approved, pending, submitted, open, opening, and finalizing statuses.\n  - This is not allowed once order is finalized. To update finalized orders, use the adjustments endpoint.\n  - You may also cancel on merchant dashboard."
+      description: 'Cancel a partial amount of an order.
+
+        - The cancelled amount will be posted as a credit toward the order balance once the order is finalized. This will not affect the original `total` amount.
+
+        - This is supported for orders in approved, pending, submitted, open, opening, and finalizing statuses.
+
+        - This is not allowed once order is finalized. To update finalized orders, use the adjustments endpoint.
+
+        - You may also cancel on merchant dashboard.'
       parameters:
       - name: id
         required: true
@@ -1327,7 +1335,7 @@ paths:
       description: 'Gets an order repayment estimate by Order ID.
 
 
-        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).'
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see Link Flow.'
       parameters:
       - name: id
         required: true
@@ -1420,7 +1428,7 @@ paths:
       description: 'Fully repay an order by Order ID.
 
 
-        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).'
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see Link Flow.'
       parameters:
       - name: id
         required: true
@@ -1912,41 +1920,28 @@ paths:
       operationId: listOrderItems
 components:
   schemas:
-    SchedulePaymentSharedDto:
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
+    CreateOrderAdjustmentRefundV4RequestDto:
       type: object
       properties:
-        number:
-          type: number
-          description: The payment number in the schedule sequence
-          example: 1
-        date:
-          format: date-time
-          type: string
-          description: The due date for this payment
-          example: '2024-02-15T00:00:00Z'
-        principal:
-          type: number
-          description: The principal amount of this payment, in cents
-          example: 95000
-        customerFee:
-          type: number
-          description: The customer fee for this payment, in cents
-          example: 500
         amount:
           type: number
-          description: The total amount due for this payment, in cents
-          example: 105000
-        financingFee:
-          type: number
-          description: The financing fee for this payment, in cents
-          example: 2500
+          description: The amount to refund in cents
+          example: 1000
+        payoutAccountId:
+          type: string
+          description: The payout account ID to reverse the payout from, if the payout has been sent. If not provided, the payout account set when finalizing the order will be used.
       required:
-      - number
-      - date
-      - principal
-      - customerFee
       - amount
-      - financingFee
     OpenOrderSharedDto:
       type: object
       properties:
@@ -1954,6 +1949,62 @@ components:
           type: string
           description: The ID of the selected quote. If this quote is not the same as the selected quote ID, the call will fail
           example: quote_123
+    OrderRepayEstimateV4ResponseDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: The order ID
+        hasPendingPayments:
+          type: boolean
+          description: Whether the order has pending payments or another repayment in progress. If true, repayment will not be allowed.
+        outstandingPrincipal:
+          type: number
+          description: The outstanding principal amount in cents
+        outstandingCustomerFees:
+          type: number
+          description: The outstanding customer fees in cents
+        outstandingBalance:
+          type: number
+          description: The total outstanding balance in cents
+        proratedDiscount:
+          type: number
+          description: 'The discount amount in cents for paying off early. NOTE: This can 0 when the order is overdue or has already received previous discounts or refunds'
+        paymentAmount:
+          type: number
+          description: The total amount to be charged now
+        paymentMethod:
+          description: The payment method used to repay the order
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodV4ResponseDto'
+      required:
+      - orderId
+      - hasPendingPayments
+      - outstandingPrincipal
+      - outstandingCustomerFees
+      - outstandingBalance
+      - proratedDiscount
+      - paymentAmount
+      - paymentMethod
+    OrderUiType:
+      type: string
+      enum:
+      - composable
+    V4ListOrderItemsV4ResponseDto:
+      type: object
+      properties:
+        data:
+          description: List of order items
+          items:
+            type: array
+          type: array
+        metadata:
+          description: Pagination metadata
+          allOf:
+          - $ref: '#/components/schemas/PageMetaDto'
+      required:
+      - data
+      - metadata
     QuoteV4ResponseDto:
       type: object
       properties:
@@ -1994,6 +2045,181 @@ components:
       - financingFeeTotal
       - apr
       - payments
+    CreateOrderItemV4RequestDto:
+      type: object
+      properties:
+        quantity:
+          type: number
+          description: The quantity of this item in the order
+        unitPrice:
+          type: number
+          description: The price per single unit of this item in cents
+        price:
+          type: number
+          description: The total price of this item in cents
+        type:
+          description: The type of the order item.
+          allOf:
+          - $ref: '#/components/schemas/OrderItemType'
+        name:
+          type: string
+          description: The name of the item
+        sku:
+          type: string
+          description: The SKU aka Stock Keeping Unit number of the item
+        externalId:
+          type: string
+        description:
+          type: string
+        url:
+          type: string
+        imageUrl:
+          type: string
+        metadata:
+          type: object
+        payee:
+          $ref: '#/components/schemas/OrderItemPayeeSharedDto'
+      required:
+      - quantity
+      - unitPrice
+      - price
+    FinalizeOrderV4RequestDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to finalize, in cents. If less than the order total, the difference will be voided. If not provided, the full order amount will be finalized.
+          example: 50000
+        metadata:
+          type: object
+          description: A JSON object of metadata to merge with existing order metadata
+          example:
+            key: value
+    OrderAdjustmentRefundV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The refunded amount, in cents
+          example: -1000
+        merchantFee:
+          type: number
+          description: The reversed merchant fee, in cents
+          example: -100
+        payoutAccountId:
+          type: string
+          description: The payout account ID the adjustment was sent to if one was set
+      required:
+      - amount
+      - merchantFee
+    PaymentMethodV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payment method id
+        customerId:
+          type: string
+          description: Customer ID
+        displayName:
+          type: number
+          description: A friendly display name of the payment method
+        type:
+          description: The type of payment method
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+      required:
+      - id
+      - customerId
+      - displayName
+      - type
+    CreateOrderV4RequestDto:
+      type: object
+      properties:
+        total:
+          type: number
+          description: Total amount of the order, in cents. Must be greater than 0
+        currency:
+          description: The currency of the order
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        externalId:
+          type: string
+          description: The external ID of the order, used for merchant reference. Must be unique.
+        items:
+          description: The line items in the order.
+          type: array
+          items:
+            $ref: '#/components/schemas/CreateOrderItemV4RequestDto'
+        customerId:
+          type: string
+          description: 'Optional: The Slope customer ID for this order. If set, only this Slope customer will be able to access the order.'
+        contactBusinessName:
+          type: string
+          description: The customer business name
+        contactEmail:
+          type: string
+          description: The customer email address
+        contactFirstName:
+          type: string
+          description: The customer first name
+        contactLastName:
+          type: string
+          description: The customer last name
+        contactDesiredLimit:
+          type: string
+          description: The desired funding limit for the customer, in cents.
+        contactPhone:
+          type: string
+          description: The customer phone number in E.164 format.
+        billingAddress:
+          description: The billing address of the order.
+          allOf:
+          - $ref: '#/components/schemas/AddressSharedDto'
+        taxId:
+          type: string
+          description: The Federal EIN / Tax ID of this business. Must be 9 digits.
+        payoutAccountId:
+          type: string
+          description: If provided, overrides the default payout account for this order
+        payeeExternalId:
+          type: string
+          description: The external ID of the payee receiving the payout for this order
+        payeeName:
+          type: string
+          description: The name of the payee receiving the payout for this order
+        resumeUrl:
+          type: string
+          description: (Optional) The URL to redirect the user if an order is approved offline. Relevant only if an order transitions from "pending" to "approved" status.
+        cancelUrl:
+          type: string
+          description: (Optional) The URL to redirect to if the user cancels the checkout. Relevant for redirect flow only
+        successUrl:
+          type: string
+          description: (Optional) The URL to redirect to if the user completes the checkout. Relevant for redirect flow only
+        metadata:
+          type: object
+          description: Any additional metadata to attach to the order. This takes in a object
+        uiType:
+          description: The type of integration that is being used.
+          allOf:
+          - $ref: '#/components/schemas/OrderUiType'
+      required:
+      - total
+      - currency
+      - externalId
+      - items
+    IframeUrlsDto:
+      type: object
+      properties:
+        checkbox:
+          type: string
+        expiresAt:
+          format: date-time
+          type: string
+      required:
+      - checkbox
+      - expiresAt
     FinalizeOrderV4ResponseDto:
       type: object
       properties:
@@ -2105,168 +2331,73 @@ components:
       - currency
       - amountOutstanding
       - transactionId
-    OrderItemPayeeSharedDto:
-      type: object
-      properties:
-        name:
-          type: string
-        province:
-          type: string
-        country:
-          type: string
-      required:
-      - name
-      - province
-      - country
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
-    OrderUiType:
+    OrderItemType:
       type: string
       enum:
-      - composable
-    AddressSharedDto:
-      type: object
-      properties:
-        line1:
-          type: string
-          description: The first line of the address
-          example: 123 Main St
-        line2:
-          type: string
-        city:
-          type: string
-          example: San Francisco
-        country:
-          type: string
-          description: ISO31661 Alpha2 code for the country
-          example: US
-        state:
-          type: string
-          description: 2-letter US state abbreviation
-          example: CA
-        postalCode:
-          type: string
-          description: 5-digit US postal code
-          example: '94107'
-      required:
-      - line1
-      - city
-      - country
-      - state
-      - postalCode
-    ComposableOrderV4ResponseDto:
+      - lineItem
+      - tax
+      - shipping
+      - discount
+      - adjustment
+    OrderStatus:
+      type: string
+      enum:
+      - pending
+      - approved
+      - submitted
+      - opening
+      - open
+      - finalizing
+      - finalized
+      - unpaid
+      - partiallyPaid
+      - complete
+      - defaulted
+      - rejected
+      - canceled
+      - refunded
+      - repayment
+    OrderAdjustmentV4ResponseDto:
       type: object
       properties:
         id:
           type: string
-          description: Order ID
-        currency:
-          type: string
-        total:
-          type: number
-          description: The total amount of the order, in cents
-        externalId:
-          type: string
-          description: The external ID of the order, used for merchant reference. Must be unique.
-        quotes:
-          description: Available quotes for this order
-          example:
-          - id: quote_123
-            name: Net 30
-            expiresAt: '2024-01-15T10:30:00Z'
-            status: approved
-            processingFeeTotal: 500
-            totalWithFees: 105000
-            financingFeePct: 2.5
-            financingFeeTotal: 2500
-            originalTotalWithFees: 105000
-            originalFinancingFeeTotal: 2500
-            originalFinancingFeePct: 2.5
-            apr: 30
-            payments:
-            - amount: 105000
-              date: '2024-02-15'
-          type: array
-          items:
-            $ref: '#/components/schemas/ComposableQuoteV4ResponseDto'
-        selectedQuoteId:
-          type: string
-          description: The ID of the selected quote
-        iframeUrls:
-          description: Embeddable URLs
-          allOf:
-          - $ref: '#/components/schemas/IframeUrlsDto'
-      required:
-      - id
-      - currency
-      - total
-      - externalId
-      - quotes
-      - selectedQuoteId
-      - iframeUrls
-    OrderPaymentScheduleV4ResponseDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount due for this payment for the order
-        date:
+          description: The adjustment ID
+          example: ordadj_123
+        createdAt:
           format: date-time
           type: string
-          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
-          example: '2024-01-01'
-      required:
-      - amount
-      - date
-    V4CreateOrderAdjustmentType:
-      type: string
-      enum:
-      - refund
-      description: The type of adjustment
-    CreateOrderAdjustmentRefundV4RequestDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount to refund in cents
-          example: 1000
-        payoutAccountId:
-          type: string
-          description: The payout account ID to reverse the payout from, if the payout has been sent. If not provided, the payout account set when finalizing the order will be used.
-      required:
-      - amount
-    CreateOrderAdjustmentV4RequestDto:
-      type: object
-      properties:
+          description: When the adjustment was created
         type:
           description: The type of adjustment
-          example: refund
           allOf:
-          - $ref: '#/components/schemas/V4CreateOrderAdjustmentType'
+          - $ref: '#/components/schemas/V4OrderAdjustmentType'
+        orderId:
+          type: string
+          description: The Slope assigned order ID this adjustment is for
+          example: ord_123
+        externalOrderId:
+          type: string
+          description: The partner external order ID this adjustment is for
+          example: ext_ord_123
         externalId:
           type: string
-          description: The partner assigned Order Adjustment external ID
-          example: ext_ordadj_123
-        refund:
-          description: Additional data when type is refund. Required if type is refund.
+          description: The partner external order adjustment ID
+          example: ext_order_adjustment_123
+        status:
+          description: The status of the adjustment
           allOf:
-          - $ref: '#/components/schemas/CreateOrderAdjustmentRefundV4RequestDto'
+          - $ref: '#/components/schemas/V4MerchantAdjustmentStatus'
+        refund:
+          description: Additional data if the adjustment is a refund.
+          allOf:
+          - $ref: '#/components/schemas/OrderAdjustmentRefundV4ResponseDto'
       required:
+      - id
+      - createdAt
       - type
-    Currency:
-      type: string
-      enum:
-      - mxn
-      - usd
+      - orderId
+      - status
     OrderEntityV4ResponseDto:
       type: object
       properties:
@@ -2374,285 +2505,26 @@ components:
       - openedAt
       - currency
       - amountOutstanding
-    OrderStatus:
+    OrderItemPayeeSharedDto:
+      type: object
+      properties:
+        name:
+          type: string
+        province:
+          type: string
+        country:
+          type: string
+      required:
+      - name
+      - province
+      - country
+    V4MerchantAdjustmentStatus:
       type: string
       enum:
       - pending
-      - approved
-      - submitted
-      - opening
-      - open
-      - finalizing
-      - finalized
-      - unpaid
-      - partiallyPaid
-      - complete
-      - defaulted
-      - rejected
-      - canceled
-      - refunded
-      - repayment
-    OrderAdjustmentV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: The adjustment ID
-          example: ordadj_123
-        createdAt:
-          format: date-time
-          type: string
-          description: When the adjustment was created
-        type:
-          description: The type of adjustment
-          allOf:
-          - $ref: '#/components/schemas/V4OrderAdjustmentType'
-        orderId:
-          type: string
-          description: The Slope assigned order ID this adjustment is for
-          example: ord_123
-        externalOrderId:
-          type: string
-          description: The partner external order ID this adjustment is for
-          example: ext_ord_123
-        externalId:
-          type: string
-          description: The partner external order adjustment ID
-          example: ext_order_adjustment_123
-        status:
-          description: The status of the adjustment
-          allOf:
-          - $ref: '#/components/schemas/V4MerchantAdjustmentStatus'
-        refund:
-          description: Additional data if the adjustment is a refund.
-          allOf:
-          - $ref: '#/components/schemas/OrderAdjustmentRefundV4ResponseDto'
-      required:
-      - id
-      - createdAt
-      - type
-      - orderId
-      - status
-    V4OrderAdjustmentType:
-      type: string
-      enum:
-      - refund
-      - dispute
-      description: The type of adjustment
-    OrderItemType:
-      type: string
-      enum:
-      - lineItem
-      - tax
-      - shipping
-      - discount
-      - adjustment
-    V4ListOrderItemsV4ResponseDto:
-      type: object
-      properties:
-        data:
-          description: List of order items
-          items:
-            type: array
-          type: array
-        metadata:
-          description: Pagination metadata
-          allOf:
-          - $ref: '#/components/schemas/PageMetaDto'
-      required:
-      - data
-      - metadata
-    PaymentMethodV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Payment method id
-        customerId:
-          type: string
-          description: Customer ID
-        displayName:
-          type: number
-          description: A friendly display name of the payment method
-        type:
-          description: The type of payment method
-          allOf:
-          - $ref: '#/components/schemas/PaymentMethodType'
-      required:
-      - id
-      - customerId
-      - displayName
-      - type
-    OrderAdjustmentRefundV4ResponseDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The refunded amount, in cents
-          example: -1000
-        merchantFee:
-          type: number
-          description: The reversed merchant fee, in cents
-          example: -100
-        payoutAccountId:
-          type: string
-          description: The payout account ID the adjustment was sent to if one was set
-      required:
-      - amount
-      - merchantFee
-    OrderRepayFullV4RequestDto:
-      type: object
-      properties:
-        paymentAmount:
-          type: number
-          description: The same expected paymentAmount as returned by the estimate endpoint
-      required:
-      - paymentAmount
-    IframeUrlsDto:
-      type: object
-      properties:
-        checkbox:
-          type: string
-        expiresAt:
-          format: date-time
-          type: string
-      required:
-      - checkbox
-      - expiresAt
-    OrderPartialCancelV4RequestDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount to cancel, in cents.
-          example: 100
-      required:
-      - amount
-    FinalizeOrderV4RequestDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount to finalize, in cents. If less than the order total, the difference will be voided. If not provided, the full order amount will be finalized.
-          example: 50000
-        metadata:
-          type: object
-          description: A JSON object of metadata to merge with existing order metadata
-          example:
-            key: value
-    CreateOrderV4RequestDto:
-      type: object
-      properties:
-        total:
-          type: number
-          description: Total amount of the order, in cents. Must be greater than 0
-        currency:
-          description: The currency of the order
-          allOf:
-          - $ref: '#/components/schemas/Currency'
-        externalId:
-          type: string
-          description: The external ID of the order, used for merchant reference. Must be unique.
-        items:
-          description: The line items in the order.
-          type: array
-          items:
-            $ref: '#/components/schemas/CreateOrderItemV4RequestDto'
-        customerId:
-          type: string
-          description: 'Optional: The Slope customer ID for this order. If set, only this Slope customer will be able to access the order.'
-        contactBusinessName:
-          type: string
-          description: The customer business name
-        contactEmail:
-          type: string
-          description: The customer email address
-        contactFirstName:
-          type: string
-          description: The customer first name
-        contactLastName:
-          type: string
-          description: The customer last name
-        contactDesiredLimit:
-          type: string
-          description: The desired funding limit for the customer, in cents.
-        contactPhone:
-          type: string
-          description: The customer phone number in E.164 format.
-        billingAddress:
-          description: The billing address of the order.
-          allOf:
-          - $ref: '#/components/schemas/AddressSharedDto'
-        taxId:
-          type: string
-          description: The Federal EIN / Tax ID of this business. Must be 9 digits.
-        payoutAccountId:
-          type: string
-          description: If provided, overrides the default payout account for this order
-        payeeExternalId:
-          type: string
-          description: The external ID of the payee receiving the payout for this order
-        payeeName:
-          type: string
-          description: The name of the payee receiving the payout for this order
-        resumeUrl:
-          type: string
-          description: (Optional) The URL to redirect the user if an order is approved offline. Relevant only if an order transitions from "pending" to "approved" status.
-        cancelUrl:
-          type: string
-          description: (Optional) The URL to redirect to if the user cancels the checkout. Relevant for redirect flow only
-        successUrl:
-          type: string
-          description: (Optional) The URL to redirect to if the user completes the checkout. Relevant for redirect flow only
-        metadata:
-          type: object
-          description: Any additional metadata to attach to the order. This takes in a object
-        uiType:
-          description: The type of integration that is being used.
-          allOf:
-          - $ref: '#/components/schemas/OrderUiType'
-      required:
-      - total
-      - currency
-      - externalId
-      - items
-    OrderRepayEstimateV4ResponseDto:
-      type: object
-      properties:
-        orderId:
-          type: string
-          description: The order ID
-        hasPendingPayments:
-          type: boolean
-          description: Whether the order has pending payments or another repayment in progress. If true, repayment will not be allowed.
-        outstandingPrincipal:
-          type: number
-          description: The outstanding principal amount in cents
-        outstandingCustomerFees:
-          type: number
-          description: The outstanding customer fees in cents
-        outstandingBalance:
-          type: number
-          description: The total outstanding balance in cents
-        proratedDiscount:
-          type: number
-          description: 'The discount amount in cents for paying off early. NOTE: This can 0 when the order is overdue or has already received previous discounts or refunds'
-        paymentAmount:
-          type: number
-          description: The total amount to be charged now
-        paymentMethod:
-          description: The payment method used to repay the order
-          allOf:
-          - $ref: '#/components/schemas/PaymentMethodV4ResponseDto'
-      required:
-      - orderId
-      - hasPendingPayments
-      - outstandingPrincipal
-      - outstandingCustomerFees
-      - outstandingBalance
-      - proratedDiscount
-      - paymentAmount
-      - paymentMethod
+      - succeeded
+      - failed
+      description: The status of the adjustment
     ComposableQuoteV4ResponseDto:
       type: object
       properties:
@@ -2702,51 +2574,41 @@ components:
       - originalTotalWithFees
       - originalFinancingFeeTotal
       - originalFinancingFeePct
-    CreateOrderItemV4RequestDto:
+    SchedulePaymentSharedDto:
       type: object
       properties:
-        quantity:
+        number:
           type: number
-          description: The quantity of this item in the order
-        unitPrice:
+          description: The payment number in the schedule sequence
+          example: 1
+        date:
+          format: date-time
+          type: string
+          description: The due date for this payment
+          example: '2024-02-15T00:00:00Z'
+        principal:
           type: number
-          description: The price per single unit of this item in cents
-        price:
+          description: The principal amount of this payment, in cents
+          example: 95000
+        customerFee:
           type: number
-          description: The total price of this item in cents
-        type:
-          description: The type of the order item.
-          allOf:
-          - $ref: '#/components/schemas/OrderItemType'
-        name:
-          type: string
-          description: The name of the item
-        sku:
-          type: string
-          description: The SKU aka Stock Keeping Unit number of the item
-        externalId:
-          type: string
-        description:
-          type: string
-        url:
-          type: string
-        imageUrl:
-          type: string
-        metadata:
-          type: object
-        payee:
-          $ref: '#/components/schemas/OrderItemPayeeSharedDto'
+          description: The customer fee for this payment, in cents
+          example: 500
+        amount:
+          type: number
+          description: The total amount due for this payment, in cents
+          example: 105000
+        financingFee:
+          type: number
+          description: The financing fee for this payment, in cents
+          example: 2500
       required:
-      - quantity
-      - unitPrice
-      - price
-    V4MerchantAdjustmentStatus:
-      type: string
-      enum:
-      - pending
-      - succeeded
-      - failed
-      description: The status of the adjustment
+      - number
+      - date
+      - principal
+      - customerFee
+      - amount
+      - financingFee
     PaymentMethodType:
       type: string
       enum:
@@ -2759,11 +2621,157 @@ components:
       - customer_wallet
       - virtual_card
       - virtual_account
-    QuoteStatus:
+    V4OrderAdjustmentType:
       type: string
       enum:
-      - approved
-      - rejected
+      - refund
+      - dispute
+      description: The type of adjustment
+    CreateOrderAdjustmentV4RequestDto:
+      type: object
+      properties:
+        type:
+          description: The type of adjustment
+          example: refund
+          allOf:
+          - $ref: '#/components/schemas/V4CreateOrderAdjustmentType'
+        externalId:
+          type: string
+          description: The partner assigned Order Adjustment external ID
+          example: ext_ordadj_123
+        refund:
+          description: Additional data when type is refund. Required if type is refund.
+          allOf:
+          - $ref: '#/components/schemas/CreateOrderAdjustmentRefundV4RequestDto'
+      required:
+      - type
+    OrderPaymentScheduleV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
+          type: string
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    OrderPartialCancelV4RequestDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount to cancel, in cents.
+          example: 100
+      required:
+      - amount
+    V4CreateOrderAdjustmentType:
+      type: string
+      enum:
+      - refund
+      description: The type of adjustment
+    ComposableOrderV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Order ID
+        currency:
+          type: string
+        total:
+          type: number
+          description: The total amount of the order, in cents
+        externalId:
+          type: string
+          description: The external ID of the order, used for merchant reference. Must be unique.
+        quotes:
+          description: Available quotes for this order
+          example:
+          - id: quote_123
+            name: Net 30
+            expiresAt: '2024-01-15T10:30:00Z'
+            status: approved
+            processingFeeTotal: 500
+            totalWithFees: 105000
+            financingFeePct: 2.5
+            financingFeeTotal: 2500
+            originalTotalWithFees: 105000
+            originalFinancingFeeTotal: 2500
+            originalFinancingFeePct: 2.5
+            apr: 30
+            payments:
+            - amount: 105000
+              date: '2024-02-15'
+          type: array
+          items:
+            $ref: '#/components/schemas/ComposableQuoteV4ResponseDto'
+        selectedQuoteId:
+          type: string
+          description: The ID of the selected quote
+        iframeUrls:
+          description: Embeddable URLs
+          allOf:
+          - $ref: '#/components/schemas/IframeUrlsDto'
+      required:
+      - id
+      - currency
+      - total
+      - externalId
+      - quotes
+      - selectedQuoteId
+      - iframeUrls
+    OrderRepayFullV4RequestDto:
+      type: object
+      properties:
+        paymentAmount:
+          type: number
+          description: The same expected paymentAmount as returned by the estimate endpoint
+      required:
+      - paymentAmount
   securitySchemes:
     apiKey:
       type: http

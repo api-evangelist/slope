@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Slope v4 Auth Payout Accounts API
+  title: Slope v4 Payout Accounts API
   description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
   version: 1.0.0
   contact:
@@ -39,7 +39,6 @@ paths:
       - Payout Accounts
       operationId: createPayoutAccount
     get:
-      description: List payout accounts
       parameters:
       - name: limit
         required: false
@@ -172,53 +171,6 @@ paths:
       operationId: deletePayoutAccount
 components:
   schemas:
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
-    PayoutAccountType:
-      type: string
-      enum:
-      - checking
-      - savings
-      description: Account Type
-    AddressSharedDto:
-      type: object
-      properties:
-        line1:
-          type: string
-          description: The first line of the address
-          example: 123 Main St
-        line2:
-          type: string
-        city:
-          type: string
-          example: San Francisco
-        country:
-          type: string
-          description: ISO31661 Alpha2 code for the country
-          example: US
-        state:
-          type: string
-          description: 2-letter US state abbreviation
-          example: CA
-        postalCode:
-          type: string
-          description: 5-digit US postal code
-          example: '94107'
-      required:
-      - line1
-      - city
-      - country
-      - state
-      - postalCode
     UpdatePayoutAccountV4RequestDto:
       type: object
       properties:
@@ -273,6 +225,12 @@ components:
       - accountNumber
       - taxId
       - accountType
+    PayoutAccountType:
+      type: string
+      enum:
+      - checking
+      - savings
+      description: Account Type
     PayoutAccountEntityV4ResponseDto:
       type: object
       properties:
@@ -302,6 +260,47 @@ components:
       - isDefaultAccount
       - createdAt
       - updatedAt
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
   securitySchemes:
     apiKey:
       type: http

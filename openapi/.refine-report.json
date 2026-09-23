@@ -1,16 +1,7 @@
 {
   "provider": "slope",
   "sources": [
-    "slope-auth-api-openapi.yml",
-    "slope-customers-api-openapi.yml",
-    "slope-files-api-openapi.yml",
-    "slope-orders-api-openapi.yml",
-    "slope-payout-accounts-api-openapi.yml",
-    "slope-persons-api-openapi.yml",
-    "slope-prescreens-api-openapi.yml",
-    "slope-simulation-api-openapi.yml",
-    "slope-transactions-api-openapi.yml",
-    "slope-user-links-api-openapi.yml"
+    "_original/slope-v4-openapi.json"
   ],
   "outputs": [
     "slope-auth-api-openapi.yml",
@@ -27,6 +18,21 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
-  "skipped": []
+  "notes": [
+    "sourced from openapi/_original/ (1 archived document(s)); previously refined output at the top level was skipped rather than re-split",
+    "slope-v4-openapi.json: upgraded openapi 3.0.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
+  "skipped": [
+    "slope-auth-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-customers-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-files-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-orders-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-payout-accounts-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-persons-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-prescreens-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-simulation-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-transactions-api-openapi.yml: previously refined output, superseded by openapi/_original/",
+    "slope-user-links-api-openapi.yml: previously refined output, superseded by openapi/_original/"
+  ]
 }

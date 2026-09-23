@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Slope v4 Auth Customers API
+  title: Slope v4 Customers API
   description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
   version: 1.0.0
   contact:
@@ -103,7 +103,7 @@ paths:
       description: 'Get a customer''s credit summary.
 
 
-        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see Link Flow.
 
 
         NOTE: Do not store this endpoint response as a customer''s credit limit may change dynamically. You should not use the credit response information to determine whether to display Slope as a payment option as there are other factors that determine eligibility.'
@@ -255,7 +255,7 @@ paths:
       description: 'Lists a customer''s payment methods.
 
 
-        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see [Link Flow](https://developers.slopepay.com/docs/link-flow).'
+        A `linkToken` is required in the HTTP Header `Slope-Link-Token` in addition to the regular auth headers, see Link Flow.'
       parameters:
       - name: customerId
         required: true
@@ -399,57 +399,30 @@ paths:
       operationId: validateCustomerMetadata
 components:
   schemas:
-    Currency:
-      type: string
-      enum:
-      - mxn
-      - usd
-    SchedulePaymentSharedDto:
+    CustomerEntityV4ResponseDto:
       type: object
       properties:
-        number:
-          type: number
-          description: The payment number in the schedule sequence
-          example: 1
-        date:
-          format: date-time
+        id:
           type: string
-          description: The due date for this payment
-          example: '2024-02-15T00:00:00Z'
-        principal:
-          type: number
-          description: The principal amount of this payment, in cents
-          example: 95000
-        customerFee:
-          type: number
-          description: The customer fee for this payment, in cents
-          example: 500
-        amount:
-          type: number
-          description: The total amount due for this payment, in cents
-          example: 105000
-        financingFee:
-          type: number
-          description: The financing fee for this payment, in cents
-          example: 2500
+          description: Slope Unique Customer ID
+        email:
+          type: string
+          description: Customer email
+        businessName:
+          type: string
+          description: Customer business name
+        phone:
+          type: string
+          description: Customer phone number
+        externalId:
+          type: string
+          description: External ID
       required:
-      - number
-      - date
-      - principal
-      - customerFee
-      - amount
-      - financingFee
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
+      - id
+      - email
+      - businessName
+      - phone
+      - externalId
     QuoteV4ResponseDto:
       type: object
       properties:
@@ -490,59 +463,16 @@ components:
       - financingFeeTotal
       - apr
       - payments
-    ValidateMetadataV4ResponseDto:
-      type: object
-      properties:
-        isValid:
-          type: boolean
-          description: Whether the metadata is valid according to the schema
-        validFields:
-          type: object
-          description: Metadata fields that passed validation
-          example:
-            joinDateRange: L1
-            customerTier: gold
-        ignoredFields:
-          description: Fields that were ignored due to schema violations or unknown fields
-          example:
-          - unknownField
-          - invalidEnumValue
-          items:
-            type: array
-          type: array
-        errors:
-          description: Validation error messages
-          example:
-          - 'lastTransactionDateRange: must be one of L1, L2, L3, L4, L5'
-          items:
-            type: array
-          type: array
-        cleanedResult:
-          type: object
-          description: The cleaned metadata that would be saved
-          example:
-            joinDateRange: L1
-            customerTier: gold
-      required:
-      - isValid
-      - validFields
-      - ignoredFields
-      - errors
-      - cleanedResult
-    OrderPaymentScheduleV4ResponseDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount due for this payment for the order
-        date:
-          format: date-time
-          type: string
-          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
-          example: '2024-01-01'
-      required:
-      - amount
-      - date
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
     CustomerOrderEntityV4ResponseDto:
       type: object
       properties:
@@ -655,6 +585,138 @@ components:
       - currency
       - amountOutstanding
       - paymentStatus
+    PaymentMethodV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payment method id
+        customerId:
+          type: string
+          description: Customer ID
+        displayName:
+          type: number
+          description: A friendly display name of the payment method
+        type:
+          description: The type of payment method
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+      required:
+      - id
+      - customerId
+      - displayName
+      - type
+    ValidateMetadataV4ResponseDto:
+      type: object
+      properties:
+        isValid:
+          type: boolean
+          description: Whether the metadata is valid according to the schema
+        validFields:
+          type: object
+          description: Metadata fields that passed validation
+          example:
+            joinDateRange: L1
+            customerTier: gold
+        ignoredFields:
+          description: Fields that were ignored due to schema violations or unknown fields
+          example:
+          - unknownField
+          - invalidEnumValue
+          items:
+            type: array
+          type: array
+        errors:
+          description: Validation error messages
+          example:
+          - 'lastTransactionDateRange: must be one of L1, L2, L3, L4, L5'
+          items:
+            type: array
+          type: array
+        cleanedResult:
+          type: object
+          description: The cleaned metadata that would be saved
+          example:
+            joinDateRange: L1
+            customerTier: gold
+      required:
+      - isValid
+      - validFields
+      - ignoredFields
+      - errors
+      - cleanedResult
+    OrderPaymentScheduleV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
+          type: string
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    OrderPaymentSubstatus:
+      type: string
+      enum:
+      - unpaid
+      - partiallyPaid
+      - completed
+      - refunded
+      - opening
+      - open
+      - canceled
+      description: The payment status for the order
+    SchedulePaymentSharedDto:
+      type: object
+      properties:
+        number:
+          type: number
+          description: The payment number in the schedule sequence
+          example: 1
+        date:
+          format: date-time
+          type: string
+          description: The due date for this payment
+          example: '2024-02-15T00:00:00Z'
+        principal:
+          type: number
+          description: The principal amount of this payment, in cents
+          example: 95000
+        customerFee:
+          type: number
+          description: The customer fee for this payment, in cents
+          example: 500
+        amount:
+          type: number
+          description: The total amount due for this payment, in cents
+          example: 105000
+        financingFee:
+          type: number
+          description: The financing fee for this payment, in cents
+          example: 2500
+      required:
+      - number
+      - date
+      - principal
+      - customerFee
+      - amount
+      - financingFee
+    PaymentMethodType:
+      type: string
+      enum:
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
     OrderStatus:
       type: string
       enum:
@@ -685,6 +747,17 @@ components:
             customerTier: gold
       required:
       - metadata
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
     CustomerCreditV4ResponseDto:
       type: object
       properties:
@@ -718,79 +791,6 @@ components:
       - pending
       - currency
       - shouldApply
-    OrderPaymentSubstatus:
-      type: string
-      enum:
-      - unpaid
-      - partiallyPaid
-      - completed
-      - refunded
-      - opening
-      - open
-      - canceled
-      description: The payment status for the order
-    PaymentMethodType:
-      type: string
-      enum:
-      - ach
-      - card
-      - oxxo
-      - spei
-      - wire
-      - rtp
-      - customer_wallet
-      - virtual_card
-      - virtual_account
-    PaymentMethodV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Payment method id
-        customerId:
-          type: string
-          description: Customer ID
-        displayName:
-          type: number
-          description: A friendly display name of the payment method
-        type:
-          description: The type of payment method
-          allOf:
-          - $ref: '#/components/schemas/PaymentMethodType'
-      required:
-      - id
-      - customerId
-      - displayName
-      - type
-    QuoteStatus:
-      type: string
-      enum:
-      - approved
-      - rejected
-    CustomerEntityV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Slope Unique Customer ID
-        email:
-          type: string
-          description: Customer email
-        businessName:
-          type: string
-          description: Customer business name
-        phone:
-          type: string
-          description: Customer phone number
-        externalId:
-          type: string
-          description: External ID
-      required:
-      - id
-      - email
-      - businessName
-      - phone
-      - externalId
   securitySchemes:
     apiKey:
       type: http

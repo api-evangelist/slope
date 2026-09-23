@@ -1,6 +1,6 @@
-openapi: 3.0.0
+openapi: 3.2.0
 info:
-  title: Slope v4 Auth User Links API
+  title: Slope v4 User Links API
   description: 'Slope v4 API - embedded credit and B2B buy-now-pay-later (BNPL) infrastructure: customers, orders/checkout, adjustments (refunds), repayments, payout accounts, prescreens, transactions, and sandbox simulation.'
   version: 1.0.0
   contact:
@@ -66,14 +66,6 @@ paths:
       operationId: createUserLinkIframeUrl
 components:
   schemas:
-    UserIframeUrlV4ResponseDto:
-      type: object
-      properties:
-        iframeUrl:
-          type: string
-          description: The iframe URL used to embed an authenticated user in your application
-      required:
-      - iframeUrl
     UserAccessTokenV4ResponseDto:
       type: object
       properties:
@@ -103,6 +95,14 @@ components:
       - userEmail
       - customerId
       - merchantId
+    UserIframeUrlV4ResponseDto:
+      type: object
+      properties:
+        iframeUrl:
+          type: string
+          description: The iframe URL used to embed an authenticated user in your application
+      required:
+      - iframeUrl
   securitySchemes:
     apiKey:
       type: http
