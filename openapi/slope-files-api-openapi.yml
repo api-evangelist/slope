@@ -40,12 +40,6 @@ paths:
       operationId: importFile
 components:
   schemas:
-    FileImportStatus:
-      type: string
-      enum:
-      - pending
-      - succeeded
-      - failed
     V4FilePurpose:
       type: string
       enum:
@@ -71,6 +65,12 @@ components:
       - importStatus
       - orderId
       - purpose
+    FileImportStatus:
+      type: string
+      enum:
+      - pending
+      - succeeded
+      - failed
     ImportFileV4RequestDto:
       type: object
       properties:

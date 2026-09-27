@@ -178,103 +178,18 @@ paths:
       operationId: simulateRejectOrder
 components:
   schemas:
-    QuoteStatus:
+    PaymentMethodType:
       type: string
       enum:
-      - approved
-      - rejected
-    CloseCustomerAccountV4ResponseDto:
-      type: object
-      properties:
-        status:
-          type: string
-          description: Status of the operation
-        customerId:
-          type: string
-          description: ID of the closed customer account
-        email:
-          type: string
-          description: Email of the closed customer account
-      required:
-      - status
-      - customerId
-      - email
-    Currency:
-      type: string
-      enum:
-      - mxn
-      - usd
-    CreateCustomerV4RequestDto:
-      type: object
-      properties:
-        shortcutTypes:
-          type: array
-          description: The list of shortcuts to use for this customer. By default a blank customer without any limits is created.
-          items:
-            type: string
-            enum:
-            - skip-pre_qualify
-            - skip-compliance
-            - skip-banking
-            - skip-consumer_credit
-            - ineligible
-        phone:
-          type: string
-          description: The phone number of the customer. By default, "+16175551212" is used.
-        businessName:
-          type: string
-          description: The phone number of the customer. By default, "Slope Demo Customer" is used.
-        address:
-          description: The address of the customer. A default address is used if not provided.
-          allOf:
-          - $ref: '#/components/schemas/AddressSharedDto'
-        taxId:
-          type: string
-          description: The taxId of the customer, by default a random number is used.
-        password:
-          type: string
-          description: A customized password for this user. By default, "Pass1234" is used
-        isLinked:
-          type: boolean
-          description: If true, the customer will be linked to the merchant.
-        hasMasterLoanAgreement:
-          type: boolean
-          description: If true, the customer will be created with an active master loan agreement.
-        hasPreferences:
-          type: boolean
-          description: If true, the customer will be created with preferred terms and repayment method.
-        email:
-          type: string
-          description: The email address for the customer. If not provided, a demo email will be generated.
-    CloseCustomerAccountV4RequestDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The ID of the customer account to close
-        email:
-          type: string
-          description: The email of the customer account to close
-    UpdateCustomerEligibilityV4RequestDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The customer ID to update.
-        complianceCompleted:
-          type: boolean
-          description: Whether the customer has completed compliance.
-        eligible:
-          type: boolean
-          description: The eligibility status to set for the customer.
-        creditLimit:
-          type: number
-          description: The credit limit to set for the customer. Must be 0 if `eligible` is false.
-      required:
-      - customerId
-      - complianceCompleted
-      - eligible
-      - creditLimit
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
     QuoteV4ResponseDto:
       type: object
       properties:
@@ -315,22 +230,6 @@ components:
       - financingFeeTotal
       - apr
       - payments
-    ApproveOrderV4RequestDto:
-      type: object
-      properties:
-        orderId:
-          type: string
-          description: The ID of the order to approve
-      required:
-      - orderId
-    RejectOrderV4RequestDto:
-      type: object
-      properties:
-        orderId:
-          type: string
-          description: The Slope ID or external ID of the order to reject
-      required:
-      - orderId
     OrderStatus:
       type: string
       enum:
@@ -349,26 +248,11 @@ components:
       - canceled
       - refunded
       - repayment
-    SimulationCreateCardV4RequestDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The ID of the customer to create the card for
-        cardNumber:
-          type: string
-          description: The card number
-          default: '4242424242424242'
-        cardExpirationMonth:
-          type: string
-          description: The card expiration date
-          default: '01'
-        cardExpirationYear:
-          type: string
-          description: The card expiration year
-          default: '2050'
-      required:
-      - customerId
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
     OrderEntityV4ResponseDto:
       type: object
       properties:
@@ -476,6 +360,78 @@ components:
       - openedAt
       - currency
       - amountOutstanding
+    CustomerEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Customer ID
+        email:
+          type: string
+          description: Customer email
+        businessName:
+          type: string
+          description: Customer business name
+        phone:
+          type: string
+          description: Customer phone number
+        externalId:
+          type: string
+          description: External ID
+      required:
+      - id
+      - email
+      - businessName
+      - phone
+      - externalId
+    UpdateCustomerEligibilityV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The customer ID to update.
+        complianceCompleted:
+          type: boolean
+          description: Whether the customer has completed compliance.
+        eligible:
+          type: boolean
+          description: The eligibility status to set for the customer.
+        creditLimit:
+          type: number
+          description: The credit limit to set for the customer. Must be 0 if `eligible` is false.
+      required:
+      - customerId
+      - complianceCompleted
+      - eligible
+      - creditLimit
+    SimulationCreateCardV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer to create the card for
+        cardNumber:
+          type: string
+          description: The card number
+          default: '4242424242424242'
+        cardExpirationMonth:
+          type: string
+          description: The card expiration date
+          default: '01'
+        cardExpirationYear:
+          type: string
+          description: The card expiration year
+          default: '2050'
+      required:
+      - customerId
+    SimulationCreateBankAccountV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer to create the bank account for
+      required:
+      - customerId
     CreateCustomerV4ResponseDto:
       type: object
       properties:
@@ -530,40 +486,6 @@ components:
       - customerFee
       - amount
       - financingFee
-    PaymentMethodType:
-      type: string
-      enum:
-      - ach
-      - card
-      - oxxo
-      - spei
-      - wire
-      - rtp
-      - customer_wallet
-      - virtual_card
-      - virtual_account
-    SimulationCreateBankAccountV4RequestDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The ID of the customer to create the bank account for
-      required:
-      - customerId
-    OrderPaymentScheduleV4ResponseDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount due for this payment for the order
-        date:
-          format: date-time
-          type: string
-          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
-          example: '2024-01-01'
-      required:
-      - amount
-      - date
     AddressSharedDto:
       type: object
       properties:
@@ -594,30 +516,108 @@ components:
       - country
       - state
       - postalCode
-    CustomerEntityV4ResponseDto:
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
+    OrderPaymentScheduleV4ResponseDto:
       type: object
       properties:
-        id:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
           type: string
-          description: Slope Unique Customer ID
-        email:
-          type: string
-          description: Customer email
-        businessName:
-          type: string
-          description: Customer business name
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    CreateCustomerV4RequestDto:
+      type: object
+      properties:
+        shortcutTypes:
+          type: array
+          description: The list of shortcuts to use for this customer. By default a blank customer without any limits is created.
+          items:
+            type: string
+            enum:
+            - skip-pre_qualify
+            - skip-compliance
+            - skip-banking
+            - skip-consumer_credit
+            - ineligible
         phone:
           type: string
-          description: Customer phone number
-        externalId:
+          description: The phone number of the customer. By default, "+16175551212" is used.
+        businessName:
           type: string
-          description: External ID
+          description: The phone number of the customer. By default, "Slope Demo Customer" is used.
+        address:
+          description: The address of the customer. A default address is used if not provided.
+          allOf:
+          - $ref: '#/components/schemas/AddressSharedDto'
+        taxId:
+          type: string
+          description: The taxId of the customer, by default a random number is used.
+        password:
+          type: string
+          description: A customized password for this user. By default, "Pass1234" is used
+        isLinked:
+          type: boolean
+          description: If true, the customer will be linked to the merchant.
+        hasMasterLoanAgreement:
+          type: boolean
+          description: If true, the customer will be created with an active master loan agreement.
+        hasPreferences:
+          type: boolean
+          description: If true, the customer will be created with preferred terms and repayment method.
+        email:
+          type: string
+          description: The email address for the customer. If not provided, a demo email will be generated.
+    CloseCustomerAccountV4RequestDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The ID of the customer account to close
+        email:
+          type: string
+          description: The email of the customer account to close
+    RejectOrderV4RequestDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: The Slope ID or external ID of the order to reject
       required:
-      - id
+      - orderId
+    ApproveOrderV4RequestDto:
+      type: object
+      properties:
+        orderId:
+          type: string
+          description: The ID of the order to approve
+      required:
+      - orderId
+    CloseCustomerAccountV4ResponseDto:
+      type: object
+      properties:
+        status:
+          type: string
+          description: Status of the operation
+        customerId:
+          type: string
+          description: ID of the closed customer account
+        email:
+          type: string
+          description: Email of the closed customer account
+      required:
+      - status
+      - customerId
       - email
-      - businessName
-      - phone
-      - externalId
   securitySchemes:
     apiKey:
       type: http

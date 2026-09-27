@@ -77,15 +77,31 @@ paths:
       operationId: createPersons
 components:
   schemas:
-    CreatePersonsV4RequestDto:
+    CreatePersonV4RequestDto:
       type: object
       properties:
-        persons:
-          type: array
-          items:
-            $ref: '#/components/schemas/CreatePersonV4RequestDto'
-      required:
-      - persons
+        firstName:
+          type: string
+        lastName:
+          type: string
+        address:
+          $ref: '#/components/schemas/AddressSharedDto'
+        dob:
+          type: string
+          description: Date of birth in ISO 8601 format (YYYY-MM-DD)
+        isApplicant:
+          type: boolean
+        isOwner:
+          type: boolean
+        isController:
+          type: boolean
+        title:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+          description: Phone number in E.164 format
     PersonV4ResponseDto:
       type: object
       properties:
@@ -119,31 +135,6 @@ components:
       - isApplicant
       - isOwner
       - isController
-    CreatePersonV4RequestDto:
-      type: object
-      properties:
-        firstName:
-          type: string
-        lastName:
-          type: string
-        address:
-          $ref: '#/components/schemas/AddressSharedDto'
-        dob:
-          type: string
-          description: Date of birth in ISO 8601 format (YYYY-MM-DD)
-        isApplicant:
-          type: boolean
-        isOwner:
-          type: boolean
-        isController:
-          type: boolean
-        title:
-          type: string
-        email:
-          type: string
-        phone:
-          type: string
-          description: Phone number in E.164 format
     AddressSharedDto:
       type: object
       properties:
@@ -174,6 +165,15 @@ components:
       - country
       - state
       - postalCode
+    CreatePersonsV4RequestDto:
+      type: object
+      properties:
+        persons:
+          type: array
+          items:
+            $ref: '#/components/schemas/CreatePersonV4RequestDto'
+      required:
+      - persons
   securitySchemes:
     apiKey:
       type: http

@@ -171,15 +171,42 @@ paths:
       operationId: deletePayoutAccount
 components:
   schemas:
-    UpdatePayoutAccountV4RequestDto:
+    PayoutAccountType:
+      type: string
+      enum:
+      - checking
+      - savings
+      description: Account Type
+    AddressSharedDto:
       type: object
       properties:
-        name:
+        line1:
           type: string
-          description: Name
-        isDefaultAccount:
-          type: boolean
-          description: Is default account
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
     CreatePayoutAccountV4RequestDto:
       type: object
       properties:
@@ -225,12 +252,26 @@ components:
       - accountNumber
       - taxId
       - accountType
-    PayoutAccountType:
-      type: string
-      enum:
-      - checking
-      - savings
-      description: Account Type
+    UpdatePayoutAccountV4RequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name
+        isDefaultAccount:
+          type: boolean
+          description: Is default account
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
     PayoutAccountEntityV4ResponseDto:
       type: object
       properties:
@@ -260,47 +301,6 @@ components:
       - isDefaultAccount
       - createdAt
       - updatedAt
-    AddressSharedDto:
-      type: object
-      properties:
-        line1:
-          type: string
-          description: The first line of the address
-          example: 123 Main St
-        line2:
-          type: string
-        city:
-          type: string
-          example: San Francisco
-        country:
-          type: string
-          description: ISO31661 Alpha2 code for the country
-          example: US
-        state:
-          type: string
-          description: 2-letter US state abbreviation
-          example: CA
-        postalCode:
-          type: string
-          description: 5-digit US postal code
-          example: '94107'
-      required:
-      - line1
-      - city
-      - country
-      - state
-      - postalCode
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
   securitySchemes:
     apiKey:
       type: http
