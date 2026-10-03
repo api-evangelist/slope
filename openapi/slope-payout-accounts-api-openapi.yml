@@ -171,12 +171,6 @@ paths:
       operationId: deletePayoutAccount
 components:
   schemas:
-    PayoutAccountType:
-      type: string
-      enum:
-      - checking
-      - savings
-      description: Account Type
     AddressSharedDto:
       type: object
       properties:
@@ -207,6 +201,61 @@ components:
       - country
       - state
       - postalCode
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    PayoutAccountType:
+      type: string
+      enum:
+      - checking
+      - savings
+      description: Account Type
+    UpdatePayoutAccountV4RequestDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name
+        isDefaultAccount:
+          type: boolean
+          description: Is default account
+    PayoutAccountEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payout account ID
+        name:
+          type: string
+          description: Name
+        externalId:
+          type: string
+          description: External ID
+        isDefaultAccount:
+          type: boolean
+          description: Whether this is the default account for the merchant
+        createdAt:
+          format: date-time
+          type: string
+          description: Timestamp of when account was create
+        updatedAt:
+          format: date-time
+          type: string
+          description: Timestamp of when account was last updated
+      required:
+      - id
+      - name
+      - isDefaultAccount
+      - createdAt
+      - updatedAt
     CreatePayoutAccountV4RequestDto:
       type: object
       properties:
@@ -252,55 +301,6 @@ components:
       - accountNumber
       - taxId
       - accountType
-    UpdatePayoutAccountV4RequestDto:
-      type: object
-      properties:
-        name:
-          type: string
-          description: Name
-        isDefaultAccount:
-          type: boolean
-          description: Is default account
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
-    PayoutAccountEntityV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Payout account ID
-        name:
-          type: string
-          description: Name
-        externalId:
-          type: string
-          description: External ID
-        isDefaultAccount:
-          type: boolean
-          description: Whether this is the default account for the merchant
-        createdAt:
-          format: date-time
-          type: string
-          description: Timestamp of when account was create
-        updatedAt:
-          format: date-time
-          type: string
-          description: Timestamp of when account was last updated
-      required:
-      - id
-      - name
-      - isDefaultAccount
-      - createdAt
-      - updatedAt
   securitySchemes:
     apiKey:
       type: http

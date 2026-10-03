@@ -399,116 +399,16 @@ paths:
       operationId: validateCustomerMetadata
 components:
   schemas:
-    PaymentMethodType:
-      type: string
-      enum:
-      - ach
-      - card
-      - oxxo
-      - spei
-      - wire
-      - rtp
-      - customer_wallet
-      - virtual_card
-      - virtual_account
-    QuoteV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        expiresAt:
-          type: string
-        status:
-          allOf:
-          - $ref: '#/components/schemas/QuoteStatus'
-        processingFeeTotal:
-          type: number
-        totalWithFinancingFees:
-          type: number
-        totalWithFees:
-          type: number
-        financingFeePct:
-          type: number
-        financingFeeTotal:
-          type: number
-        apr:
-          type: number
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/SchedulePaymentSharedDto'
-      required:
-      - id
-      - name
-      - expiresAt
-      - status
-      - processingFeeTotal
-      - totalWithFinancingFees
-      - totalWithFees
-      - financingFeePct
-      - financingFeeTotal
-      - apr
-      - payments
-    OrderStatus:
-      type: string
-      enum:
-      - pending
-      - approved
-      - submitted
-      - opening
-      - open
-      - finalizing
-      - finalized
-      - unpaid
-      - partiallyPaid
-      - complete
-      - defaulted
-      - rejected
-      - canceled
-      - refunded
-      - repayment
-    CustomerEntityV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Slope Unique Customer ID
-        email:
-          type: string
-          description: Customer email
-        businessName:
-          type: string
-          description: Customer business name
-        phone:
-          type: string
-          description: Customer phone number
-        externalId:
-          type: string
-          description: External ID
-      required:
-      - id
-      - email
-      - businessName
-      - phone
-      - externalId
     Currency:
       type: string
       enum:
       - mxn
       - usd
-    OrderPaymentSubstatus:
+    QuoteStatus:
       type: string
       enum:
-      - unpaid
-      - partiallyPaid
-      - completed
-      - refunded
-      - opening
-      - open
-      - canceled
-      description: The payment status for the order
+      - approved
+      - rejected
     SchedulePaymentSharedDto:
       type: object
       properties:
@@ -544,39 +444,45 @@ components:
       - customerFee
       - amount
       - financingFee
-    PaymentMethodV4ResponseDto:
+    ValidateMetadataV4ResponseDto:
       type: object
       properties:
-        id:
-          type: string
-          description: Payment method id
-        customerId:
-          type: string
-          description: Customer ID
-        displayName:
-          type: number
-          description: A friendly display name of the payment method
-        type:
-          description: The type of payment method
-          allOf:
-          - $ref: '#/components/schemas/PaymentMethodType'
-      required:
-      - id
-      - customerId
-      - displayName
-      - type
-    ValidateMetadataV4RequestDto:
-      type: object
-      properties:
-        metadata:
+        isValid:
+          type: boolean
+          description: Whether the metadata is valid according to the schema
+        validFields:
           type: object
-          description: Metadata object to validate against merchant schema
+          description: Metadata fields that passed validation
           example:
             joinDateRange: L1
-            lastTransactionDateRange: L2
+            customerTier: gold
+        ignoredFields:
+          description: Fields that were ignored due to schema violations or unknown fields
+          example:
+          - unknownField
+          - invalidEnumValue
+          items:
+            type: array
+          type: array
+        errors:
+          description: Validation error messages
+          example:
+          - 'lastTransactionDateRange: must be one of L1, L2, L3, L4, L5'
+          items:
+            type: array
+          type: array
+        cleanedResult:
+          type: object
+          description: The cleaned metadata that would be saved
+          example:
+            joinDateRange: L1
             customerTier: gold
       required:
-      - metadata
+      - isValid
+      - validFields
+      - ignoredFields
+      - errors
+      - cleanedResult
     CustomerOrderEntityV4ResponseDto:
       type: object
       properties:
@@ -689,6 +595,30 @@ components:
       - currency
       - amountOutstanding
       - paymentStatus
+    CustomerEntityV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Slope Unique Customer ID
+        email:
+          type: string
+          description: Customer email
+        businessName:
+          type: string
+          description: Customer business name
+        phone:
+          type: string
+          description: Customer phone number
+        externalId:
+          type: string
+          description: External ID
+      required:
+      - id
+      - email
+      - businessName
+      - phone
+      - externalId
     CustomerCreditV4ResponseDto:
       type: object
       properties:
@@ -722,11 +652,131 @@ components:
       - pending
       - currency
       - shouldApply
-    QuoteStatus:
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    OrderPaymentSubstatus:
       type: string
       enum:
+      - unpaid
+      - partiallyPaid
+      - completed
+      - refunded
+      - opening
+      - open
+      - canceled
+      description: The payment status for the order
+    QuoteV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        expiresAt:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        processingFeeTotal:
+          type: number
+        totalWithFinancingFees:
+          type: number
+        totalWithFees:
+          type: number
+        financingFeePct:
+          type: number
+        financingFeeTotal:
+          type: number
+        apr:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePaymentSharedDto'
+      required:
+      - id
+      - name
+      - expiresAt
+      - status
+      - processingFeeTotal
+      - totalWithFinancingFees
+      - totalWithFees
+      - financingFeePct
+      - financingFeeTotal
+      - apr
+      - payments
+    OrderStatus:
+      type: string
+      enum:
+      - pending
       - approved
+      - submitted
+      - opening
+      - open
+      - finalizing
+      - finalized
+      - unpaid
+      - partiallyPaid
+      - complete
+      - defaulted
       - rejected
+      - canceled
+      - refunded
+      - repayment
+    ValidateMetadataV4RequestDto:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: Metadata object to validate against merchant schema
+          example:
+            joinDateRange: L1
+            lastTransactionDateRange: L2
+            customerTier: gold
+      required:
+      - metadata
+    PaymentMethodType:
+      type: string
+      enum:
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
+    PaymentMethodV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payment method id
+        customerId:
+          type: string
+          description: Customer ID
+        displayName:
+          type: number
+          description: A friendly display name of the payment method
+        type:
+          description: The type of payment method
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+      required:
+      - id
+      - customerId
+      - displayName
+      - type
     OrderPaymentScheduleV4ResponseDto:
       type: object
       properties:
@@ -741,56 +791,6 @@ components:
       required:
       - amount
       - date
-    ValidateMetadataV4ResponseDto:
-      type: object
-      properties:
-        isValid:
-          type: boolean
-          description: Whether the metadata is valid according to the schema
-        validFields:
-          type: object
-          description: Metadata fields that passed validation
-          example:
-            joinDateRange: L1
-            customerTier: gold
-        ignoredFields:
-          description: Fields that were ignored due to schema violations or unknown fields
-          example:
-          - unknownField
-          - invalidEnumValue
-          items:
-            type: array
-          type: array
-        errors:
-          description: Validation error messages
-          example:
-          - 'lastTransactionDateRange: must be one of L1, L2, L3, L4, L5'
-          items:
-            type: array
-          type: array
-        cleanedResult:
-          type: object
-          description: The cleaned metadata that would be saved
-          example:
-            joinDateRange: L1
-            customerTier: gold
-      required:
-      - isValid
-      - validFields
-      - ignoredFields
-      - errors
-      - cleanedResult
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
   securitySchemes:
     apiKey:
       type: http

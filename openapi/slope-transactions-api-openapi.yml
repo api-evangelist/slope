@@ -80,11 +80,6 @@ paths:
       operationId: listTransactions
 components:
   schemas:
-    Currency:
-      type: string
-      enum:
-      - mxn
-      - usd
     MerchantLedgerType:
       type: string
       enum:
@@ -96,17 +91,11 @@ components:
       - payout
       - unknown
       description: The type of transaction
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
+    Currency:
+      type: string
+      enum:
+      - mxn
+      - usd
     GetTransactionV4ResponseDto:
       type: object
       properties:
@@ -151,6 +140,17 @@ components:
       - currency
       - type
       - postedAt
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
   securitySchemes:
     apiKey:
       type: http

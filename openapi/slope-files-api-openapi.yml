@@ -40,11 +40,12 @@ paths:
       operationId: importFile
 components:
   schemas:
-    V4FilePurpose:
+    FileImportStatus:
       type: string
       enum:
-      - order_invoice
-      description: The purpose of the file.
+      - pending
+      - succeeded
+      - failed
     FileV4ResponseDto:
       type: object
       properties:
@@ -65,12 +66,11 @@ components:
       - importStatus
       - orderId
       - purpose
-    FileImportStatus:
+    V4FilePurpose:
       type: string
       enum:
-      - pending
-      - succeeded
-      - failed
+      - order_invoice
+      description: The purpose of the file.
     ImportFileV4RequestDto:
       type: object
       properties:
