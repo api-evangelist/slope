@@ -399,51 +399,24 @@ paths:
       operationId: validateCustomerMetadata
 components:
   schemas:
-    Currency:
+    OrderStatus:
       type: string
       enum:
-      - mxn
-      - usd
-    QuoteStatus:
-      type: string
-      enum:
+      - pending
       - approved
+      - submitted
+      - opening
+      - open
+      - finalizing
+      - finalized
+      - unpaid
+      - partiallyPaid
+      - complete
+      - defaulted
       - rejected
-    SchedulePaymentSharedDto:
-      type: object
-      properties:
-        number:
-          type: number
-          description: The payment number in the schedule sequence
-          example: 1
-        date:
-          format: date-time
-          type: string
-          description: The due date for this payment
-          example: '2024-02-15T00:00:00Z'
-        principal:
-          type: number
-          description: The principal amount of this payment, in cents
-          example: 95000
-        customerFee:
-          type: number
-          description: The customer fee for this payment, in cents
-          example: 500
-        amount:
-          type: number
-          description: The total amount due for this payment, in cents
-          example: 105000
-        financingFee:
-          type: number
-          description: The financing fee for this payment, in cents
-          example: 2500
-      required:
-      - number
-      - date
-      - principal
-      - customerFee
-      - amount
-      - financingFee
+      - canceled
+      - refunded
+      - repayment
     ValidateMetadataV4ResponseDto:
       type: object
       properties:
@@ -483,6 +456,146 @@ components:
       - ignoredFields
       - errors
       - cleanedResult
+    SchedulePaymentSharedDto:
+      type: object
+      properties:
+        number:
+          type: number
+          description: The payment number in the schedule sequence
+          example: 1
+        date:
+          format: date-time
+          type: string
+          description: The due date for this payment
+          example: '2024-02-15T00:00:00Z'
+        principal:
+          type: number
+          description: The principal amount of this payment, in cents
+          example: 95000
+        customerFee:
+          type: number
+          description: The customer fee for this payment, in cents
+          example: 500
+        amount:
+          type: number
+          description: The total amount due for this payment, in cents
+          example: 105000
+        financingFee:
+          type: number
+          description: The financing fee for this payment, in cents
+          example: 2500
+      required:
+      - number
+      - date
+      - principal
+      - customerFee
+      - amount
+      - financingFee
+    PaymentMethodV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Payment method id
+        customerId:
+          type: string
+          description: Customer ID
+        displayName:
+          type: number
+          description: A friendly display name of the payment method
+        type:
+          description: The type of payment method
+          allOf:
+          - $ref: '#/components/schemas/PaymentMethodType'
+      required:
+      - id
+      - customerId
+      - displayName
+      - type
+    QuoteV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        name:
+          type: string
+        expiresAt:
+          type: string
+        status:
+          allOf:
+          - $ref: '#/components/schemas/QuoteStatus'
+        processingFeeTotal:
+          type: number
+        totalWithFinancingFees:
+          type: number
+        totalWithFees:
+          type: number
+        financingFeePct:
+          type: number
+        financingFeeTotal:
+          type: number
+        apr:
+          type: number
+        payments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SchedulePaymentSharedDto'
+      required:
+      - id
+      - name
+      - expiresAt
+      - status
+      - processingFeeTotal
+      - totalWithFinancingFees
+      - totalWithFees
+      - financingFeePct
+      - financingFeeTotal
+      - apr
+      - payments
+    OrderPaymentSubstatus:
+      type: string
+      enum:
+      - unpaid
+      - partiallyPaid
+      - completed
+      - refunded
+      - opening
+      - open
+      - canceled
+      description: The payment status for the order
+    CustomerCreditV4ResponseDto:
+      type: object
+      properties:
+        customerId:
+          type: string
+          description: The customer ID
+        preApprovedAmount:
+          type: number
+          description: The total pre-approved amount that the customer is given in cents for the given currency
+        outstandingAmount:
+          type: number
+          description: The outstanding amount that the customer has utilized scoped to your merchant
+        eligible:
+          type: boolean
+          description: Whether or not the customer is pre-approved for financing
+        pending:
+          type: boolean
+          description: Whether or not the customer account is pending review or action
+        currency:
+          description: Currency, lowercase `usd` for US dollars
+          allOf:
+          - $ref: '#/components/schemas/Currency'
+        shouldApply:
+          type: boolean
+          description: Whether or not the customer should apply or re-apply for financing
+      required:
+      - customerId
+      - preApprovedAmount
+      - outstandingAmount
+      - eligible
+      - pending
+      - currency
+      - shouldApply
     CustomerOrderEntityV4ResponseDto:
       type: object
       properties:
@@ -595,6 +708,60 @@ components:
       - currency
       - amountOutstanding
       - paymentStatus
+    PageMetaDto:
+      type: object
+      properties:
+        total:
+          type: number
+        beforeCursor:
+          type: string
+        afterCursor:
+          type: string
+      required:
+      - total
+    PaymentMethodType:
+      type: string
+      enum:
+      - ach
+      - card
+      - oxxo
+      - spei
+      - wire
+      - rtp
+      - customer_wallet
+      - virtual_card
+      - virtual_account
+    ValidateMetadataV4RequestDto:
+      type: object
+      properties:
+        metadata:
+          type: object
+          description: Metadata object to validate against merchant schema
+          example:
+            joinDateRange: L1
+            lastTransactionDateRange: L2
+            customerTier: gold
+      required:
+      - metadata
+    OrderPaymentScheduleV4ResponseDto:
+      type: object
+      properties:
+        amount:
+          type: number
+          description: The amount due for this payment for the order
+        date:
+          format: date-time
+          type: string
+          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
+          example: '2024-01-01'
+      required:
+      - amount
+      - date
+    QuoteStatus:
+      type: string
+      enum:
+      - approved
+      - rejected
     CustomerEntityV4ResponseDto:
       type: object
       properties:
@@ -619,178 +786,11 @@ components:
       - businessName
       - phone
       - externalId
-    CustomerCreditV4ResponseDto:
-      type: object
-      properties:
-        customerId:
-          type: string
-          description: The customer ID
-        preApprovedAmount:
-          type: number
-          description: The total pre-approved amount that the customer is given in cents for the given currency
-        outstandingAmount:
-          type: number
-          description: The outstanding amount that the customer has utilized scoped to your merchant
-        eligible:
-          type: boolean
-          description: Whether or not the customer is pre-approved for financing
-        pending:
-          type: boolean
-          description: Whether or not the customer account is pending review or action
-        currency:
-          description: Currency, lowercase `usd` for US dollars
-          allOf:
-          - $ref: '#/components/schemas/Currency'
-        shouldApply:
-          type: boolean
-          description: Whether or not the customer should apply or re-apply for financing
-      required:
-      - customerId
-      - preApprovedAmount
-      - outstandingAmount
-      - eligible
-      - pending
-      - currency
-      - shouldApply
-    PageMetaDto:
-      type: object
-      properties:
-        total:
-          type: number
-        beforeCursor:
-          type: string
-        afterCursor:
-          type: string
-      required:
-      - total
-    OrderPaymentSubstatus:
+    Currency:
       type: string
       enum:
-      - unpaid
-      - partiallyPaid
-      - completed
-      - refunded
-      - opening
-      - open
-      - canceled
-      description: The payment status for the order
-    QuoteV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        name:
-          type: string
-        expiresAt:
-          type: string
-        status:
-          allOf:
-          - $ref: '#/components/schemas/QuoteStatus'
-        processingFeeTotal:
-          type: number
-        totalWithFinancingFees:
-          type: number
-        totalWithFees:
-          type: number
-        financingFeePct:
-          type: number
-        financingFeeTotal:
-          type: number
-        apr:
-          type: number
-        payments:
-          type: array
-          items:
-            $ref: '#/components/schemas/SchedulePaymentSharedDto'
-      required:
-      - id
-      - name
-      - expiresAt
-      - status
-      - processingFeeTotal
-      - totalWithFinancingFees
-      - totalWithFees
-      - financingFeePct
-      - financingFeeTotal
-      - apr
-      - payments
-    OrderStatus:
-      type: string
-      enum:
-      - pending
-      - approved
-      - submitted
-      - opening
-      - open
-      - finalizing
-      - finalized
-      - unpaid
-      - partiallyPaid
-      - complete
-      - defaulted
-      - rejected
-      - canceled
-      - refunded
-      - repayment
-    ValidateMetadataV4RequestDto:
-      type: object
-      properties:
-        metadata:
-          type: object
-          description: Metadata object to validate against merchant schema
-          example:
-            joinDateRange: L1
-            lastTransactionDateRange: L2
-            customerTier: gold
-      required:
-      - metadata
-    PaymentMethodType:
-      type: string
-      enum:
-      - ach
-      - card
-      - oxxo
-      - spei
-      - wire
-      - rtp
-      - customer_wallet
-      - virtual_card
-      - virtual_account
-    PaymentMethodV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-          description: Payment method id
-        customerId:
-          type: string
-          description: Customer ID
-        displayName:
-          type: number
-          description: A friendly display name of the payment method
-        type:
-          description: The type of payment method
-          allOf:
-          - $ref: '#/components/schemas/PaymentMethodType'
-      required:
-      - id
-      - customerId
-      - displayName
-      - type
-    OrderPaymentScheduleV4ResponseDto:
-      type: object
-      properties:
-        amount:
-          type: number
-          description: The amount due for this payment for the order
-        date:
-          format: date-time
-          type: string
-          description: The date the payment is due for the order in the format ISO-8601 (YYYY-MM-DD)
-          example: '2024-01-01'
-      required:
-      - amount
-      - date
+      - mxn
+      - usd
   securitySchemes:
     apiKey:
       type: http

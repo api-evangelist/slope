@@ -46,31 +46,6 @@ components:
       - pending
       - succeeded
       - failed
-    FileV4ResponseDto:
-      type: object
-      properties:
-        id:
-          type: string
-        importUrl:
-          type: string
-          description: The URL the file was imported from.
-        importStatus:
-          allOf:
-          - $ref: '#/components/schemas/FileImportStatus'
-        orderId:
-          type: string
-        purpose:
-          type: string
-      required:
-      - id
-      - importStatus
-      - orderId
-      - purpose
-    V4FilePurpose:
-      type: string
-      enum:
-      - order_invoice
-      description: The purpose of the file.
     ImportFileV4RequestDto:
       type: object
       properties:
@@ -99,6 +74,31 @@ components:
       - url
       - orderId
       - purpose
+    FileV4ResponseDto:
+      type: object
+      properties:
+        id:
+          type: string
+        importUrl:
+          type: string
+          description: The URL the file was imported from.
+        importStatus:
+          allOf:
+          - $ref: '#/components/schemas/FileImportStatus'
+        orderId:
+          type: string
+        purpose:
+          type: string
+      required:
+      - id
+      - importStatus
+      - orderId
+      - purpose
+    V4FilePurpose:
+      type: string
+      enum:
+      - order_invoice
+      description: The purpose of the file.
   securitySchemes:
     apiKey:
       type: http

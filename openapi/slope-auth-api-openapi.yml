@@ -81,6 +81,14 @@ paths:
       operationId: createAuthToken
 components:
   schemas:
+    AuthTokenV4ResponseDto:
+      type: object
+      properties:
+        accessToken:
+          type: string
+          description: The access token to use to generate a token
+      required:
+      - accessToken
     AuthTokenV4RequestDto:
       type: object
       properties:
@@ -102,14 +110,6 @@ components:
       required:
       - sessionToken
       - expiresAt
-    AuthTokenV4ResponseDto:
-      type: object
-      properties:
-        accessToken:
-          type: string
-          description: The access token to use to generate a token
-      required:
-      - accessToken
   securitySchemes:
     apiKey:
       type: http

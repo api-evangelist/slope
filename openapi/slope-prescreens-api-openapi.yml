@@ -155,23 +155,6 @@ paths:
       operationId: getPrescreen
 components:
   schemas:
-    PrescreenLevelRange:
-      type: string
-      enum:
-      - NA
-      - L0
-      - L1
-      - L2
-      - L3
-      - L4
-      - L5
-      - L6
-      - L7
-      - L8
-      - L9
-      - L10
-      - L11
-      description: Join date range level
     PrescreenSharedDto:
       type: object
       properties:
@@ -186,70 +169,6 @@ components:
       required:
       - code
       - message
-    CreatePrescreenV4RequestDto:
-      type: object
-      properties:
-        externalId:
-          type: string
-          description: The partner's unique ID of the customer
-          example: partner-customer-123
-        annualRevenueAmount:
-          type: number
-          description: Last 12 months revenue, in cents
-          example: 1000000
-        businessName:
-          type: string
-          description: The name of the business
-          example: Acme, Inc.
-        doingBusinessAs:
-          type: string
-          description: The customer's doing business as (DBA) name
-          example: Acme Storefront
-        address:
-          $ref: '#/components/schemas/AddressSharedDto'
-        email:
-          type: string
-          description: The email address of the business
-          example: info@acme.com
-        taxId:
-          type: string
-          description: The US Tax ID of the business (optional)
-          example: '123456789'
-        website:
-          type: string
-          description: The website of the business. If provided, must begin with http:// or https://
-          example: https://slopepay.com
-        phone:
-          type: string
-          description: The phone number of the business
-          example: '14155551234'
-        entityType:
-          description: The type of the business entity
-          example: LLC
-          allOf:
-          - $ref: '#/components/schemas/BusinessEntityType'
-        desiredLimit:
-          type: number
-          description: The desired funding limit for the customer, in cents.
-          example: 100000
-        metadata:
-          description: Additional metadata about the customer for prescreen evaluation
-          allOf:
-          - $ref: '#/components/schemas/PrescreenMetadataSharedDto'
-      required:
-      - externalId
-      - annualRevenueAmount
-      - businessName
-      - address
-      - email
-    BusinessEntityType:
-      type: string
-      enum:
-      - LLC
-      - S Corp
-      - Corporation
-      - Partnership
-      - Sole Proprietorship
     CustomerPrescreensV4ResponseDto:
       type: object
       properties:
@@ -279,43 +198,6 @@ components:
             $ref: '#/components/schemas/PrescreenEntityV4ResponseDto'
       required:
       - prescreens
-    PrescreenStatus:
-      type: string
-      enum:
-      - pending
-      - succeeded
-      - failed
-      description: Status of the prescreen
-    AddressSharedDto:
-      type: object
-      properties:
-        line1:
-          type: string
-          description: The first line of the address
-          example: 123 Main St
-        line2:
-          type: string
-        city:
-          type: string
-          example: San Francisco
-        country:
-          type: string
-          description: ISO31661 Alpha2 code for the country
-          example: US
-        state:
-          type: string
-          description: 2-letter US state abbreviation
-          example: CA
-        postalCode:
-          type: string
-          description: 5-digit US postal code
-          example: '94107'
-      required:
-      - line1
-      - city
-      - country
-      - state
-      - postalCode
     PrescreenEntityV4ResponseDto:
       type: object
       properties:
@@ -468,6 +350,124 @@ components:
           type: string
           description: A temporary field in order to bypass field validation. This field is expected to be removed.
           example: C
+    AddressSharedDto:
+      type: object
+      properties:
+        line1:
+          type: string
+          description: The first line of the address
+          example: 123 Main St
+        line2:
+          type: string
+        city:
+          type: string
+          example: San Francisco
+        country:
+          type: string
+          description: ISO31661 Alpha2 code for the country
+          example: US
+        state:
+          type: string
+          description: 2-letter US state abbreviation
+          example: CA
+        postalCode:
+          type: string
+          description: 5-digit US postal code
+          example: '94107'
+      required:
+      - line1
+      - city
+      - country
+      - state
+      - postalCode
+    PrescreenStatus:
+      type: string
+      enum:
+      - pending
+      - succeeded
+      - failed
+      description: Status of the prescreen
+    BusinessEntityType:
+      type: string
+      enum:
+      - LLC
+      - S Corp
+      - Corporation
+      - Partnership
+      - Sole Proprietorship
+    CreatePrescreenV4RequestDto:
+      type: object
+      properties:
+        externalId:
+          type: string
+          description: The partner's unique ID of the customer
+          example: partner-customer-123
+        annualRevenueAmount:
+          type: number
+          description: Last 12 months revenue, in cents
+          example: 1000000
+        businessName:
+          type: string
+          description: The name of the business
+          example: Acme, Inc.
+        doingBusinessAs:
+          type: string
+          description: The customer's doing business as (DBA) name
+          example: Acme Storefront
+        address:
+          $ref: '#/components/schemas/AddressSharedDto'
+        email:
+          type: string
+          description: The email address of the business
+          example: info@acme.com
+        taxId:
+          type: string
+          description: The US Tax ID of the business (optional)
+          example: '123456789'
+        website:
+          type: string
+          description: The website of the business. If provided, must begin with http:// or https://
+          example: https://slopepay.com
+        phone:
+          type: string
+          description: The phone number of the business
+          example: '14155551234'
+        entityType:
+          description: The type of the business entity
+          example: LLC
+          allOf:
+          - $ref: '#/components/schemas/BusinessEntityType'
+        desiredLimit:
+          type: number
+          description: The desired funding limit for the customer, in cents.
+          example: 100000
+        metadata:
+          description: Additional metadata about the customer for prescreen evaluation
+          allOf:
+          - $ref: '#/components/schemas/PrescreenMetadataSharedDto'
+      required:
+      - externalId
+      - annualRevenueAmount
+      - businessName
+      - address
+      - email
+    PrescreenLevelRange:
+      type: string
+      enum:
+      - NA
+      - L0
+      - L1
+      - L2
+      - L3
+      - L4
+      - L5
+      - L6
+      - L7
+      - L8
+      - L9
+      - L10
+      - L11
+      description: Join date range level
   securitySchemes:
     apiKey:
       type: http
