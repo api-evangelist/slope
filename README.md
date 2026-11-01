@@ -64,6 +64,175 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-Slope is a company surfaced as a portfolio company of ggv-capital and added to the API Evangelist network as a stub for enrichment. Sector: fintech. This profile is a lead awaiting the enrichment pipeline.
+Slope is a fintech company providing credit infrastructure for business lending - an embedded buy-now-pay-later (BNPL) and working-capital solution that lets merchants offer flexible net-terms financing to their business (B2B) buyers at checkout with no added risk. Its platform combines an embedded line-of-credit product, the SlopeScore business cash-flow score for underwriting, and a developer API (v4) for creating customers and orders, driving checkout via the Slope.js widget or a hosted redirect, finalizing orders for payout, issuing refunds/adjustments, handling repayments, and subscribing to webhook events. Slope is backed by GGV Capital and has announced a relationship with Amazon.
 
-Backed by: ggv-capital — https://www.slopepay.com/
+**Areas:** Company · Fintech · Payments · Embedded Finance · Buy Now Pay Later · Lending · Credit · B2B · Checkout
+
+## Slope on APIs.io
+
+Everything profiled for Slope is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/slope/](https://apis.io/providers/slope/)** — or go straight to one of the APIs or properties below.
+
+### APIs (10)
+
+- [Slope Auth API](https://apis.io/apis/slope/slope-auth-api/) — The Auth API from Slope — 2 operation(s) for auth.
+- [Slope Customers API](https://apis.io/apis/slope/slope-customers-api/) — The Customers API from Slope — 6 operation(s) for customers.
+- [Slope Files API](https://apis.io/apis/slope/slope-files-api/) — The Files API from Slope — 1 operation(s) for files.
+- [Slope Orders API](https://apis.io/apis/slope/slope-orders-api/) — The Orders API from Slope — 11 operation(s) for orders.
+- [Slope Payout Accounts API](https://apis.io/apis/slope/slope-payout-accounts-api/) — The Payout Accounts API from Slope — 2 operation(s) for payout accounts.
+- [Slope Persons API](https://apis.io/apis/slope/slope-persons-api/) — The Persons API from Slope — 1 operation(s) for persons.
+- [Slope Prescreens API](https://apis.io/apis/slope/slope-prescreens-api/) — The Prescreens API from Slope — 2 operation(s) for prescreens.
+- [Slope Simulation API](https://apis.io/apis/slope/slope-simulation-api/) — The Simulation API from Slope — 7 operation(s) for simulation.
+- [Slope Transactions API](https://apis.io/apis/slope/slope-transactions-api/) — The Transactions API from Slope — 1 operation(s) for transactions.
+- [Slope User Links API](https://apis.io/apis/slope/slope-user-links-api/) — The User Links API from Slope — 2 operation(s) for user links.
+
+### Published properties
+
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
+
+#### Arazzo workflows (4)
+
+Multi-step workflows that chain operations into a business task.
+
+- [Create a Slope order and finalize it](https://apis.io/arazzos/slope/slope-create-order-and-finalize/)
+- [Refund a finalized Slope order](https://apis.io/arazzos/slope/slope-refund-order/)
+- [Estimate and repay a Slope order](https://apis.io/arazzos/slope/slope-repay-order/)
+- [Simulate an approved order in the sandbox](https://apis.io/arazzos/slope/slope-sandbox-approve-order/)
+
+#### AsyncAPI (2)
+
+Event-driven and webhook contracts.
+
+- [Slope Webhook Events](https://apis.io/asyncapis/slope/slope-events-asyncapi/)
+- [Slope Webhooks](https://apis.io/asyncapis/slope/slope-webhooks/)
+
+#### Event channels (12)
+
+Individual events and webhooks the provider emits.
+
+- [so.slope.customer.application_submitted](https://apis.io/channels/slope/so-slope-customer-application-submitted/)
+- [so.slope.customer.authorization_revoked](https://apis.io/channels/slope/so-slope-customer-authorization-revoked/)
+- [so.slope.customer.authorized](https://apis.io/channels/slope/so-slope-customer-authorized/)
+- [so.slope.customer.created](https://apis.io/channels/slope/so-slope-customer-created/)
+- [so.slope.customer.credit_decision_reached](https://apis.io/channels/slope/so-slope-customer-credit-decision-reached/)
+- [so.slope.customer.updated](https://apis.io/channels/slope/so-slope-customer-updated/)
+- [so.slope.order.adjustment.created](https://apis.io/channels/slope/so-slope-order-adjustment-created/)
+- [so.slope.order.finalized](https://apis.io/channels/slope/so-slope-order-finalized/)
+- [so.slope.order.finalizing](https://apis.io/channels/slope/so-slope-order-finalizing/)
+- [so.slope.order.opened](https://apis.io/channels/slope/so-slope-order-opened/)
+- [so.slope.prescreen.ready](https://apis.io/channels/slope/so-slope-prescreen-ready/)
+- [so.slope.transactions.updated](https://apis.io/channels/slope/so-slope-transactions-updated/)
+
+#### MCP servers (1)
+
+Model Context Protocol servers that expose the API to agents.
+
+- [slope](https://apis.io/servers/slope/slope/)
+
+#### Agentic access (1)
+
+Which operations an agent can call, which act, and which need a human in the loop.
+
+- [Slope Agentic Access](https://apis.io/agentic-access/slope/slope-agentic-access/)
+
+#### Collections (10)
+
+Postman and Open Collection request collections.
+
+- [Slope v4 Auth API](https://apis.io/collections/slope/open-slope-auth-api/)
+- [Slope v4 Auth Customers API](https://apis.io/collections/slope/open-slope-customers-api/)
+- [Slope v4 Auth Files API](https://apis.io/collections/slope/open-slope-files-api/)
+- [Slope v4 Auth Orders API](https://apis.io/collections/slope/open-slope-orders-api/)
+- [Slope v4 Auth Payout Accounts API](https://apis.io/collections/slope/open-slope-payout-accounts-api/)
+- [Slope v4 Auth Persons API](https://apis.io/collections/slope/open-slope-persons-api/)
+- [Slope v4 Auth Prescreens API](https://apis.io/collections/slope/open-slope-prescreens-api/)
+- [Slope v4 Auth Simulation API](https://apis.io/collections/slope/open-slope-simulation-api/)
+- [Slope v4 Auth Transactions API](https://apis.io/collections/slope/open-slope-transactions-api/)
+- [Slope v4 Auth User Links API](https://apis.io/collections/slope/open-slope-user-links-api/)
+
+#### Overlays (1)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Slope V4 Overlay](https://apis.io/overlays/slope/slope-v4-overlay/)
+
+#### Security (2)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Slope Authentication](https://apis.io/security/slope/slope-authentication/)
+- [Slope Domain Security](https://apis.io/security/slope/slope-domain-security/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Slope Rate Limits](https://apis.io/rate-limits/slope/slope-rate-limits/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.slopepay.com/)
+- [Documentation](https://developers.slopepay.com/docs/getting-started)
+- [Getting started](https://developers.slopepay.com/docs/getting-started)
+- [API reference](https://developers.slopepay.com/reference)
+- [Support](https://www.slopepay.com/contact#support)
+- [Blog](https://www.slopepay.com/blog)
+- [Terms of service](https://www.slopepay.com/terms)
+- [Privacy policy](https://www.slopepay.com/privacy)
+- [Status](https://status.slopepay.com)
+
+## API Evangelist rating
+
+**Kin Score 45.5** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 58.2 |
+| Contract governance | 4.5 |
+| Operational transparency | 43.4 |
+| Developer ergonomics | 47.0 |
+| Access clarity | 27.6 |
+
+**Agent readiness 37.2** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | documented (partial credit) |
+| MCP Server | — |
+| Auth Clarity | bearer (partial credit) |
+| Idempotency | documented (partial credit) |
+| Error Semantics | documented (partial credit) |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | yes |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | — |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | partial |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 22.3** — Payments
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/slope/](https://apis.io/providers/slope/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Slope: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/slope/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
